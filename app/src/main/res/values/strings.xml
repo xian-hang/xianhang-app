@@ -5,8 +5,11 @@
     <string name="collection">Collection</string>
     <string name="profile">Profile</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="register">Register</string>
     <string name="register_title">注册新帐号</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="verify_email">Please Verify your email\n%s@buaa.edu.cn</string>
     <string name="userId">Your Id</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

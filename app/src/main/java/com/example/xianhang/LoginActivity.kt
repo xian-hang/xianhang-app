@@ -1,5 +1,7 @@
 package com.example.xianhang
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
@@ -22,5 +24,15 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() && super.onSupportNavigateUp()
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private fun rememberLogin() {
+        val sharedPreferences = getSharedPreferences(Companion.LOGIN_PREF, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+    }
+
+    companion object {
+        const val LOGIN_PREF = "login_preferences"
     }
 }
