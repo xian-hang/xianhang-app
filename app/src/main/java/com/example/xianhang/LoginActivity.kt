@@ -2,11 +2,14 @@ package com.example.xianhang
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.xianhang.LoginFragment.Companion.LOGIN_PREF
+import com.example.xianhang.LoginFragment.Companion.REMEMBER
 
 class LoginActivity : AppCompatActivity() {
 
@@ -14,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        rememberLogin()
         setContentView(R.layout.activity_login)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -28,11 +32,11 @@ class LoginActivity : AppCompatActivity() {
 
     @SuppressLint("CommitPrefEdits")
     private fun rememberLogin() {
-        val sharedPreferences = getSharedPreferences(Companion.LOGIN_PREF, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-    }
+        val sharedPreferences = getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE)
+            ?: return
 
-    companion object {
-        const val LOGIN_PREF = "login_preferences"
+        val remember = sharedPreferences.getBoolean(REMEMBER, false)
+        if (remember)
+            startActivity(Intent(this, MainActivity::class.java))
     }
 }

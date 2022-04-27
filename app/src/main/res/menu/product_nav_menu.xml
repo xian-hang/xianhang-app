@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/productFragment2"
+        android:icon="@mipmap/ic_product"
+        android:title="@string/products" />
+    <item
+        android:id="@+id/orderFragment2"
+        android:icon="@mipmap/ic_order"
+        android:title="@string/orders" />
+</menu>

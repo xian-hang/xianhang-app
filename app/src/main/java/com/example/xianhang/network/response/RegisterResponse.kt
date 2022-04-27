@@ -1,7 +1,6 @@
 package com.example.xianhang.network.response
 
-data class LoginResponse(
+data class RegisterResponse(
     val code: Int,
-    val role: Int,
-    val token: String
+    val userId: Int
 )

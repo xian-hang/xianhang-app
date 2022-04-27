@@ -7,11 +7,25 @@
         android:layout_height="match_parent"
         tools:context="com.example.xianhang.ProfileFragment">
 
-        <Button
-            android:id="@+id/logout"
+        <include
+            android:id="@+id/profile"
+            layout="@layout/profile_item"/>
+
+        <include
+            android:id="@+id/tracking"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile"
+            layout="@layout/track_item" />
+
+        <ListView
+            android:id="@+id/list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/logout" />
+            android:layout_below="@+id/tracking"
+            android:layout_margin="10dp"
+            tools:listitem="@layout/profile_list_item" />
 
     </RelativeLayout>
 

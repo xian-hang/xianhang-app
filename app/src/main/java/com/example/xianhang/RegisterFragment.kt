@@ -65,7 +65,8 @@ class RegisterFragment : Fragment() {
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
-                Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_LONG).show()
+                // TODO: check connection wrong
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
         }

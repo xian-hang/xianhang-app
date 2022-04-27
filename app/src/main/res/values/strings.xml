@@ -15,4 +15,36 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="new_user">New User?</string>
+    <string name="settings">settings</string>
+    <string name="to_pay">待付款</string>
+    <string name="to_send">待发货</string>
+    <string name="to_receive">待收货</string>
+    <string name="resent">Resent</string>
+    <string name="new_password">New Password</string>
+    <string name="change_password">更换密码</string>
+    <string name="confirm_edit">确认修改</string>
+    <string name="confirm">确认</string>
+    <string name="introduction">Introduction</string>
+    <string name="change_profile">修改个人资料</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="products">Products</string>
+    <string name="orders">Orders</string>
+    <string name="sell_product">售卖物品</string>
+    <string name="sell_your_product">售卖商品</string>
+    <string name="product_name_cn">商品名称</string>
+    <string name="product_name">Name</string>
+    <string name="product_price_cn">商品价格</string>
+    <string name="product_price">Price</string>
+    <string name="product_stock_cn">库存</string>
+    <string name="product_stock">Stock</string>
+    <string name="trading_method_cn">交易方式</string>
+    <string name="send_cn">寄送</string>
+    <string name="pickup_cn">自取</string>
+    <string name="pickup_address_cn">自取地址</string>
+    <string name="pickup_address">Address</string>
+    <string name="sell_cn">出售</string>
+    <string name="description">Description</string>
+    <string name="product_description_cn">商品叙述</string>
+    <string name="profile_details">信誉分 %s%% | 点赞 %d | 售出物品 %d</string>
 </resources>

@@ -27,15 +27,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userId = arguments?.getString(USER)
-        println(userId)
-        // TODO: can't edit text
-        if (userId != null) {
-            println(view)
-            val verifyText = view?.findViewById<TextView>(R.id.verify_email)
-            println(verifyText)
-            verifyText?.text = resources.getString(R.string.verify_email, userId)
-        }
     }
 
     override fun onCreateView(
@@ -49,6 +40,15 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val userId = arguments?.getString(USER)
+        if (userId != null) {
+            val verifyText = view.findViewById<TextView>(R.id.verify_email)
+            verifyText.text = resources.getString(R.string.verify_email, userId)
+            val resent = view.findViewById<TextView>(R.id.resent)
+            resent.text = resources.getString(R.string.resent)
+            // TODO: resent clickable
+        }
 
         val login = view.findViewById<Button>(R.id.login)
         login?.setOnClickListener {
@@ -78,22 +78,26 @@ class LoginFragment : Fragment() {
             println("post login request")
             try {
                 val resp = Api.retrofitService.login(user)
-                if (resOk(resp)) {
+                if (resOk(resp) && resp.role == 0) {
                     editor?.putString(USER, userId)
                     editor?.putString(PASSWORD, password)
-                    editor?.putString(ROLE, resp.role)
+                    editor?.putInt(ROLE, resp.role)
                     editor?.putString(TOKEN, "Token " + resp.token)
                     editor?.putBoolean(REMEMBER, rememberMe)
                     editor?.apply()
                     findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+                } else if (resp.role == 1) {
+                    Toast.makeText(requireActivity(), "Admin User please use web login", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(requireActivity(), "Login Error", Toast.LENGTH_LONG).show()
+                    val code = resp.code
+                    val role = resp.role
+                    Toast.makeText(requireActivity(), "code: $code, role: $role", Toast.LENGTH_LONG).show()
                 }
 
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
-                Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
         }
