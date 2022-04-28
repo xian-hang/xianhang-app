@@ -3,6 +3,9 @@ package com.example.xianhang
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.UnderlineSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View

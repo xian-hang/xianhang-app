@@ -9,25 +9,24 @@
 
         <include
             android:id="@+id/profile"
-            layout="@layout/profile_item"/>
+            layout="@layout/profile_item" />
 
         <include
             android:id="@+id/tracking"
-            android:layout_marginHorizontal="10dp"
+            layout="@layout/track_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile"
-            layout="@layout/track_item" />
+            android:layout_marginHorizontal="10dp" />
 
         <ListView
             android:id="@+id/list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tracking"
+            android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             tools:listitem="@layout/profile_list_item" />
-
     </RelativeLayout>
-
 
 </layout>

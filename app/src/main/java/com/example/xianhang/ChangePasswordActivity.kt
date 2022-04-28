@@ -10,6 +10,7 @@ import com.example.xianhang.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.EditPassword
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,11 +25,11 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         val change = findViewById<Button>(R.id.change)
         change.setOnClickListener {
-            requestChangePassword()
+            showChangePasswordDialog()
         }
     }
 
-    private fun requestChangePassword() {
+    private fun showChangePasswordDialog() {
         val password = findViewById<TextInputEditText>(R.id.password).text.toString()
         val newPassword = findViewById<TextInputEditText>(R.id.new_password).text.toString()
         val confirmPassword = findViewById<TextInputEditText>(R.id.confirm_new_password).text.toString()
@@ -44,11 +45,29 @@ class ChangePasswordActivity : AppCompatActivity() {
             return
         }
 
+        MaterialAlertDialogBuilder(this)
+            .setMessage("确定更改密码吗？")
+            .setPositiveButton("确认") { _, _ ->
+                requestChangePassword()
+            }
+            .setNegativeButton("取消") { _, _ ->
+
+            }
+            .show()
+    }
+
+    private fun requestChangePassword() {
+        val password = findViewById<TextInputEditText>(R.id.password).text.toString()
+        val newPassword = findViewById<TextInputEditText>(R.id.new_password).text.toString()
+
+        val sharedPreferences = getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences.getString(TOKEN, null)
+
         val data = EditPassword(password, newPassword)
         val that = this
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val resp = Api.retrofitService.editPassword(token, data)
+                val resp = Api.retrofitService.editPassword(token!!, data)
                 if (resOk(resp)) {
                     startActivity(Intent(that, MainActivity::class.java))
                 } else {

@@ -2,6 +2,8 @@ package com.example.xianhang
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,8 +12,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
+import com.example.xianhang.LoginFragment.Companion.LOGIN_PREF
+import com.example.xianhang.LoginFragment.Companion.PASSWORD
+import com.example.xianhang.LoginFragment.Companion.REMEMBER
+import com.example.xianhang.LoginFragment.Companion.ROLE
+import com.example.xianhang.LoginFragment.Companion.TOKEN
+import com.example.xianhang.LoginFragment.Companion.USER
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,10 +28,6 @@ import retrofit2.HttpException
 import java.lang.Exception
 
 class ProfileFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,15 +52,15 @@ class ProfileFragment : Fragment() {
                 2 -> changeActivityProducts()
                 3 -> changeActivityMyOrders() // TODO
                 4 -> changeActivityNotifications() // TODO
-                5 -> requestLogout()
-                6 -> requestDeleteAccount() // TODO
+                5 -> showLogoutDialog()
+                6 -> showDeleteAccountDialog() // TODO
             }
         }
     }
 
     private fun setUpProfile(view: View) {
-        val sharePreferences = activity?.getSharedPreferences(LoginFragment.LOGIN_PREF, Context.MODE_PRIVATE)
-        val token = sharePreferences?.getString(LoginFragment.TOKEN, null)
+        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharePreferences?.getString(TOKEN, null)
 
         if (token == null) {
             Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
@@ -90,7 +95,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    // TODO: add confirm window
     private fun changeActivityEditProfile(view: View) {
         val username = view.findViewById<TextView>(R.id.username).text.toString()
         val introduction = view.findViewById<TextView>(R.id.introduction).text.toString()
@@ -100,31 +104,41 @@ class ProfileFragment : Fragment() {
         startActivity(intent)
     }
 
-    // TODO: add confirm window
     private fun changeActivityChangePassword() {
         startActivity(Intent(requireActivity(), ChangePasswordActivity::class.java))
     }
 
-    // TODO
     private fun changeActivityProducts() {
         startActivity(Intent(requireActivity(), ProductActivity::class.java))
     }
 
-    // TODO
+    // TODO: implement
     private fun changeActivityMyOrders() {
         Toast.makeText(requireActivity(), "not yet implement", Toast.LENGTH_LONG).show()
     }
 
-    // TODO
+    // TODO: implement
     private fun changeActivityNotifications() {
         Toast.makeText(requireActivity(), "not yet implement", Toast.LENGTH_LONG).show()
     }
 
+    private fun showLogoutDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage("确定要登出这个设备吗？")
+            .setPositiveButton("确认") { _, _ ->
+                requestLogout()
+            }
+            .setNegativeButton("取消") { _, _ ->
+
+            }
+            .show()
+    }
+
     @SuppressLint("CommitPrefEdits")
     private fun requestLogout() {
-        val sharePreferences = activity?.getSharedPreferences(LoginFragment.LOGIN_PREF, Context.MODE_PRIVATE)
+        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val editor = sharePreferences?.edit()
-        val token = sharePreferences?.getString(LoginFragment.TOKEN, null)
+        val token = sharePreferences?.getString(TOKEN, null)
 
         if (token == null) {
             Toast.makeText(requireActivity(), "User Must Login", Toast.LENGTH_LONG).show()
@@ -135,9 +149,9 @@ class ProfileFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.logout(token)
                 if (resOk(resp)) {
-                    editor?.putString(LoginFragment.ROLE, null)
-                    editor?.putString(LoginFragment.TOKEN, null)
-                    editor?.putBoolean(LoginFragment.REMEMBER, false)
+                    editor?.putString(ROLE, null)
+                    editor?.putString(TOKEN, null)
+                    editor?.putBoolean(REMEMBER, false)
                     editor?.apply()
 
                     val intent = Intent(context, LoginActivity::class.java)
@@ -154,8 +168,51 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    // TODO
+    private fun showDeleteAccountDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("警告")
+            .setMessage("确定停用你的帐号吗？")
+            .setPositiveButton("确认") { _, _ ->
+                requestDeleteAccount()
+            }
+            .setNegativeButton("取消") { _, _ ->
+
+            }
+            .show()
+    }
+
     private fun requestDeleteAccount() {
-        Toast.makeText(requireActivity(), "not yet implement", Toast.LENGTH_LONG).show()
+        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val editor = sharePreferences?.edit()
+        val token = sharePreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "User Must Login", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val resp = Api.retrofitService.deleteUser(token)
+                if (resOk(resp)) {
+                    editor?.putString(USER, null)
+                    editor?.putString(PASSWORD, null)
+                    editor?.putString(ROLE, null)
+                    editor?.putString(TOKEN, null)
+                    editor?.putBoolean(REMEMBER, false)
+                    editor?.apply()
+
+                    val intent = Intent(context, LoginActivity::class.java)
+                    context?.startActivity(intent)
+                } else {
+                    Toast.makeText(requireActivity(), "Delete Error", Toast.LENGTH_LONG).show()
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                e.printStackTrace()
+            }
+        }
     }
 }

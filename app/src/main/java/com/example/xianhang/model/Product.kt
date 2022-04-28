@@ -2,15 +2,15 @@ package com.example.xianhang.model
 
 import com.squareup.moshi.Json
 
-enum class TradingMethod {
-    DELIVERY, PICKUP, BOTH
-}
+const val DELIVERY = 0
+const val PICKUP = 1
+const val BOTH = 2
 
 data class Product(
     val name: String,
     val description: String,
     val price: Double,
     val stock: Int,
-    val tradingMethod: TradingMethod,
-    @Json(name = "pickUpLoc") val pickupAddress: String?
+    val tradingMethod: Int,
+    @Json(name = "pickUpLoc") val address: String?
 )

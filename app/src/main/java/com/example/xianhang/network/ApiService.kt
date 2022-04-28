@@ -1,18 +1,12 @@
 package com.example.xianhang.network
 
 import com.example.xianhang.model.*
-import com.example.xianhang.network.response.DefaultResponse
-import com.example.xianhang.network.response.LoginResponse
-import com.example.xianhang.network.response.ProfileResponse
-import com.example.xianhang.network.response.RegisterResponse
+import com.example.xianhang.network.response.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 //private const val BASE_URL = "http://192.168.38.131:8000/"
 private const val BASE_URL = "http://192.168.0.117:8000/"
@@ -53,6 +47,13 @@ interface ApiService {
     @POST("user/edit/")
     suspend fun editProfile(@Header(AUTH) authToken: String, @Body data: EditUser): DefaultResponse
 
+    @DELETE("user/delete/")
+    suspend fun deleteUser(@Header(AUTH) authToken: String): DefaultResponse
+
     @POST("product/create/")
-    suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): DefaultResponse
+    suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): ProductResponse
+
+    @POST("product/image/create/")
+    suspend fun createProductImage(@Header(AUTH) authToken: String, @Body data: Product): DefaultResponse
+
 }

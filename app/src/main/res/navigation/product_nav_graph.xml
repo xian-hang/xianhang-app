@@ -23,5 +23,13 @@
         android:id="@+id/sellProductFragment"
         android:name="com.example.xianhang.SellProductFragment"
         android:label="fragment_sell_product"
-        tools:layout="@layout/fragment_sell_product" />
+        tools:layout="@layout/fragment_sell_product" >
+        <action
+            android:id="@+id/action_sellProductFragment_to_viewProductFragment"
+            app:destination="@id/viewProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewProductFragment"
+        android:name="com.example.xianhang.ViewProductFragment"
+        android:label="ViewProductFragment" />
 </navigation>
