@@ -1,4 +1,4 @@
-package com.example.xianhang
+package com.example.xianhang.login
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,8 +8,10 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.xianhang.LoginFragment.Companion.LOGIN_PREF
-import com.example.xianhang.LoginFragment.Companion.REMEMBER
+import com.example.xianhang.R
+import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
+import com.example.xianhang.login.LoginFragment.Companion.REMEMBER
+import com.example.xianhang.home.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 

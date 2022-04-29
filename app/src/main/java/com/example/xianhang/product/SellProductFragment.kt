@@ -1,4 +1,4 @@
-package com.example.xianhang
+package com.example.xianhang.product
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
@@ -14,8 +14,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import com.example.xianhang.LoginFragment.Companion.LOGIN_PREF
-import com.example.xianhang.LoginFragment.Companion.TOKEN
+import com.example.xianhang.R
+import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
+import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.*
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk
@@ -137,7 +138,8 @@ class SellProductFragment : Fragment() {
         else PICKUP
         if (!pickup) address = null
 
-        return Product(name, description, price, stock, tradingMethod, address)
+        // TODO: add product id and user id
+        return Product(null, name, description, price, stock, tradingMethod, address, null)
     }
 
     @Suppress("DEPRECATION")

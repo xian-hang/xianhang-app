@@ -9,7 +9,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 //private const val BASE_URL = "http://192.168.38.131:8000/"
-private const val BASE_URL = "http://192.168.0.117:8000/"
+//private const val BASE_URL = "http://192.168.0.117:8000/"
+private const val BASE_URL = "https://xianhang.herokuapp.com/"
 private const val AUTH = "Authorization"
 
 private val moshi = Moshi.Builder()
@@ -49,6 +50,9 @@ interface ApiService {
 
     @DELETE("user/delete/")
     suspend fun deleteUser(@Header(AUTH) authToken: String): DefaultResponse
+
+    @GET("user/{id}/product/")
+    suspend fun getUserProduct(@Path("id") userId: Int): UserProductsResponse
 
     @POST("product/create/")
     suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): ProductResponse

@@ -1,10 +1,12 @@
-package com.example.xianhang
+package com.example.xianhang.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import com.example.xianhang.login.LoginFragment
+import com.example.xianhang.R
 import com.example.xianhang.model.EditUser
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk

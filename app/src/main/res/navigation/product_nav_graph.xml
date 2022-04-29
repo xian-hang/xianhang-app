@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/productFragment2"
-        android:name="com.example.xianhang.ProductFragment"
+        android:name="com.example.xianhang.product.ProductFragment"
         android:label="fragment_product"
         tools:layout="@layout/fragment_product" >
         <action
@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/orderFragment2"
-        android:name="com.example.xianhang.OrderFragment"
+        android:name="com.example.xianhang.product.OrderFragment"
         android:label="fragment_order"
         tools:layout="@layout/fragment_order" />
     <fragment
         android:id="@+id/sellProductFragment"
-        android:name="com.example.xianhang.SellProductFragment"
+        android:name="com.example.xianhang.product.SellProductFragment"
         android:label="fragment_sell_product"
         tools:layout="@layout/fragment_sell_product" >
         <action
@@ -30,6 +30,6 @@
     </fragment>
     <fragment
         android:id="@+id/viewProductFragment"
-        android:name="com.example.xianhang.ViewProductFragment"
+        android:name="com.example.xianhang.product.ViewProductFragment"
         android:label="ViewProductFragment" />
 </navigation>

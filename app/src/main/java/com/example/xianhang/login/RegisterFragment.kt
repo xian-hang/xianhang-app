@@ -1,4 +1,4 @@
-package com.example.xianhang
+package com.example.xianhang.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import com.example.xianhang.LoginFragment.Companion.USER
+import com.example.xianhang.R
+import com.example.xianhang.login.LoginFragment.Companion.USER
 import com.example.xianhang.databinding.FragmentRegisterBinding
 import com.example.xianhang.model.CreateUser
 import com.example.xianhang.network.Api

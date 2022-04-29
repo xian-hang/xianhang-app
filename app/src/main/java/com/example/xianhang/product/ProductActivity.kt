@@ -1,10 +1,11 @@
-package com.example.xianhang
+package com.example.xianhang.product
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.xianhang.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProductActivity : AppCompatActivity() {
@@ -18,6 +19,7 @@ class ProductActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navbar)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        navController.setGraph(R.navigation.product_nav_graph)
         bottomNavigationView.setupWithNavController(navController)
     }
 }

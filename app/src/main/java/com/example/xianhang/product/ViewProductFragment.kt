@@ -1,4 +1,4 @@
-package com.example.xianhang
+package com.example.xianhang.product
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.xianhang.R
 
 class ViewProductFragment : Fragment() {
 

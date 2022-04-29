@@ -1,9 +1,7 @@
-package com.example.xianhang
+package com.example.xianhang.home
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.os.bundleOf
-import com.example.xianhang.LoginFragment.Companion.LOGIN_PREF
-import com.example.xianhang.LoginFragment.Companion.PASSWORD
-import com.example.xianhang.LoginFragment.Companion.REMEMBER
-import com.example.xianhang.LoginFragment.Companion.ROLE
-import com.example.xianhang.LoginFragment.Companion.TOKEN
-import com.example.xianhang.LoginFragment.Companion.USER
+import com.example.xianhang.*
+import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
+import com.example.xianhang.login.LoginFragment.Companion.PASSWORD
+import com.example.xianhang.login.LoginFragment.Companion.REMEMBER
+import com.example.xianhang.login.LoginFragment.Companion.ROLE
+import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.login.LoginFragment.Companion.USER
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.network.Api
+import com.example.xianhang.product.ProductActivity
 import com.example.xianhang.rest.resOk
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +28,8 @@ import retrofit2.HttpException
 import java.lang.Exception
 
 class ProfileFragment : Fragment() {
+
+    private var _id: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +77,7 @@ class ProfileFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.getProfile(token)
                 if (resOk(resp)) {
+                    _id = resp.id
                     username.text = resp.username
                     userId.text = resp.userId
                     introduction.text = resp.introduction
@@ -109,7 +112,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun changeActivityProducts() {
-        startActivity(Intent(requireActivity(), ProductActivity::class.java))
+        val intent = Intent(requireActivity(), ProductActivity::class.java)
+        startActivity(intent)
     }
 
     // TODO: implement

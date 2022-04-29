@@ -1,11 +1,8 @@
-package com.example.xianhang
+package com.example.xianhang.login
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.UnderlineSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +12,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.xianhang.R
 import com.example.xianhang.databinding.FragmentLoginBinding
 import com.example.xianhang.model.LoginUser
 import com.example.xianhang.network.Api
@@ -82,6 +80,7 @@ class LoginFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.login(user)
                 if (resOk(resp) && resp.role == 0) {
+                    editor?.putInt(ID, resp.id)
                     editor?.putString(USER, userId)
                     editor?.putString(PASSWORD, password)
                     editor?.putInt(ROLE, resp.role)
@@ -120,6 +119,7 @@ class LoginFragment : Fragment() {
 
     companion object {
         const val LOGIN_PREF = "login_preferences"
+        const val ID = "id"
         const val USER = "userId"
         const val PASSWORD = "password"
         const val ROLE = "user_role"

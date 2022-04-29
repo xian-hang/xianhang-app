@@ -5,7 +5,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.xianhang.ProfileFragment">
+        tools:context="com.example.xianhang.home.ProfileFragment">
 
         <include
             android:id="@+id/profile"
