@@ -11,9 +11,11 @@ fun resOk(resp: Any): Boolean {
         return resp.code == 200
     } else if (resp is ProfileResponse) {
         return resp.code == 200
-    } else if (resp is ProductResponse) {
+    } else if (resp is SellProductResponse) {
         return resp.code == 200
     } else if (resp is UserProductsResponse) {
+        return resp.code == 200
+    } else if (resp is GetProductResponse) {
         return resp.code == 200
     }
     return false

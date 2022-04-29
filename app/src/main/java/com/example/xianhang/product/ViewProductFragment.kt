@@ -6,16 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.viewModels
 import com.example.xianhang.R
+import com.example.xianhang.databinding.FragmentViewProductBinding
 
 class ViewProductFragment : Fragment() {
+
+    private val viewModel: ProductViewModel by viewModels {
+        val id = arguments?.getInt("id")
+        println("id = " + id.toString())
+        ProductViewModel.Factory(id!!)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_product, container, false)
+        val binding = FragmentViewProductBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

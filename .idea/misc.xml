@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_product.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_view_product.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/product_list_item.xml" value="0.22826086956521738" />
         <entry key="app/src/main/res/drawable/ic_avatar.xml" value="0.257" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.1965" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.1965" />
@@ -37,5 +40,5 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16_PREVIEW" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

@@ -55,9 +55,11 @@ interface ApiService {
     suspend fun getUserProduct(@Path("id") userId: Int): UserProductsResponse
 
     @POST("product/create/")
-    suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): ProductResponse
+    suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): SellProductResponse
 
     @POST("product/image/create/")
     suspend fun createProductImage(@Header(AUTH) authToken: String, @Body data: Product): DefaultResponse
 
+    @GET("product/{id}/")
+    suspend fun getProduct(@Path("id") id: Int): GetProductResponse
 }

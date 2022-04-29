@@ -1,8 +1,9 @@
 package com.example.xianhang.network.response
 
+import com.example.xianhang.model.Product
 import com.squareup.moshi.Json
 
-data class ProductResponse(
+data class SellProductResponse(
     val code: Int,
     val id: Int,
     val name: String,
@@ -12,4 +13,10 @@ data class ProductResponse(
     val tradingMethod: String,
     @Json(name = "pickUpLoc") val address: String,
     @Json(name = "user") val userId: Int
+)
+
+data class GetProductResponse(
+    val code: Int,
+    val product: Product,
+    val image: List<Int>
 )

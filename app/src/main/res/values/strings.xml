@@ -10,7 +10,7 @@
     <string name="register_title">注册新帐号</string>
     <string name="remember_me">Remember Me</string>
     <string name="verify_email">Please Verify your email: %s@buaa.edu.cn\nDon\'t have receive verification?</string>
-    <string name="userId">Your Id</string>
+    <string name="userId">Student Id</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
