@@ -1,5 +1,6 @@
 package com.example.xianhang.product
 
+import android.view.View
 import androidx.lifecycle.*
 import com.example.xianhang.model.Product
 import com.example.xianhang.network.Api
@@ -16,8 +17,8 @@ class ProductViewModel(private val id: Int) : ViewModel() {
     private val _product = MutableLiveData<Product?>()
     val product: LiveData<Product?> = _product
 
-    private val _status = MutableLiveData<ProductStatus>()
-    val status: LiveData<ProductStatus> = _status
+    private val _status = MutableLiveData<Int>()
+    val status: LiveData<Int> = _status
 
     private val _tradingMethod = MutableLiveData<String>()
     val tradingMethod: LiveData<String> = _tradingMethod
@@ -43,13 +44,13 @@ class ProductViewModel(private val id: Int) : ViewModel() {
     private fun getProduct(id: Int) {
         println("============== show Product ==============")
         viewModelScope.launch {
-            _status.value = ProductStatus.LOADING
+            _status.value = View.VISIBLE
             println("status Loading")
             try {
                 val resp = Api.retrofitService.getProduct(id)
                 if (resOk(resp)) {
                     println("resOk")
-                    _status.value = ProductStatus.SUCCESS
+                    _status.value = View.GONE
                     if (resp.images.isNotEmpty()) {
                         _imageSrcUrl.value = "${imageUrl}${resp.images[0]}"
                     } else {
@@ -67,28 +68,24 @@ class ProductViewModel(private val id: Int) : ViewModel() {
                 } else {
                     println(resp)
                     println("resNotOk")
-                    _status.value = ProductStatus.FAIL
-                    _imageSrcUrl.value = ""
-                    _product.value = null
-                    _tradingMethod.value = ""
-                    _addressTitle.value = ""
+                    setError()
                 }
             } catch (e: HttpException) {
                 println("http exception")
-                _status.value = ProductStatus.FAIL
-                _imageSrcUrl.value = ""
-                _product.value = null
-                _tradingMethod.value = ""
-                _addressTitle.value = ""
+                setError()
             } catch (e: Exception) {
                 println(e.message)
-                _status.value = ProductStatus.FAIL
-                _imageSrcUrl.value = ""
-                _product.value = null
-                _tradingMethod.value = ""
-                _addressTitle.value = ""
+                setError()
             }
         }
+    }
+
+    private fun setError() {
+        _status.value = View.GONE
+        _imageSrcUrl.value = ""
+        _product.value = null
+        _tradingMethod.value = ""
+        _addressTitle.value = ""
     }
 
     companion object {

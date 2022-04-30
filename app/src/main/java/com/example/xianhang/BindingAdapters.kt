@@ -21,7 +21,7 @@ fun bindImage(img: ImageView, imgUrl: String?) {
         val imgUrl = imgUrl.toUri().buildUpon().scheme("https").build()
         println("build success")
         img.load(imgUrl) {
-            placeholder(R.mipmap.ic_image_placeholder)
+            placeholder(R.mipmap.ic_loading)
             error(R.drawable.ic_broken_image)
         }
         println("load finish")

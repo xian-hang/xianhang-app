@@ -1,11 +1,14 @@
 package com.example.xianhang.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
 const val DELIVERY = 0
 const val PICKUP = 1
 const val BOTH = 2
 
+@Parcelize
 data class Product(
     val id: Int?,
     val name: String,
@@ -15,4 +18,4 @@ data class Product(
     val tradingMethod: Int,
     @Json(name = "pickUpLoc") val address: String?,
     @Json(name = "user") val userId: Int?
-)
+): Parcelable

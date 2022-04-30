@@ -37,8 +37,13 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.File
 import android.Manifest
+import androidx.fragment.app.viewModels
+import com.example.xianhang.databinding.FragmentSellProductBinding
+import com.example.xianhang.model.Product as Product
 
 class SellProductFragment : Fragment() {
+
+    private lateinit var binding: FragmentSellProductBinding
 
     private lateinit var imageView: ImageView
     private var imagePath: String = ""
@@ -48,11 +53,19 @@ class SellProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sell_product, container, false)
+        binding = FragmentSellProductBinding.inflate(inflater)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val type = arguments?.getString("type")
+        if (type == "edit") {
+            val product = arguments?.getParcelable<Product>("product")
+            prefillProduct(product!!)
+        }
 
         imageView = view.findViewById(R.id.image)
         imageView.setOnClickListener {
@@ -69,7 +82,23 @@ class SellProductFragment : Fragment() {
         }
     }
 
-    // TODO: upload image
+    private fun prefillProduct(product: Product) {
+        binding.productName.setText(product.name)
+        binding.productPrice.setText(product.price.toString().format("%2f"))
+        binding.productStock.setText(product.stock.toString())
+        binding.productDescription.setText(product.description)
+        when(product.tradingMethod) {
+            0 -> binding.deliver.isChecked = true
+            1 -> binding.pickup.isChecked = true
+            2 -> {
+                binding.deliver.isChecked = true
+                binding.pickup.isChecked = true
+            }
+        }
+        if (binding.pickup.isChecked)
+            binding.pickupAddress.setText(product.address)
+    }
+
     private fun requestSellProduct(view: View) {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)

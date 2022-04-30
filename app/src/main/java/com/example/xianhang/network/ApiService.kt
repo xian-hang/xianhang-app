@@ -54,7 +54,7 @@ interface ApiService {
     suspend fun deleteUser(@Header(AUTH) authToken: String): DefaultResponse
 
     @GET("user/{id}/product/")
-    suspend fun getUserProduct(@Path("id") userId: Int): UserProductsResponse
+    suspend fun getUserProduct(@Path("id") userId: Int): ProductsResponse
 
     @POST("product/create/")
     suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): SellProductResponse
@@ -69,4 +69,7 @@ interface ApiService {
 
     @GET("product/{id}/")
     suspend fun getProduct(@Path("id") id: Int): GetProductResponse
+
+    @GET("product/all/")
+    suspend fun getAllProducts(/* TODO: add token */): ProductsResponse
 }

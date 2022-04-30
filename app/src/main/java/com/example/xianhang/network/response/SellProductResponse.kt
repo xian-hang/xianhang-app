@@ -5,6 +5,7 @@ import com.squareup.moshi.Json
 
 data class SellProductResponse(
     val code: Int,
+    // val product: Product
     val id: Int,
     val name: String,
     val description: String,

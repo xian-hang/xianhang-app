@@ -23,31 +23,32 @@ import retrofit2.*
 
 class RegisterFragment : Fragment() {
 
-    val binding: FragmentRegisterBinding? = null
+    private lateinit var binding: FragmentRegisterBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val register = getView()?.findViewById<Button>(R.id.register)
-        register?.setOnClickListener {
+        binding.register.setOnClickListener {
             println("clicked")
+            binding.progressBar.visibility = View.VISIBLE
             requestRegister(view)
         }
     }
 
     private fun requestRegister(view: View) {
-        val username = view.findViewById<EditText>(R.id.username).text.toString()
-        val userId = view.findViewById<EditText>(R.id.userId).text.toString()
-        val password = view.findViewById<EditText>(R.id.password).text.toString()
-        val confirmPassword = view.findViewById<EditText>(R.id.confirm_password).text.toString()
+        val username = binding.username.text.toString()
+        val userId = binding.userId.text.toString()
+        val password = binding.password.text.toString()
+        val confirmPassword = binding.confirmPassword.text.toString()
 
         if (!checkData(username, userId, password, confirmPassword))
             return
@@ -58,6 +59,7 @@ class RegisterFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.register(user)
                 if (resOk(resp)) {
+                    binding.progressBar.visibility = View.GONE
                     val bundle = bundleOf(USER to userId)
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
                 } else {

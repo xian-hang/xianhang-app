@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
 import com.example.xianhang.databinding.FragmentViewProductBinding
+import com.example.xianhang.model.Product
 
 class ViewProductFragment : Fragment() {
 
+    private lateinit var binding: FragmentViewProductBinding
     private val viewModel: ProductViewModel by viewModels {
-        val id = arguments?.getInt("id")
-        println("id = " + id.toString())
-        ProductViewModel.Factory(id!!)
+        val product = arguments?.getParcelable<Product>("product")
+        println("id = " + product?.id.toString())
+        ProductViewModel.Factory(product!!.id!!)
     }
 
     override fun onCreateView(
@@ -23,7 +27,7 @@ class ViewProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val binding = FragmentViewProductBinding.inflate(inflater)
+        binding = FragmentViewProductBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding.root
@@ -34,7 +38,7 @@ class ViewProductFragment : Fragment() {
 
         val edit = view.findViewById<Button>(R.id.edit)
         edit.setOnClickListener {
-
+            navigateEdit()
         }
 
         val delete = view.findViewById<Button>(R.id.delete)
@@ -43,8 +47,10 @@ class ViewProductFragment : Fragment() {
         }
     }
 
-    private fun requestEditProduct() {
-        // TODO: implement
+    private fun navigateEdit() {
+        val product = arguments?.getParcelable<Product>("product")
+        val bundle = bundleOf("product" to product, "type" to "edit")
+        findNavController().navigate(R.id.action_viewProductFragment_to_sellProductFragment, bundle)
     }
 
     private fun requestDeleteProduct() {

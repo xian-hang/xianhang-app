@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.xianhang.*
+import com.example.xianhang.databinding.FragmentProfileBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.PASSWORD
 import com.example.xianhang.login.LoginFragment.Companion.REMEMBER
@@ -30,24 +31,25 @@ import java.lang.Exception
 class ProfileFragment : Fragment() {
 
     private var _id: Int = 0
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpProfile(view)
 
-        val listView = view.findViewById<ListView>(R.id.list)
         val list = arrayOf("Edit Profile", "Change Password", "Selling Products", "My Orders", "Notifications", "Logout", "Delete Account")
-        val arrayAdapter = ArrayAdapter<String>(requireActivity(), R.layout.profile_list_item, list)
-        listView.adapter = arrayAdapter
-        listView.setOnItemClickListener { _, _, i, _ ->
+        val arrayAdapter = ArrayAdapter(requireActivity(), R.layout.profile_list_item, list)
+        binding.list.adapter = arrayAdapter
+        binding.list.setOnItemClickListener { _, _, i, _ ->
             when (i) {
                 0 -> changeActivityEditProfile(view)
                 1 -> changeActivityChangePassword()
@@ -73,10 +75,12 @@ class ProfileFragment : Fragment() {
         val userId = view.findViewById<TextView>(R.id.userId)
         val details = view.findViewById<TextView>(R.id.details)
         val introduction = view.findViewById<TextView>(R.id.introduction)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.getProfile(token)
                 if (resOk(resp)) {
+                    progressBar.visibility = View.GONE
                     _id = resp.id
                     username.text = resp.username
                     userId.text = resp.userId

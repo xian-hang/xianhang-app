@@ -53,6 +53,7 @@ class ProductFragment : Fragment() {
     }
 
     private fun createProduct() {
-        findNavController().navigate(R.id.action_productFragment2_to_sellProductFragment)
+        val bundle = bundleOf("type" to "create")
+        findNavController().navigate(R.id.action_productFragment2_to_sellProductFragment, bundle)
     }
 }

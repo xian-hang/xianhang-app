@@ -26,6 +26,8 @@ import java.lang.Exception
 
 class LoginFragment : Fragment() {
 
+    private lateinit var binding: FragmentLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -33,9 +35,9 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        val binding = FragmentLoginBinding.inflate(inflater)
+        binding = FragmentLoginBinding.inflate(inflater)
         return binding.root
     }
 
@@ -44,15 +46,13 @@ class LoginFragment : Fragment() {
 
         val userId = arguments?.getString(USER)
         if (userId != null) {
-            val verifyText = view.findViewById<TextView>(R.id.verify_email)
-            verifyText.text = resources.getString(R.string.verify_email, userId)
-            val resent = view.findViewById<TextView>(R.id.resent)
-            resent.text = resources.getString(R.string.resent)
+            binding.verifyEmail.text = resources.getString(R.string.verify_email, userId)
+            binding.resent.text = resources.getString(R.string.resent)
             // TODO: resent clickable
         }
 
-        val login = view.findViewById<Button>(R.id.login)
-        login?.setOnClickListener {
+        binding.login.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
             requestLogin(view)
         }
 
@@ -64,9 +64,9 @@ class LoginFragment : Fragment() {
 
     @SuppressLint("CommitPrefEdits")
     private fun requestLogin(view: View) {
-        val userId = view.findViewById<TextInputEditText>(R.id.userId).text.toString()
-        val password = view.findViewById<TextInputEditText>(R.id.password).text.toString()
-        val rememberMe = view.findViewById<CheckBox>(R.id.remember_me).isChecked
+        val userId = binding.userId.text.toString()
+        val password = binding.password.text.toString()
+        val rememberMe = binding.rememberMe.isChecked
 
         val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE)
         val editor = sharePreferences?.edit()
@@ -95,13 +95,14 @@ class LoginFragment : Fragment() {
                     val role = resp.role
                     Toast.makeText(requireActivity(), "code: $code, role: $role", Toast.LENGTH_LONG).show()
                 }
-
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
+                // TODO: check connection
                 Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
+            binding.progressBar.visibility = View.GONE
         }
     }
 

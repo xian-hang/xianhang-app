@@ -15,15 +15,13 @@ import com.example.xianhang.model.Product
 
 class ProductAdapter: ListAdapter<Product, ProductAdapter.ProductViewHolder>(DiffCallback) {
 
-    private lateinit var listener: OnItemClickListener
-
     class ProductViewHolder(private var binding: ProductListItemBinding):
         RecyclerView.ViewHolder(binding.root) {
         val view = binding.view
 
         fun bind(product: Product) {
             binding.productName.text = product.name
-            "price ${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
+            "price $${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
             binding.productImage.setImageResource(R.mipmap.ic_image_placeholder)
             binding.executePendingBindings()
         }
@@ -39,7 +37,7 @@ class ProductAdapter: ListAdapter<Product, ProductAdapter.ProductViewHolder>(Dif
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
-        val bundle = bundleOf("id" to product.id)
+        val bundle = bundleOf("product" to product)
         holder.view.setOnClickListener (
             Navigation.createNavigateOnClickListener(R.id.action_productFragment2_to_viewProductFragment, bundle)
         )
@@ -54,13 +52,5 @@ class ProductAdapter: ListAdapter<Product, ProductAdapter.ProductViewHolder>(Dif
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
         }
-    }
-
-    interface OnItemClickListener {
-        fun onItemClicked(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
     }
 }

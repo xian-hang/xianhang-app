@@ -13,7 +13,7 @@ fun resOk(resp: Any): Boolean {
         return resp.code == 200
     } else if (resp is SellProductResponse) {
         return resp.code == 200
-    } else if (resp is UserProductsResponse) {
+    } else if (resp is ProductsResponse) {
         return resp.code == 200
     } else if (resp is GetProductResponse) {
         return resp.code == 200

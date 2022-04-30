@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="欢迎来到闲航"
+            android:text="@string/welcome"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:text="寻找你喜欢的物品吧\n出售你不想要的物品吧\n说不定真有人要呢"
+            android:text="@string/xianhang_describe"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />

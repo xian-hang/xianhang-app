@@ -4,10 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/drawable/ic_broken_image.xml" value="0.169" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_change_password.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_login.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_product.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_profile.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_register.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_sell_product.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_view_product.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/product_list_item.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/product_show_item.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/profile_item.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/welcome_item.xml" value="0.22826086956521738" />
         <entry key="app/src/main/res/drawable/ic_avatar.xml" value="0.257" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.1965" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.1965" />

@@ -34,5 +34,9 @@
     <fragment
         android:id="@+id/viewProductFragment"
         android:name="com.example.xianhang.product.ViewProductFragment"
-        android:label="ViewProductFragment" />
+        android:label="ViewProductFragment" >
+        <action
+            android:id="@+id/action_viewProductFragment_to_sellProductFragment"
+            app:destination="@id/sellProductFragment" />
+    </fragment>
 </navigation>

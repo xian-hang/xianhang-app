@@ -34,6 +34,7 @@
     <string name="product_name">Name</string>
     <string name="product_price_cn">商品价格</string>
     <string name="product_price">Price</string>
+    <string name="price">$%.2f</string>
     <string name="product_stock_cn">库存</string>
     <string name="product_stock">Stock</string>
     <string name="trading_method_cn">交易方式</string>
@@ -51,4 +52,6 @@
     <string name="edit_product">修改商品</string>
     <string name="delete_product">删除商品</string>
     <string name="view">view</string>
+    <string name="welcome">欢迎来到闲航</string>
+    <string name="xianhang_describe">寻找你喜欢的物品吧，出售你不想要的物品吧，说不定真有人要呢</string>
 </resources>
