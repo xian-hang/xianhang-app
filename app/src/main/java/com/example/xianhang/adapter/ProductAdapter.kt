@@ -1,10 +1,8 @@
 package com.example.xianhang.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.leanback.widget.DiffCallback
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -22,7 +20,7 @@ class ProductAdapter: ListAdapter<Product, ProductAdapter.ProductViewHolder>(Dif
         fun bind(product: Product) {
             binding.productName.text = product.name
             "price $${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
-            binding.productImage.setImageResource(R.mipmap.ic_image_placeholder)
+            binding.productImage.setImageResource(R.drawable.ic_broken_image)
             binding.executePendingBindings()
         }
     }
