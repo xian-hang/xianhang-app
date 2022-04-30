@@ -18,5 +18,5 @@ data class SellProductResponse(
 data class GetProductResponse(
     val code: Int,
     val product: Product,
-    val image: List<Int>
+    val images: List<Int>
 )

@@ -4,6 +4,8 @@ import com.example.xianhang.model.*
 import com.example.xianhang.network.response.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -57,9 +59,17 @@ interface ApiService {
     @POST("product/create/")
     suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): SellProductResponse
 
+    @Multipart
     @POST("product/image/create/")
-    suspend fun createProductImage(@Header(AUTH) authToken: String, @Body data: Product): DefaultResponse
+    suspend fun createProductImage(
+        @Header(AUTH) authToken: String,
+        @Part image: MultipartBody.Part,
+        @Part("productId") productId: RequestBody
+    ): DefaultResponse
 
     @GET("product/{id}/")
     suspend fun getProduct(@Path("id") id: Int): GetProductResponse
+
+    @GET("product/image/{id}")
+    suspend fun getProductImage(@Path("id") id: Int): GetProductResponse
 }

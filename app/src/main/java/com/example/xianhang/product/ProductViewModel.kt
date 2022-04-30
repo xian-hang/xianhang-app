@@ -43,7 +43,8 @@ class ProductViewModel(private val id: Int) : ViewModel() {
             println("status Loading")
             try {
                 val resp = Api.retrofitService.getProduct(id)
-                if (resOk(resp)) {
+                val imageResp = Api.retrofitService.getProductImage(resp.images[0])
+                if (resOk(resp) && resOk(imageResp)) {
                     println("resOk")
                     _status.value = ProductStatus.SUCCESS
                     _product.value = resp.product
