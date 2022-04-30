@@ -3,10 +3,14 @@ package com.example.xianhang.product
 import androidx.lifecycle.*
 import com.example.xianhang.model.Product
 import com.example.xianhang.network.Api
+import com.example.xianhang.network.BASE_URL
+import com.example.xianhang.network.response.DefaultResponse
+import com.example.xianhang.network.response.GetProductResponse
 import com.example.xianhang.rest.resOk
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.lang.Exception
+import kotlin.reflect.typeOf
 
 class ProductViewModel(private val id: Int) : ViewModel() {
     private val _product = MutableLiveData<Product?>()
@@ -21,8 +25,8 @@ class ProductViewModel(private val id: Int) : ViewModel() {
     private val _addressTitle = MutableLiveData<String>()
     val addressTitle: LiveData<String> = _addressTitle
 
-    // private val _images = MutableLiveData<List<>>()
-    // val images: LiveData<List<>> = _images
+    private val _imageSrcUrl = MutableLiveData<String>()
+    val imageSrcUrl: LiveData<String> = _imageSrcUrl
 
     init {
         getProduct(id)
@@ -43,10 +47,14 @@ class ProductViewModel(private val id: Int) : ViewModel() {
             println("status Loading")
             try {
                 val resp = Api.retrofitService.getProduct(id)
-                val imageResp = Api.retrofitService.getProductImage(resp.images[0])
-                if (resOk(resp) && resOk(imageResp)) {
+                if (resOk(resp)) {
                     println("resOk")
                     _status.value = ProductStatus.SUCCESS
+                    if (resp.images.isNotEmpty()) {
+                        _imageSrcUrl.value = "${imageUrl}${resp.images[0]}"
+                    } else {
+                        _imageSrcUrl.value = ""
+                    }
                     _product.value = resp.product
                     _tradingMethod.value = when(resp.product.tradingMethod) {
                         0 -> "寄送"
@@ -57,8 +65,10 @@ class ProductViewModel(private val id: Int) : ViewModel() {
                     _addressTitle.value = if (resp.product.tradingMethod > 0) "自取地址"
                     else ""
                 } else {
+                    println(resp)
                     println("resNotOk")
                     _status.value = ProductStatus.FAIL
+                    _imageSrcUrl.value = ""
                     _product.value = null
                     _tradingMethod.value = ""
                     _addressTitle.value = ""
@@ -66,17 +76,22 @@ class ProductViewModel(private val id: Int) : ViewModel() {
             } catch (e: HttpException) {
                 println("http exception")
                 _status.value = ProductStatus.FAIL
+                _imageSrcUrl.value = ""
                 _product.value = null
                 _tradingMethod.value = ""
                 _addressTitle.value = ""
             } catch (e: Exception) {
-                println("exception")
                 println(e.message)
                 _status.value = ProductStatus.FAIL
+                _imageSrcUrl.value = ""
                 _product.value = null
                 _tradingMethod.value = ""
                 _addressTitle.value = ""
             }
         }
+    }
+
+    companion object {
+        private const val imageUrl = "${BASE_URL}product/image/"
     }
 }

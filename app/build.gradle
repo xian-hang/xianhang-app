@@ -53,6 +53,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    // For control over item selection of both touch and mouse driven selection
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+
     // Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.13.0'
 
@@ -61,6 +65,9 @@ dependencies {
 
     // okHttp3
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
+    // Coil
+    implementation "io.coil-kt:coil:1.1.1"
 
     //ksp("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
     //kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.2"

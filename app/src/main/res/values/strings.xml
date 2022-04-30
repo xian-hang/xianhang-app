@@ -47,7 +47,8 @@
     <string name="profile_details">信誉分 %s%% | 点赞 %d | 售出物品 %d</string>
     <string name="stock_title">库存：</string>
     <string name="price_title">售价：</string>
-    <string name="trading_method_title">交易方式：</string>
+    <string name="trading_method_title">交易方式</string>
     <string name="edit_product">修改商品</string>
     <string name="delete_product">删除商品</string>
+    <string name="view">view</string>
 </resources>

@@ -36,6 +36,7 @@
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_margin="10dp"
+                app:imageUrl="@{viewModel.imageSrcUrl}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
@@ -101,8 +102,8 @@
                 android:layout_margin="10dp"
                 android:text="@{viewModel.tradingMethod}"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/trading_method_title"
-                app:layout_constraintTop_toBottomOf="@+id/stock"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/trading_method_title"
                 tools:text="自取，寄送" />
 
             <TextView

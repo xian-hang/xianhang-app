@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.xianhang.R
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
@@ -24,15 +27,19 @@ class ProductFragment : Fragment() {
         ProductsViewModel.Factory(id!!)
     }
 
+    private lateinit var binding: FragmentProductBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val binding = FragmentProductBinding.inflate(inflater)
+        binding = FragmentProductBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.productsItem.adapter = ProductAdapter()
+
+        val adapter = ProductAdapter()
+        binding.productsItem.adapter = adapter
 
         return binding.root
     }
@@ -40,8 +47,7 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sell = view.findViewById<Button>(R.id.sell_product)
-        sell.setOnClickListener {
+        binding.sellProduct.setOnClickListener {
             createProduct()
         }
     }

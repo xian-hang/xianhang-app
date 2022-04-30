@@ -1,7 +1,10 @@
 package com.example.xianhang
 
+import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.model.Product
 
@@ -11,3 +14,16 @@ fun bindUserProducts(recyclerView: RecyclerView, products: List<Product>?) {
     adapter.submitList(products)
 }
 
+@BindingAdapter("imageUrl")
+fun bindImage(img: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        println("imgUrl = " + it)
+        val imgUrl = imgUrl.toUri().buildUpon().scheme("https").build()
+        println("build success")
+        img.load(imgUrl) {
+            placeholder(R.mipmap.ic_image_placeholder)
+            error(R.drawable.ic_broken_image)
+        }
+        println("load finish")
+    }
+}

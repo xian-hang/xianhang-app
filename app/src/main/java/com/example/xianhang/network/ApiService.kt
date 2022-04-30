@@ -12,7 +12,7 @@ import retrofit2.http.*
 
 //private const val BASE_URL = "http://192.168.38.131:8000/"
 //private const val BASE_URL = "http://192.168.0.117:8000/"
-private const val BASE_URL = "https://xianhang.herokuapp.com/"
+const val BASE_URL = "https://xianhang.herokuapp.com/"
 private const val AUTH = "Authorization"
 
 private val moshi = Moshi.Builder()
@@ -69,7 +69,4 @@ interface ApiService {
 
     @GET("product/{id}/")
     suspend fun getProduct(@Path("id") id: Int): GetProductResponse
-
-    @GET("product/image/{id}")
-    suspend fun getProductImage(@Path("id") id: Int): GetProductResponse
 }
