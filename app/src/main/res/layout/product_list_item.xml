@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="photo"
-            type="com.example.xianhang.model.Product" />
+            name="viewModel"
+            type="com.example.xianhang.product.ProductViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -29,6 +28,7 @@
                 android:id="@+id/product_image"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                app:imageUrl="@{viewModel.imageSrcUrl}"
                 tools:src="@mipmap/ic_launcher" />
 
             <TextView

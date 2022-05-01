@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="photo"
+            name="product"
             type="com.example.xianhang.model.Product" />
     </data>
 
@@ -16,6 +15,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/design_default_color_primary"
         android:padding="15dp"
+        app:cardUseCompatPadding="true"
         app:cardCornerRadius="15dp">
 
         <RelativeLayout

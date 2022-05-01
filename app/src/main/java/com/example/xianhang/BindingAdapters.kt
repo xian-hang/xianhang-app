@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.model.Product
+import com.example.xianhang.model.ProductBind
 
 @BindingAdapter("listitem")
 fun bindUserProducts(recyclerView: RecyclerView, products: List<Product>?) {
@@ -17,7 +18,7 @@ fun bindUserProducts(recyclerView: RecyclerView, products: List<Product>?) {
 @BindingAdapter("imageUrl")
 fun bindImage(img: ImageView, imgUrl: String?) {
     imgUrl?.let {
-        println("imgUrl = " + it)
+        println("imgUrl = $it")
         val imgUrl = imgUrl.toUri().buildUpon().scheme("https").build()
         println("build success")
         img.load(imgUrl) {

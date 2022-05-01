@@ -19,3 +19,9 @@ data class Product(
     @Json(name = "pickUpLoc") val address: String?,
     @Json(name = "user") val userId: Int?
 ): Parcelable
+
+@Parcelize
+data class ProductBind(
+    val product: Product,
+    val imageUrls: List<String>
+): Parcelable

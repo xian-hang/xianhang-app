@@ -72,4 +72,7 @@ interface ApiService {
 
     @GET("product/all/")
     suspend fun getAllProducts(/* TODO: add token */): ProductsResponse
+
+    @DELETE("product/{id}/delete/")
+    suspend fun deleteProduct(@Path("id") id: Int, @Header(AUTH) authToken: String): DefaultResponse
 }
