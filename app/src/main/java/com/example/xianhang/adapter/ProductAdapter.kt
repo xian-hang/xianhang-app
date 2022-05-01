@@ -14,6 +14,11 @@ import com.example.xianhang.databinding.ProductListItemBinding
 import com.example.xianhang.model.ProductItem
 import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
 
+const val PRODUCT = "product"
+const val PRODUCT_ITEM = "product_item"
+const val ACTION = "action"
+const val IMAGE_URL = "image_url"
+
 class ProductAdapter: ListAdapter<ProductItem, ProductAdapter.ProductItemViewHolder>(DiffCallback) {
 
     class ProductItemViewHolder(private var binding: ProductListItemBinding):
@@ -50,7 +55,7 @@ class ProductAdapter: ListAdapter<ProductItem, ProductAdapter.ProductItemViewHol
 
     override fun onBindViewHolder(holder: ProductItemViewHolder, position: Int) {
         val product = getItem(position)
-        val bundle = bundleOf("product" to product)
+        val bundle = bundleOf(PRODUCT to product.product)
         holder.view.setOnClickListener (
             Navigation.createNavigateOnClickListener(R.id.action_productFragment2_to_viewProductFragment, bundle)
         )

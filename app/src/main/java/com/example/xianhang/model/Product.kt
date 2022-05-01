@@ -10,15 +10,15 @@ const val BOTH = 2
 
 @Parcelize
 data class Product(
-    val id: Int?,
+    var id: Int?,
     val name: String,
     val description: String,
     val price: Double,
     val stock: Int,
     val tradingMethod: Int,
-    @Json(name = "pickUpLoc") val address: String?,
-    @Json(name = "user") val userId: Int?,
-    val username: String?
+    @Json(name = "pickUpLoc") var address: String?,
+    @Json(name = "user") var userId: Int?,
+    var username: String?
 ): Parcelable
 
 @Parcelize

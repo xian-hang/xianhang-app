@@ -12,9 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CheckBox
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -37,38 +35,31 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.File
 import android.Manifest
-import androidx.fragment.app.viewModels
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.net.toUri
+import coil.load
+import com.example.xianhang.adapter.ACTION
+import com.example.xianhang.adapter.IMAGE_URL
+import com.example.xianhang.adapter.PRODUCT
 import com.example.xianhang.databinding.FragmentSellProductBinding
+import com.example.xianhang.network.response.DefaultResponse
 import com.example.xianhang.model.Product as Product
 
 class SellProductFragment : Fragment() {
 
     private lateinit var binding: FragmentSellProductBinding
-
-    private lateinit var imageView: ImageView
     private var imagePath: String = ""
+    private var upload = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentSellProductBinding.inflate(inflater)
+        val type = arguments?.getString(ACTION)
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val type = arguments?.getString("type")
-        if (type == "edit") {
-            val product = arguments?.getParcelable<Product>("product")
-            prefillProduct(product!!)
-        }
-
-        imageView = view.findViewById(R.id.image)
-        imageView.setOnClickListener {
+        binding.image.setOnClickListener {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 selectImage()
             } else {
@@ -76,13 +67,29 @@ class SellProductFragment : Fragment() {
             }
         }
 
-        val sell = view.findViewById<Button>(R.id.sell)
-        sell.setOnClickListener {
-            requestSellProduct(view)
+        if (type == "edit") {
+            val product = arguments?.getParcelable<Product>(PRODUCT)
+            prefillProduct(product!!)
+            binding.sell.setOnClickListener {
+                requestEditProduct(product)
+            }
+        } else {
+            binding.sell.setOnClickListener {
+                requestSellProduct()
+            }
         }
+
+        return binding.root
     }
 
     private fun prefillProduct(product: Product) {
+        val imageUrl = arguments?.getString(IMAGE_URL)
+        val imgUrl = imageUrl!!.toUri().buildUpon().scheme("https").build()
+        binding.image.load(imgUrl) {
+            placeholder(R.mipmap.ic_loading)
+            error(R.mipmap.ic_image_placeholder)
+        }
+
         binding.productName.setText(product.name)
         binding.productPrice.setText(product.price.toString().format("%2f"))
         binding.productStock.setText(product.stock.toString())
@@ -99,7 +106,7 @@ class SellProductFragment : Fragment() {
             binding.pickupAddress.setText(product.address)
     }
 
-    private fun requestSellProduct(view: View) {
+    private fun requestEditProduct(product: Product) {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
 
@@ -107,15 +114,29 @@ class SellProductFragment : Fragment() {
             Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
             return
         }
-        if (!checkData(view)) return
+        if (!checkData()) return
 
-        val product = getData(view)
+        val newProduct = getData()
+        newProduct.id = product.id
+        newProduct.userId = product.userId
+        newProduct.username = product.username
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val resp = Api.retrofitService.sellProduct(token, product)
+                val resp = Api.retrofitService.editProduct(token, newProduct, product.id!!)
                 if (resOk(resp)) {
-                    uploadImage(token, File(imagePath), resp.product.id!!)
-                    val bundle = bundleOf("id" to resp.product.id)
+                    if (upload) {
+                        if (binding.image.tag != R.mipmap.ic_image_placeholder) {
+                            val res1 = Api.retrofitService.deleteProductImage(token, product.id!!)
+                            if (!resOk(res1)) {
+                                Toast.makeText(requireActivity(), "image delete failed", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                        val res2 = uploadImage(token, File(imagePath), product.id!!)
+                        if (!resOk(res2)) {
+                            Toast.makeText(requireActivity(), "image upload failed", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    val bundle = bundleOf(PRODUCT to newProduct)
                     findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
                 } else {
                     Toast.makeText(requireActivity(), "Create Error", Toast.LENGTH_LONG).show()
@@ -130,14 +151,49 @@ class SellProductFragment : Fragment() {
         }
     }
 
-    private fun checkData(view: View): Boolean {
-        val name = view.findViewById<TextInputEditText>(R.id.product_name).text.toString()
-        val description = view.findViewById<TextInputEditText>(R.id.product_description).text.toString()
-        val price = view.findViewById<TextInputEditText>(R.id.product_price).text.toString().toDouble()
-        val stock = view.findViewById<TextInputEditText>(R.id.product_stock).text.toString().toInt()
-        val deliver = view.findViewById<CheckBox>(R.id.deliver).isChecked
-        val pickup = view.findViewById<CheckBox>(R.id.pickup).isChecked
-        val address = view.findViewById<TextInputEditText>(R.id.pickup_address).text.toString()
+    private fun requestSellProduct() {
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+        if (!checkData()) return
+
+        val product = getData()
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val resp = Api.retrofitService.createProduct(token, product)
+                if (resOk(resp)) {
+                    if (upload) {
+                        val res = uploadImage(token, File(imagePath), resp.product.id!!)
+                        if (!resOk(res))
+                            Toast.makeText(requireActivity(), "image upload failed", Toast.LENGTH_LONG).show()
+                    }
+                    val bundle = bundleOf(PRODUCT to resp.product)
+                    findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
+                } else {
+                    Toast.makeText(requireActivity(), "Create Error", Toast.LENGTH_LONG).show()
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                // TODO: check connection wrong
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun checkData(): Boolean {
+        val name = binding.productName.text.toString()
+        val description = binding.productDescription.text.toString()
+        val price = binding.productPrice.text.toString().toDouble()
+        val stock = binding.productStock.text.toString().toInt()
+        val deliver = binding.deliver.isChecked
+        val pickup = binding.pickup.isChecked
+        val address = binding.pickupAddress.text.toString()
 
         if (name.isEmpty()) {
             Toast.makeText(requireActivity(), "Please fill in the product name", Toast.LENGTH_LONG).show()
@@ -171,14 +227,14 @@ class SellProductFragment : Fragment() {
         return true
     }
 
-    private fun getData(view: View): Product {
-        val name = view.findViewById<TextInputEditText>(R.id.product_name).text.toString()
-        val description = view.findViewById<TextInputEditText>(R.id.product_description).text.toString()
-        val price = view.findViewById<TextInputEditText>(R.id.product_price).text.toString().toDouble()
-        val stock = view.findViewById<TextInputEditText>(R.id.product_stock).text.toString().toInt()
-        val deliver = view.findViewById<CheckBox>(R.id.deliver).isChecked
-        val pickup = view.findViewById<CheckBox>(R.id.pickup).isChecked
-        var address: String? = view.findViewById<TextInputEditText>(R.id.pickup_address).text.toString()
+    private fun getData(): Product {
+        val name = binding.productName.text.toString()
+        val description = binding.productDescription.text.toString()
+        val price = binding.productPrice.text.toString().toDouble()
+        val stock = binding.productStock.text.toString().toInt()
+        val deliver = binding.deliver.isChecked
+        val pickup = binding.pickup.isChecked
+        var address: String? = binding.pickupAddress.text.toString()
         val tradingMethod = if (deliver && pickup) BOTH
         else if (deliver) DELIVERY
         else PICKUP
@@ -187,7 +243,7 @@ class SellProductFragment : Fragment() {
         return Product(null, name, description, price, stock, tradingMethod, address, null, null)
     }
 
-    private suspend fun uploadImage(token: String, image: File, id: Int) {
+    private suspend fun uploadImage(token: String, image: File, id: Int): DefaultResponse {
         val reqImage = image.asRequestBody("image/*".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData(
             "image",
@@ -196,7 +252,7 @@ class SellProductFragment : Fragment() {
         )
 
         val reqId = id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        Api.retrofitService.createProductImage(token, filePart, reqId)
+        return Api.retrofitService.createProductImage(token, filePart, reqId)
     }
 
     private fun requestStoragePermission() {
@@ -254,7 +310,7 @@ class SellProductFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK) {
-            imageView.setImageURI(data?.data)
+            binding.image.setImageURI(data?.data)
             data?.data?.let { uri ->
                 activity?.contentResolver
                     ?.query(uri, null, null, null, null)
@@ -263,6 +319,7 @@ class SellProductFragment : Fragment() {
                         imagePath = it.getString(it.getColumnIndex(MediaStore.MediaColumns.DATA))
                 }
             }
+            upload = true
         }
     }
 

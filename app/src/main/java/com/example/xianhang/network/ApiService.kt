@@ -57,7 +57,14 @@ interface ApiService {
     suspend fun getUserProduct(@Path("id") userId: Int): ProductsResponse
 
     @POST("product/create/")
-    suspend fun sellProduct(@Header(AUTH) authToken: String, @Body data: Product): SellProductResponse
+    suspend fun createProduct(@Header(AUTH) authToken: String, @Body data: Product): SellProductResponse
+
+    @POST("product/{id}/edit/")
+    suspend fun editProduct(
+        @Header(AUTH) authToken: String,
+        @Body data: Product,
+        @Path("id") id: Int
+    ): DefaultResponse
 
     @Multipart
     @POST("product/image/create/")
@@ -65,6 +72,12 @@ interface ApiService {
         @Header(AUTH) authToken: String,
         @Part image: MultipartBody.Part,
         @Part("productId") productId: RequestBody
+    ): DefaultResponse
+
+    @DELETE("product/image/{id}/delete/")
+    suspend fun deleteProductImage(
+        @Header(AUTH) authToken: String,
+        @Path("id") id: Int
     ): DefaultResponse
 
     @GET("product/{id}/")

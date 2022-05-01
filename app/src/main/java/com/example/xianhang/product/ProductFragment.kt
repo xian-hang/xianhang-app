@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xianhang.R
+import com.example.xianhang.adapter.ACTION
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.adapter.ProductAdapter
@@ -53,7 +54,7 @@ class ProductFragment : Fragment() {
     }
 
     private fun createProduct() {
-        val bundle = bundleOf("type" to "create")
+        val bundle = bundleOf(ACTION to "create")
         findNavController().navigate(R.id.action_productFragment2_to_sellProductFragment, bundle)
     }
 }

@@ -12,6 +12,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
+import com.example.xianhang.adapter.ACTION
+import com.example.xianhang.adapter.IMAGE_URL
+import com.example.xianhang.adapter.PRODUCT
 import com.example.xianhang.databinding.FragmentViewProductBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
@@ -29,7 +32,7 @@ class ViewProductFragment : Fragment() {
 
     private lateinit var binding: FragmentViewProductBinding
     private val viewModel: ProductViewModel by viewModels {
-        val product = arguments?.getParcelable<Product>("product")
+        val product = arguments?.getParcelable<Product>(PRODUCT)
         println("id = " + product?.id.toString())
         ProductViewModel.Factory(product!!.id!!)
     }
@@ -60,8 +63,9 @@ class ViewProductFragment : Fragment() {
     }
 
     private fun navigateEdit() {
-        val product = arguments?.getParcelable<Product>("product")
-        val bundle = bundleOf("product" to product, "type" to "edit")
+        val product = arguments?.getParcelable<Product>(PRODUCT)
+        val imageUrl = viewModel.imageSrcUrl.value
+        val bundle = bundleOf(PRODUCT to product, ACTION to "edit", IMAGE_URL to imageUrl)
         findNavController().navigate(R.id.action_viewProductFragment_to_sellProductFragment, bundle)
     }
 

@@ -45,7 +45,7 @@ class HomeAdapter: ListAdapter<Product, HomeAdapter.ProductViewHolder>(DiffCallb
     // TODO: bind product first image
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
-        val bundle = bundleOf("product" to product)
+        val bundle = bundleOf(PRODUCT to product)
         holder.view.setOnClickListener (
             Navigation.createNavigateOnClickListener(R.id.action_productFragment2_to_viewProductFragment, bundle)
         )
