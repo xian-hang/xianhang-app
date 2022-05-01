@@ -5,13 +5,10 @@ import androidx.lifecycle.*
 import com.example.xianhang.model.Product
 import com.example.xianhang.network.Api
 import com.example.xianhang.network.BASE_URL
-import com.example.xianhang.network.response.DefaultResponse
-import com.example.xianhang.network.response.GetProductResponse
 import com.example.xianhang.rest.resOk
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.lang.Exception
-import kotlin.reflect.typeOf
 
 class ProductViewModel(private val id: Int) : ViewModel() {
     private val _product = MutableLiveData<Product?>()
@@ -52,7 +49,7 @@ class ProductViewModel(private val id: Int) : ViewModel() {
                     println("resOk")
                     _status.value = View.GONE
                     if (resp.images.isNotEmpty()) {
-                        _imageSrcUrl.value = "${imageUrl}${resp.images[0]}"
+                        _imageSrcUrl.value = "${IMAGE_URL}${resp.images[0]}"
                     } else {
                         _imageSrcUrl.value = ""
                     }
@@ -89,6 +86,6 @@ class ProductViewModel(private val id: Int) : ViewModel() {
     }
 
     companion object {
-        private const val imageUrl = "${BASE_URL}product/image/"
+        const val IMAGE_URL = "${BASE_URL}product/image/"
     }
 }

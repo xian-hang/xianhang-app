@@ -17,11 +17,12 @@ data class Product(
     val stock: Int,
     val tradingMethod: Int,
     @Json(name = "pickUpLoc") val address: String?,
-    @Json(name = "user") val userId: Int?
+    @Json(name = "user") val userId: Int?,
+    val username: String?
 ): Parcelable
 
 @Parcelize
-data class ProductBind(
+data class ProductItem(
     val product: Product,
-    val imageUrls: List<String>
+    @Json(name = "image") val imagesId: List<Int>
 ): Parcelable

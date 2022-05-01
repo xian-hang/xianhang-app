@@ -114,8 +114,8 @@ class SellProductFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.sellProduct(token, product)
                 if (resOk(resp)) {
-                    uploadImage(token, File(imagePath), resp.id)
-                    val bundle = bundleOf("id" to resp.id)
+                    uploadImage(token, File(imagePath), resp.product.id!!)
+                    val bundle = bundleOf("id" to resp.product.id)
                     findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
                 } else {
                     Toast.makeText(requireActivity(), "Create Error", Toast.LENGTH_LONG).show()
@@ -184,7 +184,7 @@ class SellProductFragment : Fragment() {
         else PICKUP
         if (!pickup) address = null
 
-        return Product(null, name, description, price, stock, tradingMethod, address, null)
+        return Product(null, name, description, price, stock, tradingMethod, address, null, null)
     }
 
     private suspend fun uploadImage(token: String, image: File, id: Int) {

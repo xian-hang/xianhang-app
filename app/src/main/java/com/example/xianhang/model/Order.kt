@@ -14,7 +14,7 @@ const val CANCEL = 4
 data class Order(
     val id: Int,
     val price: Double,
-    val postage: Double,
+    val postage: Double?,
     val amount: Int,
     val status: Int,
     val product: Product?,

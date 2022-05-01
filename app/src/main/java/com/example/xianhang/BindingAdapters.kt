@@ -6,11 +6,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.xianhang.adapter.ProductAdapter
-import com.example.xianhang.model.Product
-import com.example.xianhang.model.ProductBind
+import com.example.xianhang.model.ProductItem
 
 @BindingAdapter("listitem")
-fun bindUserProducts(recyclerView: RecyclerView, products: List<Product>?) {
+fun bindUserProducts(recyclerView: RecyclerView, products: List<ProductItem>?) {
     val adapter = recyclerView.adapter as ProductAdapter
     adapter.submitList(products)
 }
