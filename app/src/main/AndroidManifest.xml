@@ -9,14 +9,17 @@
 
     <application
         android:allowBackup="true"
-        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.XianHang"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity
+            android:name=".BuyProductActivity"
+            android:exported="false" />
         <activity
             android:name=".product.ProductActivity"
             android:exported="false" />

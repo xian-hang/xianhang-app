@@ -20,8 +20,8 @@ class ProductViewModel(private val id: Int) : ViewModel() {
     private val _tradingMethod = MutableLiveData<String>()
     val tradingMethod: LiveData<String> = _tradingMethod
 
-    private val _addressTitle = MutableLiveData<String>()
-    val addressTitle: LiveData<String> = _addressTitle
+    private val _visibility = MutableLiveData<Int>()
+    val visibility: LiveData<Int> = _visibility
 
     private val _imageSrcUrl = MutableLiveData<String>()
     val imageSrcUrl: LiveData<String> = _imageSrcUrl
@@ -60,8 +60,8 @@ class ProductViewModel(private val id: Int) : ViewModel() {
                         2 -> "自取，寄送"
                         else -> ""
                     }
-                    _addressTitle.value = if (resp.product.tradingMethod > 0) "自取地址"
-                    else ""
+                    _visibility.value = if (resp.product.tradingMethod > 0) View.VISIBLE
+                    else View.GONE
                 } else {
                     println(resp)
                     println("resNotOk")
@@ -82,7 +82,7 @@ class ProductViewModel(private val id: Int) : ViewModel() {
         _imageSrcUrl.value = ""
         _product.value = null
         _tradingMethod.value = ""
-        _addressTitle.value = ""
+        _visibility.value = View.GONE
     }
 
     companion object {

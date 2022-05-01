@@ -21,14 +21,13 @@ import com.example.xianhang.databinding.FragmentProductBinding
 
 class ProductFragment : Fragment() {
 
+    private lateinit var binding: FragmentProductBinding
     private val viewModel: ProductsViewModel by viewModels {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val id = sharedPreferences?.getInt(ID, 0)
         println("id = " + id.toString())
         ProductsViewModel.Factory(id!!)
     }
-
-    private lateinit var binding: FragmentProductBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +37,7 @@ class ProductFragment : Fragment() {
         binding = FragmentProductBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
-        val adapter = ProductAdapter()
-        binding.productsItem.adapter = adapter
+        binding.productsItem.adapter = ProductAdapter()
 
         return binding.root
     }

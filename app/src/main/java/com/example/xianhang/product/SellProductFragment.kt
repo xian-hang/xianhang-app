@@ -122,18 +122,33 @@ class SellProductFragment : Fragment() {
         newProduct.username = product.username
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                println("edit product")
                 val resp = Api.retrofitService.editProduct(token, newProduct, product.id!!)
                 if (resOk(resp)) {
+                    println("edit product success")
                     if (upload) {
-                        if (binding.image.tag != R.mipmap.ic_image_placeholder) {
+                        //if (binding.image.tag != R.mipmap.ic_image_placeholder) {
+                        println("run delete image")
+                        try {
                             val res1 = Api.retrofitService.deleteProductImage(token, product.id!!)
                             if (!resOk(res1)) {
                                 Toast.makeText(requireActivity(), "image delete failed", Toast.LENGTH_LONG).show()
                             }
+                        } catch (e: HttpException) {
+                            println("delete image failed")
+                            if (e.code() == 404) {
+                                println("no need to delete image")
+                            }
                         }
-                        val res2 = uploadImage(token, File(imagePath), product.id!!)
-                        if (!resOk(res2)) {
-                            Toast.makeText(requireActivity(), "image upload failed", Toast.LENGTH_LONG).show()
+                        println("run upload image")
+                        try {
+                            val res2 = uploadImage(token, File(imagePath), product.id!!)
+                            if (!resOk(res2)) {
+                                println("upload image failed")
+                                Toast.makeText(requireActivity(), "image upload failed", Toast.LENGTH_LONG).show()
+                            }
+                        } catch (e: HttpException) {
+                            println("upload image failed")
                         }
                     }
                     val bundle = bundleOf(PRODUCT to newProduct)
@@ -142,6 +157,7 @@ class SellProductFragment : Fragment() {
                     Toast.makeText(requireActivity(), "Create Error", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
+                println("http exception")
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection wrong
@@ -319,6 +335,7 @@ class SellProductFragment : Fragment() {
                         imagePath = it.getString(it.getColumnIndex(MediaStore.MediaColumns.DATA))
                 }
             }
+            println("upload is true now")
             upload = true
         }
     }

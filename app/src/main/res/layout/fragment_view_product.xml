@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.xianhang.product.ProductViewModel" />
@@ -56,11 +57,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
+                android:maxEms="5"
                 android:text="@{@string/price(viewModel.product.price)}"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/price_title"
                 app:layout_constraintTop_toBottomOf="@+id/product_name"
-                tools:text="$10" />
+                tools:text="$10000000000" />
 
             <TextView
                 android:id="@+id/stock_title"
@@ -78,11 +80,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
+                android:maxEms="5"
                 android:text="@{String.valueOf(viewModel.product.stock)}"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/stock_title"
                 app:layout_constraintTop_toBottomOf="@+id/price"
-                tools:text="10" />
+                tools:text="100000000000000000" />
 
             <TextView
                 android:id="@+id/trading_method_title"
@@ -123,34 +126,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:maxEms="15"
                 android:text="@{viewModel.product.description}"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_title"
-                tools:text="这个人很懒" />
+                tools:text="这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒" />
 
             <TextView
                 android:id="@+id/address_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@{viewModel.addressTitle}"
+                android:text="@string/pickup_address_cn"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:visibility="@{viewModel.visibility}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description"
-                tools:text="@string/pickup_address_cn" />
+                app:layout_constraintTop_toBottomOf="@+id/description" />
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:maxWidth="400dp"
                 android:text="@{viewModel.product.address}"
                 android:textSize="20sp"
+                android:visibility="@{viewModel.visibility}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/address_title"
-                tools:text="学院路校区" />
+                tools:text="学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区" />
 
             <Button
                 android:id="@+id/edit"

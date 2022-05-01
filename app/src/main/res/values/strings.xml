@@ -54,4 +54,6 @@
     <string name="view">view</string>
     <string name="welcome">欢迎来到闲航</string>
     <string name="xianhang_describe">寻找你喜欢的物品吧，出售你不想要的物品吧，说不定真有人要呢</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

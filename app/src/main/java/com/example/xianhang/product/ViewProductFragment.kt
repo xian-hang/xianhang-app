@@ -82,7 +82,6 @@ class ViewProductFragment : Fragment() {
     }
 
     private fun requestDeleteProduct() {
-        // TODO: implement
         val id = binding.viewModel!!.product.value!!.id
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)

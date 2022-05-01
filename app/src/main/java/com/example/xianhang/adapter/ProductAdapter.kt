@@ -26,6 +26,7 @@ class ProductAdapter: ListAdapter<ProductItem, ProductAdapter.ProductItemViewHol
         val view = binding.view
 
         fun bind(productItem: ProductItem) {
+            println("ProductAdapter start binding")
             val product = productItem.product
 
             binding.productName.text = product.name

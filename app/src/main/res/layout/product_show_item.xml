@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="product"
-            type="com.example.xianhang.model.Product" />
+            name="viewModel"
+            type="com.example.xianhang.home.HomeViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -20,7 +20,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/design_default_color_primary"
             android:padding="15dp">
 
