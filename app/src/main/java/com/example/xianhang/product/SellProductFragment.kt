@@ -126,6 +126,7 @@ class SellProductFragment : Fragment() {
                 val resp = Api.retrofitService.editProduct(token, newProduct, product.id!!)
                 if (resOk(resp)) {
                     println("edit product success")
+                    // TODO: fix edit image
                     if (upload) {
                         //if (binding.image.tag != R.mipmap.ic_image_placeholder) {
                         println("run delete image")

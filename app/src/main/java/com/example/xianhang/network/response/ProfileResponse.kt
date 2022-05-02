@@ -12,7 +12,7 @@ enum class Status {
 
 data class ProfileResponse(
     val code: Int,
-    val id: Int,
+    val id: Int?,
     val username: String,
     @Json(name = "studentId") val userId: String,
     val introduction: String,

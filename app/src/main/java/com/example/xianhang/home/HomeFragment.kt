@@ -7,19 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.xianhang.adapter.HomeAdapter
+import com.example.xianhang.adapter.BUYER
+import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.databinding.FragmentHomeBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.product.ProductsViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels {
+    private val viewModel: ProductsViewModel by viewModels {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
         println("token = " + token?.isNotEmpty().toString())
-        HomeViewModel.Factory(token!!)
+        ProductsViewModel.Factory(BUYER, null, token)
     }
 
     override fun onCreateView(
@@ -30,7 +32,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.products.adapter = HomeAdapter(requireContext())
+        binding.products.adapter = ProductAdapter(BUYER, context)
 
         return binding.root
     }

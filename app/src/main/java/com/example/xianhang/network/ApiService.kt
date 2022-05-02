@@ -53,6 +53,9 @@ interface ApiService {
     @DELETE("user/delete/")
     suspend fun deleteUser(@Header(AUTH) authToken: String): DefaultResponse
 
+    @GET("user/{id}/")
+    suspend fun getUser(@Header(AUTH) authToken: String, @Path("id") id: Int): ProfileResponse
+
     @GET("user/{id}/product/")
     suspend fun getUserProduct(@Path("id") userId: Int): ProductsResponse
 

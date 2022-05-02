@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.xianhang.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_buyProductActivity"
+            app:destination="@id/buyProductActivity" />
+    </fragment>
     <fragment
         android:id="@+id/followFragment"
         android:name="com.example.xianhang.home.FollowFragment"
@@ -25,4 +29,9 @@
         android:name="com.example.xianhang.home.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <activity
+        android:id="@+id/buyProductActivity"
+        android:name="com.example.xianhang.buy.BuyProductActivity"
+        android:label="activity_buy_product"
+        tools:layout="@layout/activity_buy_product" />
 </navigation>

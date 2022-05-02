@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.xianhang.home.HomeViewModel" />
+            type="com.example.xianhang.product.ProductsViewModel" />
     </data>
 
     <RelativeLayout
@@ -34,7 +34,7 @@
             android:layout_below="@+id/search"
             android:layout_alignParentStart="true"
             android:layout_marginHorizontal="10dp"
-            android:text="商品"
+            android:text="@string/product_cn"
             android:textSize="24sp"
             android:textStyle="bold" />
 

@@ -17,7 +17,7 @@ data class Product(
     val stock: Int,
     val tradingMethod: Int,
     @Json(name = "pickUpLoc") var address: String?,
-    @Json(name = "user") var userId: Int?,
+    var userId: Int?,
     var username: String?
 ): Parcelable
 

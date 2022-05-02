@@ -17,6 +17,7 @@ import com.example.xianhang.adapter.ACTION
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.adapter.ProductAdapter
+import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.FragmentProductBinding
 
 class ProductFragment : Fragment() {
@@ -26,7 +27,7 @@ class ProductFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val id = sharedPreferences?.getInt(ID, 0)
         println("id = " + id.toString())
-        ProductsViewModel.Factory(id!!)
+        ProductsViewModel.Factory(SELLER, id, null)
     }
 
     override fun onCreateView(
@@ -37,7 +38,7 @@ class ProductFragment : Fragment() {
         binding = FragmentProductBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.productsItem.adapter = ProductAdapter()
+        binding.productsItem.adapter = ProductAdapter(SELLER, context)
 
         return binding.root
     }

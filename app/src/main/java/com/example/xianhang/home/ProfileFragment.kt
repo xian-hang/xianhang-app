@@ -36,7 +36,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater)
         return binding.root
@@ -54,10 +54,10 @@ class ProfileFragment : Fragment() {
                 0 -> changeActivityEditProfile(view)
                 1 -> changeActivityChangePassword()
                 2 -> changeActivityProducts()
-                3 -> changeActivityMyOrders() // TODO
-                4 -> changeActivityNotifications() // TODO
+                3 -> changeActivityMyOrders()
+                4 -> changeActivityNotifications()
                 5 -> showLogoutDialog()
-                6 -> showDeleteAccountDialog() // TODO
+                6 -> showDeleteAccountDialog()
             }
         }
     }
@@ -81,7 +81,7 @@ class ProfileFragment : Fragment() {
                 val resp = Api.retrofitService.getProfile(token)
                 if (resOk(resp)) {
                     progressBar.visibility = View.GONE
-                    _id = resp.id
+                    _id = resp.id!!
                     username.text = resp.username
                     userId.text = resp.userId
                     introduction.text = resp.introduction
