@@ -91,4 +91,7 @@ interface ApiService {
 
     @DELETE("product/image/{id}/delete/")
     suspend fun deleteProduct(@Path("id") id: Int, @Header(AUTH) authToken: String): DefaultResponse
+
+    @POST("order/create/")
+    suspend fun createOrder(@Header(AUTH) authToken: String, @Body order: OrderRequest): DefaultResponse
 }

@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_profile" />
     <activity
         android:id="@+id/buyProductActivity"
-        android:name="com.example.xianhang.buy.BuyProductActivity"
+        android:name="com.example.xianhang.order.OrderActivity"
         android:label="activity_buy_product"
-        tools:layout="@layout/activity_buy_product" />
+        tools:layout="@layout/activity_order" />
 </navigation>

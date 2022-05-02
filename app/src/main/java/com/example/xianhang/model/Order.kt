@@ -12,15 +12,25 @@ const val CANCEL = 4
 
 @Parcelize
 data class Order(
-    val id: Int,
+    val id: Int?,
     val price: Double,
     val postage: Double?,
     val amount: Int,
-    val status: Int,
-    val product: Product?,
+    val status: Int?,
     @Json(name = "user") val userId: Int?,
+    val product: Product?,
     val name: String,
     @Json(name = "phoneNum") val phone: String,
     val tradingMethod: Int,
     @Json(name = "deliveringAddr") val address: String?
 ): Parcelable
+
+data class OrderRequest(
+    val price: Double,
+    val amount: Int,
+    val productId: Int,
+    val name: String,
+    val phoneNum: String,
+    val tradingMethod: Int,
+    @Json(name = "deliveringAddr") val address: String?
+)

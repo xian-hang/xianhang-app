@@ -12,7 +12,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".OrderFragment">
+        tools:context=".BuyFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -121,50 +121,27 @@
                 tools:text="自取" />
 
             <TextView
-                android:id="@+id/status_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/trading_method_title"
-                android:layout_alignParentStart="true"
-                android:layout_margin="10dp"
-                android:text="状态："
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/trading_method"
-                android:layout_alignParentEnd="true"
-                android:layout_marginVertical="10dp"
-                android:layout_toEndOf="@+id/trading_method_title"
-                android:text="@{viewModel.status}"
-                android:textSize="20sp"
-                tools:text="待付款" />
-
-            <TextView
                 android:id="@+id/phone_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/status_title"
+                android:layout_below="@+id/trading_method"
                 android:layout_alignParentStart="true"
                 android:layout_margin="10dp"
                 android:text="@string/phone"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <EditText
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/status"
+                android:layout_below="@+id/trading_method"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_toEndOf="@+id/phone_title"
-                android:textSize="20sp"
-                tools:text="0123456789" />
+                android:hint="@string/phone2"
+                android:inputType="phone"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/address_title"
@@ -178,41 +155,27 @@
                 android:textStyle="bold"
                 android:visibility="@{viewModel.visible}" />
 
-            <TextView
+            <EditText
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/phone"
                 android:layout_alignParentEnd="true"
-                android:layout_marginVertical="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_toEndOf="@+id/address_title"
+                android:hint="@string/send_address"
+                android:inputType="textPostalAddress"
                 android:textSize="20sp"
-                android:visibility="@{viewModel.visible}"
-                tools:text="chichi jia" />
+                android:visibility="@{viewModel.visible}" />
 
             <Button
-                android:id="@+id/action"
+                android:id="@+id/confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/address"
-                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                android:text="@{viewModel.action}"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="修改" />
-
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/address"
-                android:layout_toStartOf="@+id/action"
-                android:layout_margin="10dp"
-                android:backgroundTint="#ff0000"
-                android:text="@string/cancel"
+                android:text="@string/confirm"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />

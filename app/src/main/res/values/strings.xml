@@ -49,6 +49,7 @@
     <string name="stock_title">库存：</string>
     <string name="price_title">售价：</string>
     <string name="trading_method_title">交易方式</string>
+    <string name="trading_method_title2">交易方式：</string>
     <string name="edit_product">修改商品</string>
     <string name="delete_product">删除商品</string>
     <string name="view">view</string>
@@ -57,6 +58,17 @@
     <string name="delivery_cn">邮寄</string>
     <string name="buy">购买</string>
     <string name="product_cn">商品</string>
-    <string name="follow">关注</string>
+    <string name="product_title">商品：</string>
+    <string name="follow">+ 关注</string>
+    <string name="followed">\u2713 关注</string>
     <string name="report">举报</string>
+    <string name="number_cn">数量：</string>
+    <string name="trade_num_cn">交易数量</string>
+    <string name="order_title">订单</string>
+    <string name="phone">电话号码：</string>
+    <string name="phone2">电话号码</string>
+    <string name="send_address_title">邮寄地址：</string>
+    <string name="send_address">邮寄地址</string>
+    <string name="stock">stock: %d</string>
+    <string name="cancel">取消</string>
 </resources>

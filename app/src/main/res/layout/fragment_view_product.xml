@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".product.ViewProductFragment">
@@ -27,9 +27,8 @@
                 android:text="@{viewModel.product.name}"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
                 tools:text="Product Name" />
 
             <ImageView
@@ -37,15 +36,16 @@
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_margin="10dp"
-                app:imageUrl="@{viewModel.imageSrcUrl}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_name" />
+                android:layout_below="@+id/product_name"
+                app:imageUrl="@{viewModel.imageSrcUrl}" />
 
             <TextView
                 android:id="@+id/price_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_below="@+id/product_name"
+                android:layout_toEndOf="@+id/imageView"
                 android:text="@string/price_title"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -57,34 +57,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:maxEms="5"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/product_name"
+                android:layout_toEndOf="@+id/price_title"
+                android:layout_alignParentEnd="true"
                 android:text="@{@string/price(viewModel.product.price)}"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/price_title"
-                app:layout_constraintTop_toBottomOf="@+id/product_name"
-                tools:text="$10000000000" />
+                tools:text="$1000000000000000" />
 
             <TextView
                 android:id="@+id/stock_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_below="@+id/price"
+                android:layout_toEndOf="@+id/imageView"
                 android:text="@string/stock_title"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/price" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:maxEms="5"
+                android:layout_marginEnd="10dp"
                 android:text="@{String.valueOf(viewModel.product.stock)}"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/stock_title"
-                app:layout_constraintTop_toBottomOf="@+id/price"
+                android:layout_toEndOf="@+id/stock_title"
+                android:layout_below="@id/price"
                 tools:text="100000000000000000" />
 
             <TextView
@@ -95,18 +96,18 @@
                 android:text="@string/trading_method_title"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/stock" />
+                android:layout_toEndOf="@id/imageView"
+                android:layout_below="@+id/stock" />
 
             <TextView
                 android:id="@+id/trading_method"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:text="@{viewModel.tradingMethod}"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/trading_method_title"
+                android:layout_below="@+id/trading_method_title"
+                android:layout_toEndOf="@+id/imageView"
                 tools:text="自取，寄送" />
 
             <TextView
@@ -117,20 +118,20 @@
                 android:text="@string/product_description_cn"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                android:layout_below="@+id/trading_method"
+                android:layout_alignParentStart="true"
                 tools:text="商品叙述" />
 
             <TextView
                 android:id="@+id/description"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:maxEms="15"
                 android:text="@{viewModel.product.description}"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description_title"
+                android:layout_below="@+id/description_title"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 tools:text="这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒" />
 
             <TextView
@@ -141,21 +142,20 @@
                 android:text="@string/pickup_address_cn"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="@{viewModel.visibility}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                android:layout_below="@+id/description"
+                android:visibility="@{viewModel.visibility}" />
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:maxWidth="400dp"
                 android:text="@{viewModel.product.address}"
                 android:textSize="20sp"
                 android:visibility="@{viewModel.visibility}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/address_title"
+                android:layout_below="@+id/address_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 tools:text="学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区" />
 
             <Button
@@ -165,8 +165,9 @@
                 android:layout_margin="10dp"
                 android:text="@string/edit_product"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/address" />
+                android:layout_below="@+id/address"
+                android:layout_alignParentStart="true"
+                />
 
             <Button
                 android:id="@+id/delete"
@@ -176,9 +177,9 @@
                 android:backgroundTint="#ff0000"
                 android:text="@string/delete_product"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/edit"
-                app:layout_constraintTop_toBottomOf="@+id/address" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_toEndOf="@+id/edit"
+                android:layout_below="@+id/address" />
+        </RelativeLayout>
     </ScrollView>
 
 </layout>

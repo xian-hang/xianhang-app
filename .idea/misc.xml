@@ -8,7 +8,9 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/drawable/ic_collection_outline.xml" value="0.169" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout-v23/fragment_view_product.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_change_password.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_order.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_view_product.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_buy.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_login.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_order.xml" value="0.22826086956521738" />
@@ -58,5 +60,5 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16_PREVIEW" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

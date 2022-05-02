@@ -13,13 +13,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".buy.UserFragment">
+        tools:context=".order.UserFragment">
 
         <include
             android:id="@+id/profile"
             layout="@layout/profile_item" />
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile"
@@ -29,6 +30,7 @@
             android:visibility="gone" />
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/unlike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile"
@@ -82,7 +84,7 @@
             android:layout_margin="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:listitem="@{viewModel.products}"
-            tools:listitem="@layout/product_show_item" />
+            tools:listitem="@layout/product_list_item" />
 
     </RelativeLayout>
 </layout>

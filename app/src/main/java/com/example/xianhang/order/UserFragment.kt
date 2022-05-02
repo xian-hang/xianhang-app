@@ -1,6 +1,5 @@
-package com.example.xianhang.buy
+package com.example.xianhang.order
 
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -54,6 +53,48 @@ class UserFragment : Fragment() {
         val id = arguments?.getInt(ID)
         println("user id = $id")
         setUpProfile(view, id!!)
+
+        binding.like.setOnClickListener {
+            // TODO: implement unlike
+            unlike()
+        }
+
+        binding.unlike.setOnClickListener {
+            // TODO: implement like
+            like()
+        }
+
+        binding.follow.setOnClickListener {
+            // TODO: implement follow
+            follow()
+        }
+
+        binding.report.setOnClickListener {
+            // TODO: implement report
+            report()
+        }
+    }
+
+    private fun unlike() {
+        binding.unlike.visibility = View.VISIBLE
+        binding.like.visibility = View.GONE
+    }
+
+    private fun like() {
+        binding.unlike.visibility = View.GONE
+        binding.like.visibility = View.VISIBLE
+    }
+
+    private fun follow() {
+        if (binding.follow.text == resources.getString(R.string.follow)) {
+            binding.follow.text = resources.getString(R.string.followed)
+        } else {
+            binding.follow.text = resources.getString(R.string.follow)
+        }
+    }
+
+    private fun report() {
+
     }
 
     private fun setUpProfile(view: View, id: Int) {
