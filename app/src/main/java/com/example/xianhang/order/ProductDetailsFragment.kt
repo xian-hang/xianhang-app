@@ -17,10 +17,7 @@ import com.example.xianhang.databinding.FragmentProductDetailsBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
-import com.example.xianhang.model.DELIVERY
-import com.example.xianhang.model.PICKUP
-import com.example.xianhang.model.Product
-import com.example.xianhang.model.ProductItem
+import com.example.xianhang.model.*
 import com.example.xianhang.network.Api
 import com.example.xianhang.product.ProductViewModel
 import com.example.xianhang.rest.resOk
@@ -131,7 +128,8 @@ class ProductDetailsFragment : Fragment() {
         binding.collect.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val resp = Api.retrofitService.collect(token, productItem!!.product.id!!)
+                val obj = ProductId(productItem!!.product.id!!)
+                val resp = Api.retrofitService.collect(token, obj)
                 if (resOk(resp)) {
                     Toast.makeText(requireActivity(), "collected", Toast.LENGTH_LONG).show()
                 } else {

@@ -44,11 +44,8 @@ class OrdersViewModel(
             _status.value = View.VISIBLE
             try {
                 var resp: OrdersResponse? = null
-                resp = if (method == BUYER) {
-                    Api.retrofitService.getBoughtOrders(token)
-                } else {
-                    Api.retrofitService.getSoldOrders(token)
-                }
+                resp = if (method == BUYER) Api.retrofitService.getBoughtOrders(token)
+                else Api.retrofitService.getSoldOrders(token)
                 if (resOk(resp)) {
                     _status.value = View.GONE
                     _orders.value = resp.orders

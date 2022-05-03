@@ -28,7 +28,7 @@ data class Order(
 @Parcelize
 data class OrderItem(
     val order: Order,
-    val imageId: Int?
+    @Json(name = "image") val imagesId: List<Int>
 ): Parcelable
 
 data class OrderRequest(

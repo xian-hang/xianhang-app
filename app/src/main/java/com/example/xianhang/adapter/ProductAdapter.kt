@@ -37,7 +37,6 @@ class ProductAdapter(private val method: Int, private val context: Context?):
             val product = productItem.product
 
             binding.productName.text = product.name
-            // TODO: change to setDetails
             setDetails(product, method)
 
             var imageUrl: String = ""

@@ -17,6 +17,8 @@ import com.example.xianhang.databinding.FragmentUserBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.model.ProductId
+import com.example.xianhang.model.UserId
 import com.example.xianhang.network.Api
 import com.example.xianhang.product.ProductsViewModel
 import com.example.xianhang.rest.resOk
@@ -119,7 +121,8 @@ class UserFragment : Fragment() {
         binding.like.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val resp = Api.retrofitService.like(token, userId!!)
+                val obj = UserId(userId!!)
+                val resp = Api.retrofitService.like(token, obj)
                 if (resOk(resp)) {
                     Toast.makeText(requireActivity(), "liked", Toast.LENGTH_LONG).show()
                 } else {
@@ -146,7 +149,8 @@ class UserFragment : Fragment() {
             binding.follow.text = resources.getString(R.string.followed)
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val resp = Api.retrofitService.follow(token, userId!!)
+                    val obj = UserId(userId!!)
+                    val resp = Api.retrofitService.follow(token, obj)
                     if (resOk(resp)) {
                         Toast.makeText(requireActivity(), "followed", Toast.LENGTH_LONG).show()
                     } else {
