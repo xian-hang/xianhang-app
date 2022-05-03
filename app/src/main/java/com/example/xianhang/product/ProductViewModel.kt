@@ -1,10 +1,14 @@
 package com.example.xianhang.product
 
+import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.xianhang.model.Product
+import com.example.xianhang.model.ProductId
 import com.example.xianhang.network.Api
 import com.example.xianhang.network.BASE_URL
+import com.example.xianhang.network.response.DefaultResponse
 import com.example.xianhang.rest.resOk
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -43,6 +47,41 @@ class ProductViewModel(private val token: String, private val id: Int) : ViewMod
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return ProductViewModel(token, id) as T
+        }
+    }
+
+    fun setId(context: Context?, productId: Int?) {
+        _collected.value = if (collectId != null) View.GONE else View.VISIBLE
+        _uncollect.value = if (collectId == null) View.GONE else View.VISIBLE
+        viewModelScope.launch {
+            try {
+                if (collectId != null) {
+                    println("uncollect")
+                    val resp = Api.retrofitService.uncollect(token, collectId!!)
+                    if (resOk(resp)) {
+                        collectId = null
+                        Toast.makeText(context, "uncollected", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    println("collect")
+                    val resp = Api.retrofitService.collect(token, ProductId(productId!!))
+                    if (resOk(resp)) {
+                        collectId = resp.collectionId
+                        Toast.makeText(context, "collected", Toast.LENGTH_LONG).show()
+                    } else {
+                        println(resp.code)
+                        println(resp)
+                        Toast.makeText(context, "collect failed", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+            }
         }
     }
 

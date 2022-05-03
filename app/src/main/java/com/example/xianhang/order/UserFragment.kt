@@ -17,7 +17,6 @@ import com.example.xianhang.databinding.FragmentUserBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
-import com.example.xianhang.model.ProductId
 import com.example.xianhang.model.UserId
 import com.example.xianhang.network.Api
 import com.example.xianhang.product.ProductsViewModel
@@ -31,14 +30,14 @@ import java.lang.Exception
 class UserFragment : Fragment() {
 
     private lateinit var binding: FragmentUserBinding
-    private val viewModel: ProductsViewModel by viewModels {
+    private val productsViewModel: ProductsViewModel by viewModels {
         val id = arguments?.getInt(ID)
         println("user id = $id")
         ProductsViewModel.Factory(USER_PRODUCT, id, null)
     }
-    private var userId: Int? = null
-    private var likeId: Int? = null
-    private var followId: Int? = null
+    private val userViewModel: UserViewModel by viewModels()
+    var userId: Int? = null
+    var token: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,12 +46,16 @@ class UserFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentUserBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.userViewModel = userViewModel
+        binding.productsViewModel = productsViewModel
         binding.products.adapter = ProductAdapter(USER_PRODUCT, context)
 
         val id = arguments?.getInt(ID)
         println("user id = $id")
-        userId = id!!
+        userId = id
+
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        token = sharedPreferences?.getString(TOKEN, null)
 
         return binding.root
     }
@@ -62,16 +65,14 @@ class UserFragment : Fragment() {
         setUpProfile(view, userId!!)
 
         binding.like.setOnClickListener {
-            unlike()
+            like()
         }
 
         binding.unlike.setOnClickListener {
-            // TODO: wait backend fix
             like()
         }
 
         binding.follow.setOnClickListener {
-            // TODO: wait backend fix
             follow()
         }
 
@@ -81,118 +82,27 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun unlike() {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-
-        if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        binding.unlike.visibility = View.VISIBLE
-        binding.like.visibility = View.GONE
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val resp = Api.retrofitService.unlike(token, likeId!!)
-                if (resOk(resp)) {
-                    Toast.makeText(requireActivity(), "unliked", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
-                }
-            } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun like() {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-
-        if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        binding.unlike.visibility = View.GONE
-        binding.like.visibility = View.VISIBLE
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val obj = UserId(userId!!)
-                val resp = Api.retrofitService.like(token, obj)
-                if (resOk(resp)) {
-                    Toast.makeText(requireActivity(), "liked", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
-                }
-            } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun follow() {
-        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharePreferences?.getString(TOKEN, null)
-
-        if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        if (followId == null) {
-            binding.follow.text = resources.getString(R.string.followed)
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    val obj = UserId(userId!!)
-                    val resp = Api.retrofitService.follow(token, obj)
-                    if (resOk(resp)) {
-                        Toast.makeText(requireActivity(), "followed", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
-                    }
-                } catch (e: HttpException) {
-                    Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
-                } catch (e: Exception) {
-                    // TODO: check connection wrong
-                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
-                    e.printStackTrace()
-                }
-            }
-        } else {
-            binding.follow.text = resources.getString(R.string.follow)
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    val resp = Api.retrofitService.unfollow(token, followId!!)
-                    if (resOk(resp)) {
-                        Toast.makeText(requireActivity(), "unfollowed", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
-                    }
-                } catch (e: HttpException) {
-                    Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
-                } catch (e: Exception) {
-                    // TODO: check connection wrong
-                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
-
     private fun report() {
 
     }
 
-    private fun setUpProfile(view: View, id: Int) {
-        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharePreferences?.getString(TOKEN, null)
+    private fun like() {
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+        binding.userViewModel!!.setLike(context, token!!, userId)
+    }
 
+    private fun follow() {
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+        binding.userViewModel!!.setFollow(context, token!!, userId)
+    }
+
+    private fun setUpProfile(view: View, id: Int) {
         if (token == null) {
             Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
             return
@@ -205,7 +115,7 @@ class UserFragment : Fragment() {
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val resp = Api.retrofitService.getUser(token, id)
+                val resp = Api.retrofitService.getUser(token!!, id)
                 if (resOk(resp)) {
                     progressBar.visibility = View.GONE
                     username.text = resp.username
@@ -217,12 +127,7 @@ class UserFragment : Fragment() {
                         resp.likes,
                         resp.soldItem
                     )
-                    likeId = resp.likeId
-                    followId = resp.followId
-                    binding.like.visibility = if (likeId != null) View.VISIBLE else View.GONE
-                    binding.unlike.visibility = if (likeId == null) View.VISIBLE else View.GONE
-                    binding.follow.text = if (followId == null) resources.getString(R.string.follow)
-                    else resources.getString(R.string.followed)
+                    binding.userViewModel!!.init(context, resp.likeId, resp.followId)
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

@@ -25,6 +25,8 @@ const val METHOD = "method"
 const val SELLER = 0
 const val BUYER = 1
 const val USER_PRODUCT = 2
+const val COLLECTION = 3
+const val FEEDS = 4
 
 class ProductAdapter(private val method: Int, private val context: Context?):
     ListAdapter<ProductItem, ProductAdapter.ProductItemViewHolder>(DiffCallback) {
@@ -56,7 +58,7 @@ class ProductAdapter(private val method: Int, private val context: Context?):
         private fun setDetails(product: Product, method: Int) {
             if (method == SELLER) {
                 "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
-            } else if (method == BUYER) {
+            } else if (method == BUYER || method == COLLECTION) {
                 "$${product.price} | ${product.username}".also { binding.productDetails.text = it }
             } else if (method == USER_PRODUCT) {
                 "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }

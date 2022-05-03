@@ -48,7 +48,6 @@ class LoginFragment : Fragment() {
         if (userId != null) {
             binding.verifyEmail.text = resources.getString(R.string.verify_email, userId)
             binding.resent.text = resources.getString(R.string.resend)
-            // TODO: resent clickable
             binding.resent.setOnClickListener {
                 requestResent()
             }

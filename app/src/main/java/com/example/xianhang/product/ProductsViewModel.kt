@@ -2,9 +2,7 @@ package com.example.xianhang.product
 
 import android.view.View
 import androidx.lifecycle.*
-import com.example.xianhang.adapter.BUYER
-import com.example.xianhang.adapter.SELLER
-import com.example.xianhang.adapter.USER_PRODUCT
+import com.example.xianhang.adapter.*
 import com.example.xianhang.model.ProductItem
 import com.example.xianhang.network.Api
 import com.example.xianhang.network.response.ProductsResponse
@@ -50,7 +48,9 @@ class ProductsViewModel(
             try {
                 val resp: ProductsResponse = when (method) {
                     BUYER -> Api.retrofitService.getAllProducts(token!!)
+                    COLLECTION -> Api.retrofitService.getCollections(token!!)
                     // USER_PRODUCT and SELLER request same
+                    FEEDS -> Api.retrofitService.getFeeds(token!!)
                     else -> Api.retrofitService.getUserProduct(id!!)
                 }
                 if (resOk(resp)) {

@@ -39,6 +39,7 @@ class ProductDetailsFragment : Fragment() {
         ProductViewModel.Factory(token!!, productItem!!.product.id!!)
     }
     private val orderViewModel: OrderViewModel by activityViewModels()
+    private var token: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +54,9 @@ class ProductDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        token = sharedPreferences?.getString(TOKEN, null)
+
         binding.profile.setOnClickListener {
             profile()
         }
@@ -63,12 +67,11 @@ class ProductDetailsFragment : Fragment() {
         }
 
         binding.uncollect.setOnClickListener {
-            // TODO: get collect id
             collect()
         }
 
         binding.collect.setOnClickListener {
-            uncollect()
+            collect()
         }
     }
 
@@ -89,6 +92,14 @@ class ProductDetailsFragment : Fragment() {
         orderViewModel.setOrder(productItem!!.product, amount, tradingMethod)
 
         findNavController().navigate(R.id.action_productDetailsFragment_to_buyFragment)
+    }
+
+    private fun collect() {
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+        binding.viewModel!!.setId(context, productItem?.product?.id)
     }
 
     private fun checkData(): Boolean {
@@ -113,60 +124,5 @@ class ProductDetailsFragment : Fragment() {
         }
 
         return true
-    }
-
-    private fun collect() {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-
-        if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        binding.uncollect.visibility = View.GONE
-        binding.collect.visibility = View.VISIBLE
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val obj = ProductId(productItem!!.product.id!!)
-                val resp = Api.retrofitService.collect(token, obj)
-                if (resOk(resp)) {
-                    Toast.makeText(requireActivity(), "collected", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
-                }
-            } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun uncollect() {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-
-        if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        binding.collect.visibility = View.GONE
-        binding.uncollect.visibility = View.VISIBLE
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val resp = Api.retrofitService.uncollect(token, binding.viewModel!!.collectId!!)
-                if (resOk(resp)) {
-                    Toast.makeText(requireActivity(), "uncollected", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
-                }
-            } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
-            }
-        }
     }
 }

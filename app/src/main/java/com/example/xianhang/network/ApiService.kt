@@ -95,20 +95,23 @@ interface ApiService {
     @DELETE("product/image/{id}/delete/")
     suspend fun deleteProduct(@Path("id") id: Int, @Header(AUTH) authToken: String): DefaultResponse
 
+    @GET("product/feed/")
+    suspend fun getFeeds(@Header(AUTH) authToken: String): ProductsResponse
+
     @POST("user/like/create/")
-    suspend fun like(@Header(AUTH) authToken: String, @Body userId: UserId): DefaultResponse
+    suspend fun like(@Header(AUTH) authToken: String, @Body userId: UserId): LikeResponse
 
     @DELETE("user/like/{id}/delete/")
     suspend fun unlike(@Header(AUTH) authToken: String, @Path("id") id: Int): DefaultResponse
 
     @POST("followership/create/")
-    suspend fun follow(@Header(AUTH) authToken: String, @Body userId: UserId): DefaultResponse
+    suspend fun follow(@Header(AUTH) authToken: String, @Body userId: UserId): FollowResponse
 
     @DELETE("followership/{id}/delete/")
     suspend fun unfollow(@Header(AUTH) authToken: String, @Path("id") id: Int): DefaultResponse
 
     @POST("collection/create/")
-    suspend fun collect(@Header(AUTH) authToken: String, @Body productId: ProductId): DefaultResponse
+    suspend fun collect(@Header(AUTH) authToken: String, @Body productId: ProductId): CollectResponse
 
     @DELETE("collection/{id}/delete/")
     suspend fun uncollect(@Header(AUTH) authToken: String, @Path("id") collectionId: Int): DefaultResponse
@@ -124,4 +127,7 @@ interface ApiService {
 
     @GET("order/{id}/")
     suspend fun getOrder(@Header(AUTH) authToken: String, @Path("id") id: Int): OrderResponse
+
+    @GET("order/list/")
+    suspend fun getCollections(@Header(AUTH) authToken: String): ProductsResponse
 }

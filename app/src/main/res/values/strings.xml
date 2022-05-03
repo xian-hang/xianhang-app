@@ -74,4 +74,6 @@
     <string name="send_address">邮寄地址</string>
     <string name="stock">stock: %d</string>
     <string name="cancel">取消</string>
+    <string name="my_collection">我的收藏</string>
+    <string name="feeds">关注用户动态</string>
 </resources>
