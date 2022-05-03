@@ -74,9 +74,15 @@ class OrderAdapter(private val method: Int, private val context: Context?):
     private fun setClickListener(method: Int, order: OrderItem, holder: OrderItemViewHolder) {
         val bundle = bundleOf(ID to order.order.id)
         println("order id = ${order.order.id}")
-        holder.view.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_ordersFragment_to_orderFragment3, bundle)
-        )
+        if (method == BUYER) {
+            holder.view.setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.action_ordersFragment_to_orderFragment3, bundle)
+            )
+        } else if (method == SELLER) {
+            holder.view.setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.action_orderFragment2_to_orderFragment4, bundle)
+            )
+        }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<OrderItem>() {

@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.ViewCompat
 import com.example.xianhang.*
+import com.example.xianhang.adapter.BUYER
+import com.example.xianhang.adapter.METHOD
+import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.FragmentProfileBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.PASSWORD
@@ -113,12 +116,13 @@ class ProfileFragment : Fragment() {
 
     private fun changeActivityProducts() {
         val intent = Intent(requireActivity(), ProductActivity::class.java)
+        intent.putExtra(METHOD, SELLER)
         startActivity(intent)
     }
 
-    // TODO: wait backend change productId to product
     private fun changeActivityMyOrders() {
         val intent = Intent(requireActivity(), ViewOrderActivity::class.java)
+        intent.putExtra(METHOD, BUYER)
         startActivity(intent)
     }
 
