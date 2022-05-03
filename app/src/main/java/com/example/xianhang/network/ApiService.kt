@@ -121,4 +121,7 @@ interface ApiService {
 
     @GET("order/selling/")
     suspend fun getSoldOrders(@Header(AUTH) authToken: String): OrdersResponse
+
+    @GET("order/{id}/")
+    suspend fun getOrder(@Header(AUTH) authToken: String, @Path("id") id: Int): OrderResponse
 }

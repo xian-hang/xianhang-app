@@ -4,12 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.xianhang.R
 import com.example.xianhang.databinding.OrderItemBinding
+import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.model.Order
 import com.example.xianhang.model.OrderItem
 import com.example.xianhang.product.ProductViewModel
@@ -59,13 +62,15 @@ class OrderAdapter(private val method: Int, private val context: Context?):
     override fun onBindViewHolder(holder: OrderItemViewHolder, position: Int) {
         val order = getItem(position)
         setClickListener(method, order, holder)
+        holder.bind(order, method)
     }
 
-    // TODO: goto view order
     private fun setClickListener(method: Int, order: OrderItem, holder: OrderItemViewHolder) {
-        // holder.view.setOnClickListener(
-            // Navigation.createNavigateOnClickListener(R.id)
-        // )
+        val bundle = bundleOf(ID to order.order.id)
+        println("order id = ${order.order.id}")
+        holder.view.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_ordersFragment_to_orderFragment3, bundle)
+        )
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<OrderItem>() {

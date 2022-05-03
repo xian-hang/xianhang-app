@@ -69,6 +69,7 @@ class LoginFragment : Fragment() {
         val userId = arguments?.getString(USER)
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                println("userId = $userId")
                 val resp = Api.retrofitService.resend(userId!!)
                 if (resOk(resp)) {
                     Toast.makeText(requireActivity(), "Resent", Toast.LENGTH_LONG).show()

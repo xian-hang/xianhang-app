@@ -18,7 +18,6 @@ data class Order(
     val amount: Int,
     val status: Int?,
     @Json(name = "user") val userId: Int?,
-    // TODO: wait yinxuan change to product
     val product: Product?,
     val name: String,
     @Json(name = "phoneNum") val phone: String,
