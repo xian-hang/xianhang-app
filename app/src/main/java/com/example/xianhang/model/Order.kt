@@ -18,11 +18,18 @@ data class Order(
     val amount: Int,
     val status: Int?,
     @Json(name = "user") val userId: Int?,
+    // TODO: wait yinxuan change to product
     val product: Product?,
     val name: String,
     @Json(name = "phoneNum") val phone: String,
     val tradingMethod: Int,
     @Json(name = "deliveringAddr") val address: String?
+): Parcelable
+
+@Parcelize
+data class OrderItem(
+    val order: Order,
+    val imageId: Int?
 ): Parcelable
 
 data class OrderRequest(

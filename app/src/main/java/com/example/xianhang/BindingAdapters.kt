@@ -5,7 +5,9 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.xianhang.adapter.OrderAdapter
 import com.example.xianhang.adapter.ProductAdapter
+import com.example.xianhang.model.OrderItem
 import com.example.xianhang.model.ProductItem
 
 @BindingAdapter("listitem")
@@ -14,6 +16,14 @@ fun bindUserProducts(recyclerView: RecyclerView, products: List<ProductItem>?) {
     println("submit list")
     println("products = $products")
     adapter.submitList(products)
+}
+
+@BindingAdapter("listorder")
+fun bindOrders(recyclerView: RecyclerView, orders: List<OrderItem>?) {
+    val adapter = recyclerView.adapter as OrderAdapter
+    println("submit list")
+    println("orders = $orders")
+    adapter.submitList(orders)
 }
 
 @BindingAdapter("imageUrl")

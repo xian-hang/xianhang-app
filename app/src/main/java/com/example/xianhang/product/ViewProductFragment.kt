@@ -32,9 +32,11 @@ class ViewProductFragment : Fragment() {
 
     private lateinit var binding: FragmentViewProductBinding
     private val viewModel: ProductViewModel by viewModels {
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
         val product = arguments?.getParcelable<Product>(PRODUCT)
         println("id = " + product?.id.toString())
-        ProductViewModel.Factory(product!!.id!!)
+        ProductViewModel.Factory(token!!, product!!.id!!)
     }
 
     override fun onCreateView(
@@ -51,13 +53,11 @@ class ViewProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val edit = view.findViewById<Button>(R.id.edit)
-        edit.setOnClickListener {
+        binding.edit.setOnClickListener {
             navigateEdit()
         }
 
-        val delete = view.findViewById<Button>(R.id.delete)
-        delete.setOnClickListener {
+        binding.delete.setOnClickListener {
             showDeleteDialog()
         }
     }

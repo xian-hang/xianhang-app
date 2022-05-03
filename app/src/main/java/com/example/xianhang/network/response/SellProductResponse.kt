@@ -11,5 +11,6 @@ data class SellProductResponse(
 data class GetProductResponse(
     val code: Int,
     val product: Product,
-    @Json(name = "image") val images: List<Int>
+    @Json(name = "image") val images: List<Int>,
+    @Json(name = "collectionId") val collectId: Int?
 )

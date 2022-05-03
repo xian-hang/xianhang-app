@@ -1,5 +1,6 @@
 package com.example.xianhang.order
 
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,20 +15,31 @@ import com.example.xianhang.R
 import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.databinding.FragmentProductDetailsBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
+import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
+import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.DELIVERY
 import com.example.xianhang.model.PICKUP
 import com.example.xianhang.model.Product
 import com.example.xianhang.model.ProductItem
+import com.example.xianhang.network.Api
 import com.example.xianhang.product.ProductViewModel
+import com.example.xianhang.rest.resOk
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.lang.Exception
 
 class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
     private var productItem: ProductItem? = null
     private val productViewModel: ProductViewModel by viewModels {
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
         productItem = activity?.intent?.extras?.getParcelable(PRODUCT_ITEM)
         println("id = ${productItem?.product?.id}")
-        ProductViewModel.Factory(productItem!!.product.id!!)
+        ProductViewModel.Factory(token!!, productItem!!.product.id!!)
     }
     private val orderViewModel: OrderViewModel by activityViewModels()
 
@@ -108,12 +120,56 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun collect() {
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+
         binding.uncollect.visibility = View.GONE
         binding.collect.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val resp = Api.retrofitService.collect(token, productItem!!.product.id!!)
+                if (resOk(resp)) {
+                    Toast.makeText(requireActivity(), "collected", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun uncollect() {
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+
         binding.collect.visibility = View.GONE
         binding.uncollect.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val resp = Api.retrofitService.uncollect(token, binding.viewModel!!.collectId!!)
+                if (resOk(resp)) {
+                    Toast.makeText(requireActivity(), "uncollected", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

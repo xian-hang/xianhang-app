@@ -32,12 +32,6 @@ class ProductsViewModel(
         getProducts()
     }
 
-    fun getImageUrl(ids: List<Int>): String {
-        if (ids.isNotEmpty())
-            return "${IMAGE_URL}${ids[0]}"
-        return ""
-    }
-
     class Factory(
         private val method: Int,
         private val id: Int?,

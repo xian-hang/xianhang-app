@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.lang.Exception
 
-class ProductViewModel(private val id: Int) : ViewModel() {
+class ProductViewModel(private val token: String, private val id: Int) : ViewModel() {
     private val _product = MutableLiveData<Product?>()
     val product: LiveData<Product?> = _product
 
@@ -23,28 +23,37 @@ class ProductViewModel(private val id: Int) : ViewModel() {
     private val _visibility = MutableLiveData<Int>()
     val visibility: LiveData<Int> = _visibility
 
+    private val _collected = MutableLiveData<Int>()
+    val collected: LiveData<Int> = _collected
+
+    private val _uncollect = MutableLiveData<Int>()
+    val uncollect: LiveData<Int> = _uncollect
+
     private val _imageSrcUrl = MutableLiveData<String>()
     val imageSrcUrl: LiveData<String> = _imageSrcUrl
 
+    var collectId: Int? = null
+
     init {
-        getProduct(id)
+        getProduct(token, id)
     }
 
-    class Factory(private val id: Int): ViewModelProvider.Factory {
+    class Factory(private val token: String, private val id: Int): ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ProductViewModel(id) as T
+            return ProductViewModel(token, id) as T
         }
     }
 
-    private fun getProduct(id: Int) {
+    private fun getProduct(token: String, id: Int) {
         println("============== show Product ==============")
         viewModelScope.launch {
             _status.value = View.VISIBLE
             println("status Loading")
             try {
-                val resp = Api.retrofitService.getProduct(id)
+                println("id = $id")
+                val resp = Api.retrofitService.getProduct(token, id)
                 if (resOk(resp)) {
                     println("resOk")
                     _status.value = View.GONE
@@ -60,8 +69,11 @@ class ProductViewModel(private val id: Int) : ViewModel() {
                         2 -> "自取，寄送"
                         else -> ""
                     }
-                    _visibility.value = if (resp.product.tradingMethod > 0) View.VISIBLE
-                    else View.GONE
+                    _visibility.value = if (resp.product.tradingMethod > 0) View.VISIBLE else View.GONE
+                    println("collectId = ${resp.collectId}")
+                    collectId = resp.collectId
+                    _collected.value = if (resp.collectId == null) View.GONE else View.VISIBLE
+                    _uncollect.value = if (resp.collectId != null) View.GONE else View.VISIBLE
                 } else {
                     println(resp)
                     println("resNotOk")
@@ -83,6 +95,8 @@ class ProductViewModel(private val id: Int) : ViewModel() {
         _product.value = null
         _tradingMethod.value = ""
         _visibility.value = View.GONE
+        _collected.value = View.GONE
+        _uncollect.value = View.VISIBLE
     }
 
     companion object {

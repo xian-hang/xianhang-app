@@ -65,6 +65,8 @@
     <string name="number_cn">数量：</string>
     <string name="trade_num_cn">交易数量</string>
     <string name="order_title">订单</string>
+    <string name="bought_order_title">购买订单</string>
+    <string name="sold_order_title">出售订单</string>
     <string name="phone">电话号码：</string>
     <string name="phone2">电话号码</string>
     <string name="send_address_title">邮寄地址：</string>

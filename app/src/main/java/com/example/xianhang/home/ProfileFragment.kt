@@ -19,6 +19,8 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.login.LoginFragment.Companion.USER
 import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.network.Api
+import com.example.xianhang.order.OrderActivity
+import com.example.xianhang.order.ViewOrderActivity
 import com.example.xianhang.product.ProductActivity
 import com.example.xianhang.rest.resOk
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -122,7 +124,8 @@ class ProfileFragment : Fragment() {
 
     // TODO: implement
     private fun changeActivityMyOrders() {
-        Toast.makeText(requireActivity(), "not yet implement", Toast.LENGTH_LONG).show()
+        val intent = Intent(requireActivity(), ViewOrderActivity::class.java)
+        startActivity(intent)
     }
 
     // TODO: implement

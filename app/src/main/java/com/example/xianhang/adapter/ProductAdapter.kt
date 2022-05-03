@@ -75,7 +75,6 @@ class ProductAdapter(private val method: Int, private val context: Context?):
 
     override fun onBindViewHolder(holder: ProductItemViewHolder, position: Int) {
         val product = getItem(position)
-        // TODO: change to setClickListener
         setClickListener(method, product, holder)
         holder.bind(product, method)
     }

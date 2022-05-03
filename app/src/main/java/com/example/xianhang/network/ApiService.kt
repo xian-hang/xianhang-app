@@ -84,7 +84,7 @@ interface ApiService {
     ): DefaultResponse
 
     @GET("product/{id}/")
-    suspend fun getProduct(@Path("id") id: Int): GetProductResponse
+    suspend fun getProduct(@Header(AUTH) authToken: String, @Path("id") id: Int): GetProductResponse
 
     @GET("product/all/")
     suspend fun getAllProducts(@Header(AUTH) authToken: String): ProductsResponse
@@ -92,6 +92,18 @@ interface ApiService {
     @DELETE("product/image/{id}/delete/")
     suspend fun deleteProduct(@Path("id") id: Int, @Header(AUTH) authToken: String): DefaultResponse
 
+    @POST("collection/create/")
+    suspend fun collect(@Header(AUTH) authToken: String, @Body productId: Int): DefaultResponse
+
+    @DELETE("collection/{id}/delete/")
+    suspend fun uncollect(@Header(AUTH) authToken: String, @Path("id") collectionId: Int): DefaultResponse
+
     @POST("order/create/")
     suspend fun createOrder(@Header(AUTH) authToken: String, @Body order: OrderRequest): DefaultResponse
+
+    @GET("order/buying/")
+    suspend fun getBoughtOrders(@Header(AUTH) authToken: String): OrdersResponse
+
+    @GET("order/selling/")
+    suspend fun getSoldOrders(@Header(AUTH) authToken: String): OrdersResponse
 }
