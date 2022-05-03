@@ -34,6 +34,9 @@ class UserFragment : Fragment() {
         println("user id = $id")
         ProductsViewModel.Factory(USER_PRODUCT, id, null)
     }
+    private var userId: Int? = null
+    private var likeId: Int? = null
+    private var followId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +48,16 @@ class UserFragment : Fragment() {
         binding.viewModel = viewModel
         binding.products.adapter = ProductAdapter(USER_PRODUCT, context)
 
+        val id = arguments?.getInt(ID)
+        println("user id = $id")
+        userId = id!!
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val id = arguments?.getInt(ID)
-        println("user id = $id")
-        setUpProfile(view, id!!)
+        setUpProfile(view, userId!!)
 
         binding.like.setOnClickListener {
             // TODO: implement unlike
@@ -76,20 +81,104 @@ class UserFragment : Fragment() {
     }
 
     private fun unlike() {
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+
         binding.unlike.visibility = View.VISIBLE
         binding.like.visibility = View.GONE
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val resp = Api.retrofitService.unlike(token, likeId!!)
+                if (resOk(resp)) {
+                    Toast.makeText(requireActivity(), "unliked", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun like() {
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+
         binding.unlike.visibility = View.GONE
         binding.like.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val resp = Api.retrofitService.like(token, userId!!)
+                if (resOk(resp)) {
+                    Toast.makeText(requireActivity(), "liked", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun follow() {
-        if (binding.follow.text == resources.getString(R.string.follow)) {
+        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharePreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (followId == null) {
             binding.follow.text = resources.getString(R.string.followed)
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val resp = Api.retrofitService.follow(token, userId!!)
+                    if (resOk(resp)) {
+                        Toast.makeText(requireActivity(), "followed", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                    }
+                } catch (e: HttpException) {
+                    Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                } catch (e: Exception) {
+                    // TODO: check connection wrong
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                    e.printStackTrace()
+                }
+            }
         } else {
             binding.follow.text = resources.getString(R.string.follow)
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val resp = Api.retrofitService.unfollow(token, followId!!)
+                    if (resOk(resp)) {
+                        Toast.makeText(requireActivity(), "unfollowed", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                    }
+                } catch (e: HttpException) {
+                    Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                } catch (e: Exception) {
+                    // TODO: check connection wrong
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                    e.printStackTrace()
+                }
+            }
         }
     }
 
@@ -125,6 +214,12 @@ class UserFragment : Fragment() {
                         resp.likes,
                         resp.soldItem
                     )
+                    likeId = resp.likeId
+                    followId = resp.followId
+                    binding.like.visibility = if (likeId != null) View.VISIBLE else View.GONE
+                    binding.unlike.visibility = if (likeId == null) View.VISIBLE else View.GONE
+                    binding.follow.text = if (followId == null) resources.getString(R.string.follow)
+                    else resources.getString(R.string.followed)
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

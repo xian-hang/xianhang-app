@@ -122,7 +122,7 @@ class ProfileFragment : Fragment() {
         startActivity(intent)
     }
 
-    // TODO: implement
+    // TODO: wait backend change productId to product
     private fun changeActivityMyOrders() {
         val intent = Intent(requireActivity(), ViewOrderActivity::class.java)
         startActivity(intent)

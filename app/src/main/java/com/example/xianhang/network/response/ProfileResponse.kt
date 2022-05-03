@@ -21,5 +21,6 @@ data class ProfileResponse(
     @Json(name = "rating") val credit: Double,
     val status: Int,
     val likeId: Int?,
+    @Json(name = "followershipId") val followId: Int?,
     @Json(name = "totalLike") val likes: Int
 )

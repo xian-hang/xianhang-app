@@ -66,12 +66,11 @@ class ProductDetailsFragment : Fragment() {
         }
 
         binding.uncollect.setOnClickListener {
-            // TODO: implement collect product
+            // TODO: get collect id
             collect()
         }
 
         binding.collect.setOnClickListener {
-            // TODO: implement uncollect product
             uncollect()
         }
     }
