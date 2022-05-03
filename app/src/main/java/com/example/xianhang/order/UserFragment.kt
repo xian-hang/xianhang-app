@@ -60,17 +60,16 @@ class UserFragment : Fragment() {
         setUpProfile(view, userId!!)
 
         binding.like.setOnClickListener {
-            // TODO: implement unlike
             unlike()
         }
 
         binding.unlike.setOnClickListener {
-            // TODO: implement like
+            // TODO: wait backend fix
             like()
         }
 
         binding.follow.setOnClickListener {
-            // TODO: implement follow
+            // TODO: wait backend fix
             follow()
         }
 

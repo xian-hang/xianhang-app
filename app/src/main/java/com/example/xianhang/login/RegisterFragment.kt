@@ -63,12 +63,15 @@ class RegisterFragment : Fragment() {
                     val bundle = bundleOf(USER to userId)
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
                 } else {
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireActivity(), "Register Error", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
+                binding.progressBar.visibility = View.GONE
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection wrong
+                binding.progressBar.visibility = View.GONE
                 Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }

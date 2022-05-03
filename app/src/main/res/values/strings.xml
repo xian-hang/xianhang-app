@@ -19,7 +19,8 @@
     <string name="to_pay">待付款</string>
     <string name="to_send">待发货</string>
     <string name="to_receive">待收货</string>
-    <string name="resent"><u>Resent</u></string>
+    <string name="resend"><u>Resend</u></string>
+    <string name="resent">Resent</string>
     <string name="new_password">New Password</string>
     <string name="change_password">更换密码</string>
     <string name="confirm_edit">确认修改</string>

@@ -47,13 +47,16 @@ class LoginFragment : Fragment() {
         val userId = arguments?.getString(USER)
         if (userId != null) {
             binding.verifyEmail.text = resources.getString(R.string.verify_email, userId)
-            binding.resent.text = resources.getString(R.string.resent)
+            binding.resent.text = resources.getString(R.string.resend)
             // TODO: resent clickable
+            binding.resent.setOnClickListener {
+                requestResent()
+            }
         }
 
         binding.login.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
-            requestLogin(view)
+            requestLogin()
         }
 
         val newUser = getView()?.findViewById<TextView>(R.id.new_user)
@@ -62,8 +65,28 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun requestResent() {
+        val userId = arguments?.getString(USER)
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val resp = Api.retrofitService.resend(userId!!)
+                if (resOk(resp)) {
+                    Toast.makeText(requireActivity(), "Resent", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                // TODO: check connection
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                e.printStackTrace()
+            }
+        }
+    }
+
     @SuppressLint("CommitPrefEdits")
-    private fun requestLogin(view: View) {
+    private fun requestLogin() {
         val userId = binding.userId.text.toString()
         val password = binding.password.text.toString()
         val rememberMe = binding.rememberMe.isChecked

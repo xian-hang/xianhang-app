@@ -2,34 +2,154 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.xianhang.home.ProfileFragment">
+        android:fillViewport="true">
 
-        <include
-            android:id="@+id/profile"
-            layout="@layout/profile_item" />
-
-        <include
-            android:id="@+id/tracking"
-            layout="@layout/track_item"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profile"
-            android:layout_marginHorizontal="10dp" />
+            android:orientation="vertical"
+            tools:context="com.example.xianhang.home.ProfileFragment">
 
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tracking"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
-            tools:listitem="@layout/profile_list_item" />
-    </RelativeLayout>
+            <include
+                android:id="@+id/profile"
+                layout="@layout/profile_item" />
+
+            <include
+                android:id="@+id/tracking"
+                layout="@layout/track_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp" />
+
+            <TextView
+                android:id="@+id/edit_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="Edit Profile"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#000000" />
+
+            <TextView
+                android:id="@+id/change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="Change Password"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#000000" />
+
+            <TextView
+                android:id="@+id/selling_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="Selling Products"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#000000" />
+
+            <TextView
+                android:id="@+id/orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="My Orders"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#000000" />
+
+            <TextView
+                android:id="@+id/notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="Notifications"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#000000" />
+
+            <TextView
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="Logout"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#000000" />
+
+            <TextView
+                android:id="@+id/delete_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="Delete Account"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>

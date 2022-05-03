@@ -41,6 +41,9 @@ interface ApiService {
     @POST("user/logout/")
     suspend fun logout(@Header(AUTH) authToken: String): DefaultResponse
 
+    @POST("user/resent/")
+    suspend fun resend(@Body studentId: String): DefaultResponse
+
     @GET("user/profile/")
     suspend fun getProfile(@Header(AUTH) authToken: String): ProfileResponse
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.ViewCompat
 import com.example.xianhang.*
 import com.example.xianhang.databinding.FragmentProfileBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
@@ -48,20 +49,13 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpProfile(view)
 
-        val list = arrayOf("Edit Profile", "Change Password", "Selling Products", "My Orders", "Notifications", "Logout", "Delete Account")
-        val arrayAdapter = ArrayAdapter(requireActivity(), R.layout.profile_list_item, list)
-        binding.list.adapter = arrayAdapter
-        binding.list.setOnItemClickListener { _, _, i, _ ->
-            when (i) {
-                0 -> changeActivityEditProfile(view)
-                1 -> changeActivityChangePassword()
-                2 -> changeActivityProducts()
-                3 -> changeActivityMyOrders()
-                4 -> changeActivityNotifications()
-                5 -> showLogoutDialog()
-                6 -> showDeleteAccountDialog()
-            }
-        }
+        binding.editProfile.setOnClickListener { changeActivityEditProfile(view) }
+        binding.changePassword.setOnClickListener { changeActivityChangePassword() }
+        binding.sellingProducts.setOnClickListener { changeActivityProducts() }
+        binding.orders.setOnClickListener { changeActivityMyOrders() }
+        binding.notification.setOnClickListener { changeActivityNotifications() }
+        binding.logout.setOnClickListener { showLogoutDialog() }
+        binding.deleteAccount.setOnClickListener { showDeleteAccountDialog() }
     }
 
     private fun setUpProfile(view: View) {
