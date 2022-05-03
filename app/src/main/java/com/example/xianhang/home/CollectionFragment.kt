@@ -34,6 +34,7 @@ class CollectionFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentCollectionBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.products.adapter = ProductAdapter(COLLECTION, context)
         return binding.root

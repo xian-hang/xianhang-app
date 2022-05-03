@@ -47,7 +47,6 @@ class BuyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.confirm.setOnClickListener {
-            // TODO: implement order
             order()
         }
     }

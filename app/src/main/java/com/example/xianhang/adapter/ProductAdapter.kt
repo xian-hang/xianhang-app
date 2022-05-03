@@ -42,7 +42,7 @@ class ProductAdapter(private val method: Int, private val context: Context?):
             binding.productName.text = product.name
             setDetails(product, method)
 
-            var imageUrl: String = ""
+            var imageUrl = ""
             if (productItem.imagesId.isNotEmpty()) {
                 imageUrl = "${IMAGE_URL}${productItem.imagesId[0]}"
             }

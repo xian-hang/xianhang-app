@@ -34,6 +34,7 @@ class FollowFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentFollowBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.products.adapter = ProductAdapter(FEEDS, context)
         return binding.root

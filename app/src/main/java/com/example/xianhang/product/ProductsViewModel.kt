@@ -46,24 +46,33 @@ class ProductsViewModel(
         viewModelScope.launch {
             _status.value = View.VISIBLE
             try {
+                println("method = $method")
+                println("token = $token")
                 val resp: ProductsResponse = when (method) {
                     BUYER -> Api.retrofitService.getAllProducts(token!!)
                     COLLECTION -> Api.retrofitService.getCollections(token!!)
-                    // USER_PRODUCT and SELLER request same
                     FEEDS -> Api.retrofitService.getFeeds(token!!)
+                    // USER_PRODUCT and SELLER request same
                     else -> Api.retrofitService.getUserProduct(id!!)
                 }
                 if (resOk(resp)) {
+                    println("get products")
                     _status.value = View.GONE
                     _products.value = resp.products
+                    println("resp.products = ${resp.products}")
                 } else {
+                    println("get products failed")
                     _status.value = View.GONE
                     _products.value = listOf()
                 }
             } catch (e: HttpException) {
+                println("get products http failed")
+                println(e.message())
                 _status.value = View.GONE
                 _products.value = listOf()
             } catch (e: Exception) {
+                println("get products other failed")
+                println(e.message)
                 _status.value = View.GONE
                 _products.value = listOf()
             }
