@@ -102,10 +102,11 @@ class ProductAdapter(private val method: Int, private val context: Context?):
                 )
             }
             USER_PRODUCT -> {
-                val bundle = bundleOf(PRODUCT to product.product)
-                holder.view.setOnClickListener(
-                    Navigation.createNavigateOnClickListener(R.id.action_userFragment_to_productDetailsFragment, bundle)
-                )
+                holder.view.setOnClickListener {
+                    val intent = Intent(context, OrderActivity::class.java)
+                    intent.putExtra(PRODUCT_ITEM, product)
+                    context?.startActivity(intent)
+                }
             }
             SEARCH -> {
                 holder.view.setOnClickListener {
