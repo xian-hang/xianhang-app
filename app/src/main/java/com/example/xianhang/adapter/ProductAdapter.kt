@@ -101,14 +101,8 @@ class ProductAdapter(private val method: Int, private val context: Context?):
                     Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_buyProductActivity, bundle)
                 )
             }
-            USER_PRODUCT -> {
-                holder.view.setOnClickListener {
-                    val intent = Intent(context, OrderActivity::class.java)
-                    intent.putExtra(PRODUCT_ITEM, product)
-                    context?.startActivity(intent)
-                }
-            }
-            SEARCH -> {
+            // USER_PRODUCT, SEARCH and FEEDs are same
+            else -> {
                 holder.view.setOnClickListener {
                     val intent = Intent(context, OrderActivity::class.java)
                     intent.putExtra(PRODUCT_ITEM, product)

@@ -30,6 +30,9 @@ class OrderViewModel: ViewModel() {
     private val _postage = MutableLiveData<Double>()
     val postage: LiveData<Double> = _postage
 
+    private val _postageShow = MutableLiveData<String>()
+    val postageShow: LiveData<String> = _postageShow
+
     private val _amount = MutableLiveData<Int>()
     val amount: LiveData<Int> = _amount
 
@@ -81,6 +84,7 @@ class OrderViewModel: ViewModel() {
         }
         println("postage is null = ${o.postage == null}")
         _postage.value = o.postage ?: 0.0
+        _postageShow.value = if (o.postage == null) "待确认" else String.format("$%.2f", o.postage)
         _status.value = when (o.status) {
             UNPAID -> "待付款"
             PAID -> "待发货"
@@ -120,6 +124,7 @@ class OrderViewModel: ViewModel() {
 
     fun setPostage(p: Double) {
         _postage.value = p
+        _postageShow.value = String.format("$%.2f", p)
     }
 
     fun setStatus(context: Context?, token: String, state: Int, isBuyer: Boolean) {

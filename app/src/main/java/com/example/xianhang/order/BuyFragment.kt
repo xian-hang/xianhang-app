@@ -83,7 +83,7 @@ class BuyFragment : Fragment() {
         val price = binding.price.text.toString().toDouble()
         val amount = binding.amount.text.toString().toInt()
         val productId = viewModel.product.value!!.id
-        val name = binding.product.text.toString()
+        val name = binding.name.text.toString()
         val phoneNum = binding.phone.text.toString()
         val tradingMethod = if (binding.tradingMethod.text.toString() == "自取") PICKUP
         else DELIVERY
