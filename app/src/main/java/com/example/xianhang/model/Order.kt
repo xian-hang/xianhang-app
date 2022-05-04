@@ -9,6 +9,7 @@ const val PAID = 1
 const val SHIPPED = 2
 const val COMPLETE = 3
 const val CANCEL = 4
+const val ALL = 5
 
 @Parcelize
 data class Order(
@@ -39,4 +40,8 @@ data class OrderRequest(
     val phoneNum: String,
     val tradingMethod: Int,
     @Json(name = "deliveringAddr") val address: String?
+)
+
+data class OrderStatusRequest(
+    val status: Int
 )

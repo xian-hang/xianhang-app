@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/unpaidFragment"
+        android:title="@string/to_pay" />
+    <item
+        android:id="@+id/paidFragment"
+        android:title="@string/to_send" />
+    <item
+        android:id="@+id/sentFragment"
+        android:title="@string/to_receive" />
+</menu>

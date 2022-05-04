@@ -72,7 +72,7 @@ class OrderAdapter(private val method: Int, private val context: Context?):
     }
 
     private fun setClickListener(method: Int, order: OrderItem, holder: OrderItemViewHolder) {
-        val bundle = bundleOf(ID to order.order.id)
+        val bundle = bundleOf(ID to order.order.id, TO to R.id.action_orderFragment3_to_payFragment)
         println("order id = ${order.order.id}")
         if (method == BUYER) {
             holder.view.setOnClickListener(

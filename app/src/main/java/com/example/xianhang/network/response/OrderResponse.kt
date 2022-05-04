@@ -6,3 +6,8 @@ data class OrderResponse(
     val code: Int,
     val order: Order
 )
+
+data class OrderIdResponse(
+    val code: Int,
+    val orderId: Int
+)

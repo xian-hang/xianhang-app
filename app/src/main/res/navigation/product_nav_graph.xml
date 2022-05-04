@@ -48,6 +48,6 @@
     </fragment>
     <fragment
         android:id="@+id/orderFragment4"
-        android:name="com.example.xianhang.OrderFragment"
+        android:name="com.example.xianhang.order.OrderFragment"
         android:label="OrderFragment" />
 </navigation>

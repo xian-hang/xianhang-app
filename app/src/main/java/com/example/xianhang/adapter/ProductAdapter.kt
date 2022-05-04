@@ -21,6 +21,8 @@ const val PRODUCT_ITEM = "product_item"
 const val ACTION = "action"
 const val IMAGE_URL = "image_url"
 const val METHOD = "method"
+const val PRICE = "price"
+const val TO = "to"
 
 const val SELLER = 0
 const val BUYER = 1

@@ -53,7 +53,7 @@ class ProductsViewModel(
                     COLLECTION -> Api.retrofitService.getCollections(token!!)
                     FEEDS -> Api.retrofitService.getFeeds(token!!)
                     // USER_PRODUCT and SELLER request same
-                    else -> Api.retrofitService.getUserProduct(id!!)
+                    else -> Api.retrofitService.getUserProduct(token, id!!)
                 }
                 if (resOk(resp)) {
                     println("get products")

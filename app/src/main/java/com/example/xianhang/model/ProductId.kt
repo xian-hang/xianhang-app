@@ -10,4 +10,6 @@ data class UserId(
     @Json(name = "userId") val id: Int
 )
 
-
+data class StatusId(
+    val status: Int
+)

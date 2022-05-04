@@ -1,4 +1,4 @@
-package com.example.xianhang
+package com.example.xianhang.order
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
@@ -7,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.xianhang.adapter.PRODUCT_ITEM
+import com.example.xianhang.R
+import com.example.xianhang.adapter.TO
 import com.example.xianhang.databinding.FragmentBuyBinding
+import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.DELIVERY
 import com.example.xianhang.model.OrderRequest
 import com.example.xianhang.model.PICKUP
-import com.example.xianhang.model.ProductItem
 import com.example.xianhang.network.Api
-import com.example.xianhang.order.OrderViewModel
 import com.example.xianhang.rest.resOk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,9 +65,12 @@ class BuyFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.createOrder(token!!, getData())
                 if (resOk(resp)) {
-                    findNavController().navigate(R.id.action_buyFragment_to_orderFragment)
+                    val id = resp.orderId
+                    val bundle = bundleOf(ID to id, TO to R.id.action_orderFragment_to_payFragment2)
+                    findNavController().navigate(R.id.action_buyFragment_to_orderFragment, bundle)
                 } else {
-                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                    println(resp)
+                    Toast.makeText(requireActivity(), "order failed", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

@@ -19,11 +19,15 @@ fun resOk(resp: Any): Boolean {
         return resp.code == 200
     } else if (resp is OrdersResponse) {
         return resp.code == 200
+    } else if (resp is OrderResponse) {
+        return resp.code == 200
     } else if (resp is CollectResponse) {
         return resp.code == 200
     } else if (resp is LikeResponse) {
         return resp.code == 200
     } else if (resp is FollowResponse) {
+        return resp.code == 200
+    } else if (resp is OrderIdResponse) {
         return resp.code == 200
     }
     return false

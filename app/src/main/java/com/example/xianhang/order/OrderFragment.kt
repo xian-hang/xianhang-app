@@ -1,4 +1,4 @@
-package com.example.xianhang
+package com.example.xianhang.order
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
@@ -7,13 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.xianhang.R
+import com.example.xianhang.adapter.PRICE
+import com.example.xianhang.adapter.TO
 import com.example.xianhang.databinding.FragmentOrderBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.model.*
 import com.example.xianhang.network.Api
-import com.example.xianhang.order.OrderViewModel
 import com.example.xianhang.rest.resOk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,12 +30,16 @@ class OrderFragment : Fragment() {
 
     private lateinit var binding: FragmentOrderBinding
     private val viewModel: OrderViewModel by activityViewModels()
+    private var token: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        token = sharedPreferences?.getString(TOKEN, null)
+
         binding = FragmentOrderBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -46,7 +55,6 @@ class OrderFragment : Fragment() {
 
     private fun getOrder() {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
 
         println("token = $token")
         if (token == null) {
@@ -55,12 +63,21 @@ class OrderFragment : Fragment() {
         }
 
         val id = arguments?.getInt(ID)
-        println("id = $id")
+        val userId = sharedPreferences?.getInt(ID, 0)
+        println("order id = $id, userId = $userId")
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val resp = Api.retrofitService.getOrder(token, id!!)
+                val resp = Api.retrofitService.getOrder(token!!, id!!)
+                println(resp)
                 if (resOk(resp)) {
-                    viewModel.setOrder(resp.order.product!!, resp.order.amount, resp.order.tradingMethod)
+                    val isBuyer = resp.order.userId == userId
+                    binding.viewModel!!.setOrder(resp.order, isBuyer)
+                    binding.action.setOnClickListener {
+                        action(resp.order.status!!, isBuyer, resp.order.price)
+                    }
+                    binding.cancel.setOnClickListener {
+                        cancel(isBuyer)
+                    }
                 } else {
                     Toast.makeText(requireActivity(), "view order failed", Toast.LENGTH_LONG).show()
                 }
@@ -72,5 +89,34 @@ class OrderFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun action(status: Int, isBuyer: Boolean, price: Double) {
+        val to = arguments?.getInt(TO)
+        println(to)
+        when (status) {
+            UNPAID -> if (isBuyer) {
+                if (to == R.id.action_orderFragment_to_payFragment2) {
+                    val bundle = bundleOf(PRICE to price, TO to R.id.action_payFragment2_to_orderFragment)
+                    findNavController().navigate(to, bundle)
+                } else if (to == R.id.action_orderFragment3_to_payFragment) {
+                    val bundle = bundleOf(PRICE to price, TO to R.id.action_payFragment_to_orderFragment3)
+                    findNavController().navigate(to, bundle)
+                }
+            } else {
+                findNavController().navigate(R.id.action_orderFragment3_to_postageFragment)
+            }
+            PAID -> if (!isBuyer) {
+                // TODO: set send button
+                viewModel.setStatus(context, token!!, SHIPPED, isBuyer)
+            }
+            SHIPPED -> if (isBuyer) {
+                viewModel.setStatus(context, token!!, COMPLETE, isBuyer)
+            }
+        }
+    }
+
+    private fun cancel(isBuyer: Boolean) {
+        viewModel.setStatus(context, token!!, CANCEL, isBuyer)
     }
 }

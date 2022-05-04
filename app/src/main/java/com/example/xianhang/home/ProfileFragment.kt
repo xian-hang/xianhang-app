@@ -51,6 +51,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpProfile(view)
+        setUpTracking(view)
 
         binding.editProfile.setOnClickListener { changeActivityEditProfile(view) }
         binding.changePassword.setOnClickListener { changeActivityChangePassword() }
@@ -59,6 +60,29 @@ class ProfileFragment : Fragment() {
         binding.notification.setOnClickListener { changeActivityNotifications() }
         binding.logout.setOnClickListener { showLogoutDialog() }
         binding.deleteAccount.setOnClickListener { showDeleteAccountDialog() }
+    }
+
+    private fun setUpTracking(view: View) {
+        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharePreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val toPay = view.findViewById<ImageButton>(R.id.to_pay)
+        val toSend = view.findViewById<ImageButton>(R.id.to_send)
+        val toReceive = view.findViewById<ImageButton>(R.id.to_receive)
+        toPay.setOnClickListener {
+            startActivity(Intent(requireActivity(), OrderStatusActivity::class.java))
+        }
+        toSend.setOnClickListener {
+            startActivity(Intent(requireActivity(), OrderStatusActivity::class.java))
+        }
+        toReceive.setOnClickListener {
+            startActivity(Intent(requireActivity(), OrderStatusActivity::class.java))
+        }
     }
 
     private fun setUpProfile(view: View) {

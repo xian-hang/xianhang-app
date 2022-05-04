@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tracking_nav_graph"
+    app:startDestination="@id/unpaidFragment">
+
+    <fragment
+        android:id="@+id/paidFragment"
+        android:name="com.example.xianhang.PaidFragment"
+        android:label="PaidFragment" />
+    <fragment
+        android:id="@+id/unpaidFragment"
+        android:name="com.example.xianhang.UnpaidFragment"
+        android:label="UnpaidFragment" />
+    <fragment
+        android:id="@+id/sentFragment"
+        android:name="com.example.xianhang.SentFragment"
+        android:label="SentFragment" />
+</navigation>

@@ -1,5 +1,6 @@
-package com.example.xianhang.product
+package com.example.xianhang
 
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,22 +11,23 @@ import androidx.fragment.app.viewModels
 import com.example.xianhang.adapter.BUYER
 import com.example.xianhang.adapter.METHOD
 import com.example.xianhang.adapter.OrderAdapter
-import com.example.xianhang.adapter.SELLER
-import com.example.xianhang.databinding.FragmentOrdersBinding
+import com.example.xianhang.databinding.FragmentPaidBinding
+import com.example.xianhang.databinding.FragmentSentBinding
+import com.example.xianhang.login.LoginFragment
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
-import com.example.xianhang.model.ALL
+import com.example.xianhang.model.SHIPPED
 import com.example.xianhang.order.OrdersViewModel
 
-class OrdersFragment : Fragment() {
+class SentFragment : Fragment() {
 
-    private lateinit var binding: FragmentOrdersBinding
+    private lateinit var binding: FragmentSentBinding
     private val viewModel: OrdersViewModel by viewModels {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
-        val method = activity?.intent?.extras?.getInt(METHOD)
+        val method = BUYER
         println("token = " + token.toString())
-        OrdersViewModel.Factory(method!!, token!!, ALL)
+        OrdersViewModel.Factory(method, token!!, SHIPPED)
     }
 
     override fun onCreateView(
@@ -33,12 +35,11 @@ class OrdersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentOrdersBinding.inflate(inflater)
+        binding = FragmentSentBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        val method = activity?.intent?.extras?.getInt(METHOD)
-        binding.orders.adapter = OrderAdapter(method!!, context)
-        binding.title.text = if (method == BUYER) "购买订单" else if (method == SELLER) "出售订单" else "订单"
+        val method = BUYER
+        binding.orders.adapter = OrderAdapter(method, context)
 
         return binding.root
     }

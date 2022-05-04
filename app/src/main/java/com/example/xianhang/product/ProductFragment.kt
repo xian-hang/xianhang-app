@@ -19,6 +19,7 @@ import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.FragmentProductBinding
+import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 
 class ProductFragment : Fragment() {
 
@@ -26,8 +27,9 @@ class ProductFragment : Fragment() {
     private val viewModel: ProductsViewModel by viewModels {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val id = sharedPreferences?.getInt(ID, 0)
+        val token = sharedPreferences?.getString(TOKEN, null)
         println("id = " + id.toString())
-        ProductsViewModel.Factory(SELLER, id, null)
+        ProductsViewModel.Factory(SELLER, id, token)
     }
 
     override fun onCreateView(

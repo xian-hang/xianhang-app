@@ -12,7 +12,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".OrderFragment">
+        tools:context=".order.OrderFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -163,6 +163,7 @@
                 android:layout_marginVertical="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_toEndOf="@+id/phone_title"
+                android:text="@{viewModel.order.phone}"
                 android:textSize="20sp"
                 tools:text="0123456789" />
 
@@ -172,11 +173,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/phone_title"
                 android:layout_alignParentStart="true"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/send_address_title"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="@{viewModel.visible}" />
+                android:visibility="@{viewModel.visAddr}" />
 
             <TextView
                 android:id="@+id/address"
@@ -187,31 +191,67 @@
                 android:layout_marginVertical="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_toEndOf="@+id/address_title"
+                android:text="@{viewModel.order.address}"
                 android:textSize="20sp"
-                android:visibility="@{viewModel.visible}"
+                android:visibility="@{viewModel.visAddr}"
                 tools:text="chichi jia" />
+
+            <TextView
+                android:id="@+id/postage_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/postage_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="@{viewModel.visAddr}" />
+
+            <TextView
+                android:id="@+id/postage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/address_title"
+                android:text="@{String.valueOf(viewModel.postage)}"
+                android:textSize="20sp"
+                android:visibility="@{viewModel.visAddr}"
+                tools:text="$10" />
 
             <Button
                 android:id="@+id/action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address"
+                android:layout_below="@+id/postage"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:enabled="@{viewModel.disAction}"
                 android:text="@{viewModel.action}"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:text="修改" />
+                android:visibility="@{viewModel.visAction}"
+                tools:text="付款" />
 
             <Button
                 android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address"
-                android:layout_toStartOf="@+id/action"
+                android:layout_below="@+id/action"
+                android:layout_alignParentEnd="true"
                 android:layout_margin="10dp"
                 android:backgroundTint="#ff0000"
+                android:visibility="@{viewModel.visCancel}"
                 android:text="@string/cancel"
                 android:textColor="@color/white"
                 android:textSize="20sp"

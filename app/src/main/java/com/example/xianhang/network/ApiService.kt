@@ -60,7 +60,7 @@ interface ApiService {
     suspend fun getUser(@Header(AUTH) authToken: String, @Path("id") id: Int): ProfileResponse
 
     @GET("user/{id}/product/")
-    suspend fun getUserProduct(@Path("id") userId: Int): ProductsResponse
+    suspend fun getUserProduct(@Header(AUTH) authToken: String?, @Path("id") userId: Int): ProductsResponse
 
     @POST("product/create/")
     suspend fun createProduct(@Header(AUTH) authToken: String, @Body data: Product): SellProductResponse
@@ -117,10 +117,13 @@ interface ApiService {
     suspend fun uncollect(@Header(AUTH) authToken: String, @Path("id") collectionId: Int): DefaultResponse
 
     @POST("order/create/")
-    suspend fun createOrder(@Header(AUTH) authToken: String, @Body order: OrderRequest): DefaultResponse
+    suspend fun createOrder(@Header(AUTH) authToken: String, @Body order: OrderRequest): OrderIdResponse
 
     @GET("order/buying/")
     suspend fun getBoughtOrders(@Header(AUTH) authToken: String): OrdersResponse
+
+    @GET("order/buying/status/")
+    suspend fun getStatusOrders(@Header(AUTH) authToken: String, @Body status: StatusId): OrdersResponse
 
     @GET("order/selling/")
     suspend fun getSoldOrders(@Header(AUTH) authToken: String): OrdersResponse
@@ -128,6 +131,13 @@ interface ApiService {
     @GET("order/{id}/")
     suspend fun getOrder(@Header(AUTH) authToken: String, @Path("id") id: Int): OrderResponse
 
-    @GET("order/list/")
+    @POST("order/{id}/edit/status/")
+    suspend fun editOrderStatus(
+        @Header(AUTH) authToken: String,
+        @Path("id") id: Int,
+        @Body data: OrderStatusRequest
+    ): DefaultResponse
+
+    @GET("collection/list/")
     suspend fun getCollections(@Header(AUTH) authToken: String): ProductsResponse
 }

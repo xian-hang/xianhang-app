@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".OrderStatusActivity"
+            android:exported="false" />
+        <activity
             android:name=".order.ViewOrderActivity"
             android:exported="false" />
         <activity

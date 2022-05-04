@@ -18,14 +18,7 @@ import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.*
-import com.example.xianhang.network.Api
 import com.example.xianhang.product.ProductViewModel
-import com.example.xianhang.rest.resOk
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.lang.Exception
 
 class ProductDetailsFragment : Fragment() {
 
@@ -89,8 +82,7 @@ class ProductDetailsFragment : Fragment() {
             else -> -1
         }
         val amount = binding.num.text.toString().toInt()
-        orderViewModel.setOrder(productItem!!.product, amount, tradingMethod)
-
+        orderViewModel.previewOrder(productItem!!.product, amount, tradingMethod)
         findNavController().navigate(R.id.action_productDetailsFragment_to_buyFragment)
     }
 

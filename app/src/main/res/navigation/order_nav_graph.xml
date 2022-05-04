@@ -14,6 +14,29 @@
     </fragment>
     <fragment
         android:id="@+id/orderFragment3"
-        android:name="com.example.xianhang.OrderFragment"
-        android:label="OrderFragment" />
+        android:name="com.example.xianhang.order.OrderFragment"
+        android:label="OrderFragment" >
+        <action
+            android:id="@+id/action_orderFragment3_to_payFragment"
+            app:destination="@id/payFragment" />
+        <action
+            android:id="@+id/action_orderFragment3_to_postageFragment"
+            app:destination="@id/postageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.example.xianhang.order.PayFragment"
+        android:label="PayFragment" >
+        <action
+            android:id="@+id/action_payFragment_to_orderFragment3"
+            app:destination="@id/orderFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/postageFragment"
+        android:name="com.example.xianhang.PostageFragment"
+        android:label="PostageFragment" >
+        <action
+            android:id="@+id/action_postageFragment_to_orderFragment3"
+            app:destination="@id/orderFragment3" />
+    </fragment>
 </navigation>
