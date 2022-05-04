@@ -5,10 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.xianhang.adapter.BUYER
 import com.example.xianhang.adapter.IMAGE_URL
-import com.example.xianhang.model.OrderItem
-import com.example.xianhang.model.PAID
-import com.example.xianhang.model.SHIPPED
-import com.example.xianhang.model.UNPAID
+import com.example.xianhang.model.*
 import com.example.xianhang.network.Api
 import com.example.xianhang.network.response.OrdersResponse
 import com.example.xianhang.product.ProductsViewModel
@@ -50,18 +47,16 @@ class OrdersViewModel(
             try {
                 var resp: OrdersResponse? = null
                 resp = if (method == BUYER) {
-                    if (getStatus == UNPAID) {
-                        Api.retrofitService.getBoughtOrders(token)
-                    } else if (getStatus == PAID) {
-                        Api.retrofitService.getBoughtOrders(token)
-                    } else if (getStatus == SHIPPED) {
-                        Api.retrofitService.getBoughtOrders(token)
-                    } else {
-                        Api.retrofitService.getBoughtOrders(token)
+                    when (getStatus) {
+                        UNPAID -> Api.retrofitService.getStatusOrders(token, StatusId(UNPAID))
+                        PAID -> Api.retrofitService.getStatusOrders(token, StatusId(PAID))
+                        SHIPPED -> Api.retrofitService.getStatusOrders(token, StatusId(SHIPPED))
+                        else -> Api.retrofitService.getBoughtOrders(token)
                     }
                 }
                 else Api.retrofitService.getSoldOrders(token)
                 if (resOk(resp)) {
+                    println("resp = $resp")
                     _status.value = View.GONE
                     _orders.value = resp.orders
                 } else {
@@ -69,9 +64,11 @@ class OrdersViewModel(
                     setError()
                 }
             } catch (e: HttpException) {
+                println("get orders http error")
                 println(e.message())
                 setError()
             } catch (e: Exception) {
+                println("get orders other error")
                 println(e.message)
                 setError()
             }

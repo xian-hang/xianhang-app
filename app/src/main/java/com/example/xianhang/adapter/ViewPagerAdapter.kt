@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.xianhang.PaidFragment
-import com.example.xianhang.SentFragment
-import com.example.xianhang.UnpaidFragment
+import com.example.xianhang.order.PaidFragment
+import com.example.xianhang.order.SentFragment
+import com.example.xianhang.order.UnpaidFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle):
     FragmentStateAdapter(fragmentManager, lifecycle) {

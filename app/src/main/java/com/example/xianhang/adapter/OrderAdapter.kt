@@ -1,6 +1,7 @@
 package com.example.xianhang.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -11,12 +12,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.xianhang.R
+import com.example.xianhang.order.ViewOrderActivity
 import com.example.xianhang.databinding.OrderItemBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.model.*
 import com.example.xianhang.product.ProductViewModel
 
-class OrderAdapter(private val method: Int, private val context: Context?):
+class OrderAdapter(private val method: Int, private val status: Int, private val context: Context?):
     ListAdapter<OrderItem, OrderAdapter.OrderItemViewHolder>(DiffCallback) {
 
     class OrderItemViewHolder(private var binding: OrderItemBinding, method: Int):
@@ -72,16 +74,19 @@ class OrderAdapter(private val method: Int, private val context: Context?):
     }
 
     private fun setClickListener(method: Int, order: OrderItem, holder: OrderItemViewHolder) {
-        val bundle = bundleOf(ID to order.order.id, TO to R.id.action_orderFragment3_to_payFragment)
         println("order id = ${order.order.id}")
         if (method == BUYER) {
-            holder.view.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_ordersFragment_to_orderFragment3, bundle)
-            )
+            holder.view.setOnClickListener {
+                val intent = Intent(context, ViewOrderActivity::class.java)
+                intent.putExtra(ID, order.order.id)
+                context?.startActivity(intent)
+            }
         } else if (method == SELLER) {
-            holder.view.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_orderFragment2_to_orderFragment4, bundle)
-            )
+            holder.view.setOnClickListener {
+                val intent = Intent(context, ViewOrderActivity::class.java)
+                intent.putExtra(ID, order.order.id)
+                context?.startActivity(intent)
+            }
         }
     }
 

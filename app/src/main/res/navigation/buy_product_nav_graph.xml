@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/buy_product_nav_graph"
     app:startDestination="@id/productDetailsFragment">
     <fragment
@@ -21,29 +22,30 @@
         <action
             android:id="@+id/action_userFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
     </fragment>
     <fragment
         android:id="@+id/buyFragment"
         android:name="com.example.xianhang.order.BuyFragment"
         android:label="BuyFragment" >
         <action
-            android:id="@+id/action_buyFragment_to_orderFragment"
-            app:destination="@id/orderFragment" />
+            android:id="@+id/action_buyFragment_to_viewOrderActivity"
+            app:destination="@id/viewOrderActivity" />
     </fragment>
     <fragment
-        android:id="@+id/orderFragment"
-        android:name="com.example.xianhang.order.OrderFragment"
-        android:label="OrderFragment" >
+        android:id="@+id/reportFragment"
+        android:name="com.example.xianhang.home.ReportFragment"
+        android:label="ReportFragment" >
         <action
-            android:id="@+id/action_orderFragment_to_payFragment2"
-            app:destination="@id/payFragment2" />
+            android:id="@+id/action_reportFragment_to_nav_graph"
+            app:destination="@id/nav_graph" />
     </fragment>
-    <fragment
-        android:id="@+id/payFragment2"
-        android:name="com.example.xianhang.order.PayFragment"
-        android:label="PayFragment" >
-        <action
-            android:id="@+id/action_payFragment2_to_orderFragment"
-            app:destination="@id/orderFragment" />
-    </fragment>
+    <include app:graph="@navigation/main_nav_graph" />
+    <activity
+        android:id="@+id/viewOrderActivity"
+        android:name="com.example.xianhang.order.ViewOrderActivity"
+        android:label="activity_view_order"
+        tools:layout="@layout/activity_view_order" />
 </navigation>

@@ -122,8 +122,11 @@ interface ApiService {
     @GET("order/buying/")
     suspend fun getBoughtOrders(@Header(AUTH) authToken: String): OrdersResponse
 
-    @GET("order/buying/status/")
-    suspend fun getStatusOrders(@Header(AUTH) authToken: String, @Body status: StatusId): OrdersResponse
+    @POST("order/buying/status/")
+    suspend fun getStatusOrders(
+        @Header(AUTH) authToken: String,
+        @Body status: StatusId
+    ): OrdersResponse
 
     @GET("order/selling/")
     suspend fun getSoldOrders(@Header(AUTH) authToken: String): OrdersResponse
@@ -138,6 +141,24 @@ interface ApiService {
         @Body data: OrderStatusRequest
     ): DefaultResponse
 
+    @POST("order/{id}/edit/postage/")
+    suspend fun setPostage(
+        @Header(AUTH) authToken: String,
+        @Path("id") id: Int,
+        @Body data: PostageReqeust
+    ): DefaultResponse
+
     @GET("collection/list/")
     suspend fun getCollections(@Header(AUTH) authToken: String): ProductsResponse
+
+    @POST("report/create/")
+    suspend fun createReport(@Header(AUTH) authToken: String, @Body data: ReportRequest): ReportResponse
+
+    @Multipart
+    @POST("report/image/create/")
+    suspend fun createReportImage(
+        @Header(AUTH) authToken: String,
+        @Part image: MultipartBody.Part,
+        @Part("reportId") reportId: RequestBody
+    ): DefaultResponse
 }

@@ -37,7 +37,7 @@ class OrdersFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         val method = activity?.intent?.extras?.getInt(METHOD)
-        binding.orders.adapter = OrderAdapter(method!!, context)
+        binding.orders.adapter = OrderAdapter(method!!, ALL, context)
         binding.title.text = if (method == BUYER) "购买订单" else if (method == SELLER) "出售订单" else "订单"
 
         return binding.root

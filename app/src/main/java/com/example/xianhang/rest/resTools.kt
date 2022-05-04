@@ -29,6 +29,8 @@ fun resOk(resp: Any): Boolean {
         return resp.code == 200
     } else if (resp is OrderIdResponse) {
         return resp.code == 200
+    } else if (resp is ReportResponse) {
+        return resp.code == 200
     }
     return false
 }

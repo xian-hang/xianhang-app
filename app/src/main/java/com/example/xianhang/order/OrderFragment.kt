@@ -62,7 +62,7 @@ class OrderFragment : Fragment() {
             return
         }
 
-        val id = arguments?.getInt(ID)
+        val id = activity?.intent?.extras?.getInt(ID)
         val userId = sharedPreferences?.getInt(ID, 0)
         println("order id = $id, userId = $userId")
         CoroutineScope(Dispatchers.Main).launch {
@@ -92,22 +92,14 @@ class OrderFragment : Fragment() {
     }
 
     private fun action(status: Int, isBuyer: Boolean, price: Double) {
-        val to = arguments?.getInt(TO)
-        println(to)
         when (status) {
             UNPAID -> if (isBuyer) {
-                if (to == R.id.action_orderFragment_to_payFragment2) {
-                    val bundle = bundleOf(PRICE to price, TO to R.id.action_payFragment2_to_orderFragment)
-                    findNavController().navigate(to, bundle)
-                } else if (to == R.id.action_orderFragment3_to_payFragment) {
-                    val bundle = bundleOf(PRICE to price, TO to R.id.action_payFragment_to_orderFragment3)
-                    findNavController().navigate(to, bundle)
-                }
+                val bundle = bundleOf(PRICE to price)
+                findNavController().navigate(R.id.action_orderFragment_to_payFragment, bundle)
             } else {
-                findNavController().navigate(R.id.action_orderFragment3_to_postageFragment)
+                findNavController().navigate(R.id.action_orderFragment_to_postageFragment)
             }
             PAID -> if (!isBuyer) {
-                // TODO: set send button
                 viewModel.setStatus(context, token!!, SHIPPED, isBuyer)
             }
             SHIPPED -> if (isBuyer) {

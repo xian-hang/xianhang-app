@@ -118,19 +118,8 @@ class OrderViewModel: ViewModel() {
         updatePrice()
     }
 
-    fun setPostage(context: Context?, p: Double) {
+    fun setPostage(p: Double) {
         _postage.value = p
-        viewModelScope.launch {
-            // TODO: request postage value
-            try {
-
-            } catch (e: HttpException) {
-                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-                e.printStackTrace()
-            }
-        }
     }
 
     fun setStatus(context: Context?, token: String, state: Int, isBuyer: Boolean) {
@@ -144,20 +133,10 @@ class OrderViewModel: ViewModel() {
                 if (resOk(resp)) {
                     Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                     when (state) {
-                        PAID -> {
-                            // ALERT: don't use these statement
-                            println("why u in here???")
-                        }
-                        SHIPPED -> {
-                            updateStatus(SHIPPED, isBuyer)
-                        }
-                        COMPLETE -> {
-                            updateStatus(COMPLETE, isBuyer)
-                        }
-                        CANCEL -> {
-                            updateStatus(CANCEL, isBuyer)
-                        }
-                        else -> {}
+                        PAID -> println("why u in here???")
+                        SHIPPED -> updateStatus(SHIPPED, isBuyer)
+                        COMPLETE -> updateStatus(COMPLETE, isBuyer)
+                        CANCEL -> updateStatus(CANCEL, isBuyer)
                     }
                 } else {
                     Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()

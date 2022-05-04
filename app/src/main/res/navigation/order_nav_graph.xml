@@ -2,25 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/order_nav_graph"
-    app:startDestination="@id/ordersFragment">
+    app:startDestination="@id/orderFragment">
 
     <fragment
-        android:id="@+id/ordersFragment"
-        android:name="com.example.xianhang.product.OrdersFragment"
-        android:label="OrdersFragment" >
-        <action
-            android:id="@+id/action_ordersFragment_to_orderFragment3"
-            app:destination="@id/orderFragment3" />
-    </fragment>
-    <fragment
-        android:id="@+id/orderFragment3"
+        android:id="@+id/orderFragment"
         android:name="com.example.xianhang.order.OrderFragment"
         android:label="OrderFragment" >
         <action
-            android:id="@+id/action_orderFragment3_to_payFragment"
+            android:id="@+id/action_orderFragment_to_payFragment"
             app:destination="@id/payFragment" />
         <action
-            android:id="@+id/action_orderFragment3_to_postageFragment"
+            android:id="@+id/action_orderFragment_to_postageFragment"
             app:destination="@id/postageFragment" />
     </fragment>
     <fragment
@@ -28,15 +20,15 @@
         android:name="com.example.xianhang.order.PayFragment"
         android:label="PayFragment" >
         <action
-            android:id="@+id/action_payFragment_to_orderFragment3"
-            app:destination="@id/orderFragment3" />
+            android:id="@+id/action_payFragment_to_orderFragment"
+            app:destination="@id/orderFragment" />
     </fragment>
     <fragment
         android:id="@+id/postageFragment"
-        android:name="com.example.xianhang.PostageFragment"
+        android:name="com.example.xianhang.order.PostageFragment"
         android:label="PostageFragment" >
         <action
-            android:id="@+id/action_postageFragment_to_orderFragment3"
-            app:destination="@id/orderFragment3" />
+            android:id="@+id/action_postageFragment_to_orderFragment"
+            app:destination="@id/orderFragment" />
     </fragment>
 </navigation>

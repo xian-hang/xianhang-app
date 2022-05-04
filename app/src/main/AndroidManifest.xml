@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.xianhang">
+    package="com.example.xianhang" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -16,12 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.XianHang"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m">
-        <activity
-            android:name=".OrderStatusActivity"
-            android:exported="false" />
+        tools:targetApi="m" >
         <activity
             android:name=".order.ViewOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".order.OrderStatusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".order.ViewOrdersActivity"
             android:exported="false" />
         <activity
             android:name=".order.OrderActivity"
@@ -43,7 +46,7 @@
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

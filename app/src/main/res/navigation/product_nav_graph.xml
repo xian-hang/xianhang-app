@@ -18,13 +18,13 @@
             app:destination="@id/viewProductFragment" />
     </fragment>
     <fragment
-        android:id="@+id/orderFragment2"
+        android:id="@+id/ordersFragment"
         android:name="com.example.xianhang.product.OrdersFragment"
         android:label="fragment_order"
         tools:layout="@layout/fragment_orders" >
         <action
-            android:id="@+id/action_orderFragment2_to_orderFragment4"
-            app:destination="@id/orderFragment4" />
+            android:id="@+id/action_ordersFragment_to_order_nav_graph"
+            app:destination="@id/order_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/sellProductFragment"
@@ -46,8 +46,5 @@
             android:id="@+id/action_viewProductFragment_to_productFragment2"
             app:destination="@id/productFragment2" />
     </fragment>
-    <fragment
-        android:id="@+id/orderFragment4"
-        android:name="com.example.xianhang.order.OrderFragment"
-        android:label="OrderFragment" />
+    <include app:graph="@navigation/order_nav_graph" />
 </navigation>

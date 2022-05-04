@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.USER_PRODUCT
@@ -77,13 +79,13 @@ class UserFragment : Fragment() {
         }
 
         binding.report.setOnClickListener {
-            // TODO: implement report
             report()
         }
     }
 
     private fun report() {
-
+        val bundle = bundleOf(ID to userId)
+        findNavController().navigate(R.id.action_userFragment_to_reportFragment, bundle)
     }
 
     private fun like() {
@@ -130,10 +132,10 @@ class UserFragment : Fragment() {
                     binding.userViewModel!!.init(context, resp.likeId, resp.followId)
                 }
             } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection wrong
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
         }

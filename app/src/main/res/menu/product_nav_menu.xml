@@ -7,7 +7,7 @@
         android:icon="@mipmap/ic_product"
         android:title="@string/products" />
     <item
-        android:id="@+id/orderFragment2"
+        android:id="@+id/ordersFragment"
         android:icon="@mipmap/ic_order"
         android:title="@string/orders" />
 </menu>

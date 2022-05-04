@@ -45,3 +45,7 @@ data class OrderRequest(
 data class OrderStatusRequest(
     val status: Int
 )
+
+data class PostageReqeust(
+    val postage: Double
+)

@@ -66,10 +66,9 @@ class BuyFragment : Fragment() {
                 val resp = Api.retrofitService.createOrder(token!!, getData())
                 if (resOk(resp)) {
                     val id = resp.orderId
-                    val bundle = bundleOf(ID to id, TO to R.id.action_orderFragment_to_payFragment2)
-                    findNavController().navigate(R.id.action_buyFragment_to_orderFragment, bundle)
+                    val bundle = bundleOf(ID to id)
+                    findNavController().navigate(R.id.action_buyFragment_to_viewOrderActivity, bundle)
                 } else {
-                    println(resp)
                     Toast.makeText(requireActivity(), "order failed", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {

@@ -276,7 +276,7 @@ class SellProductFragment : Fragment() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
             AlertDialog.Builder(requireActivity())
                 .setTitle("Permission needed")
-                .setMessage("This permission is needed because of this and that")
+                .setMessage("This permission is needed")
                 .setPositiveButton("ok") { _, _ ->
                     ActivityCompat.requestPermissions(
                         requireActivity(),

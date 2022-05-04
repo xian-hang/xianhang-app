@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.ViewCompat
 import com.example.xianhang.*
 import com.example.xianhang.adapter.BUYER
 import com.example.xianhang.adapter.METHOD
@@ -23,8 +22,8 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.login.LoginFragment.Companion.USER
 import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.network.Api
-import com.example.xianhang.order.OrderActivity
-import com.example.xianhang.order.ViewOrderActivity
+import com.example.xianhang.order.OrderStatusActivity
+import com.example.xianhang.order.ViewOrdersActivity
 import com.example.xianhang.product.ProductActivity
 import com.example.xianhang.rest.resOk
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -145,7 +144,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun changeActivityMyOrders() {
-        val intent = Intent(requireActivity(), ViewOrderActivity::class.java)
+        val intent = Intent(requireActivity(), ViewOrdersActivity::class.java)
         intent.putExtra(METHOD, BUYER)
         startActivity(intent)
     }
