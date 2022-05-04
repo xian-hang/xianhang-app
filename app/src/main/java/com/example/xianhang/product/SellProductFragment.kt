@@ -133,17 +133,19 @@ class SellProductFragment : Fragment() {
                     println("edit product success")
                     // TODO: fix edit image
                     if (upload) {
-                        println("run delete image")
-                        try {
-                            // TODO: change product.id to image.id
-                            val res1 = Api.retrofitService.deleteProductImage(token, imageId!!)
-                            if (!resOk(res1)) {
-                                Toast.makeText(requireActivity(), "image delete failed", Toast.LENGTH_LONG).show()
-                            }
-                        } catch (e: HttpException) {
-                            println("delete image failed")
-                            if (e.code() == 404) {
-                                println("no need to delete image")
+                        if (imageId != null) {
+                            println("run delete image")
+                            try {
+                                // TODO: change product.id to image.id
+                                val res1 = Api.retrofitService.deleteProductImage(token, imageId!!)
+                                if (!resOk(res1)) {
+                                    Toast.makeText(requireActivity(), "image delete failed", Toast.LENGTH_LONG).show()
+                                }
+                            } catch (e: HttpException) {
+                                println("delete image failed")
+                                if (e.code() == 404) {
+                                    println("no need to delete image")
+                                }
                             }
                         }
                         println("run upload image")
