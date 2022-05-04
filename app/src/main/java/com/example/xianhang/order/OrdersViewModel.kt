@@ -1,14 +1,11 @@
 package com.example.xianhang.order
 
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.xianhang.adapter.BUYER
-import com.example.xianhang.adapter.IMAGE_URL
 import com.example.xianhang.model.*
 import com.example.xianhang.network.Api
 import com.example.xianhang.network.response.OrdersResponse
-import com.example.xianhang.product.ProductsViewModel
 import com.example.xianhang.rest.resOk
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

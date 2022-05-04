@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.*
 import com.example.xianhang.adapter.*
 import com.example.xianhang.model.ProductItem
+import com.example.xianhang.model.SearchRequest
 import com.example.xianhang.network.Api
 import com.example.xianhang.network.response.ProductsResponse
 import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
@@ -16,6 +17,7 @@ class ProductsViewModel(
     private val method: Int,
     private val id: Int?,
     private val token: String?,
+    private val keyword: String?
 ): ViewModel() {
     private val _products = MutableLiveData<List<ProductItem>>()
     val products: LiveData<List<ProductItem>> = _products
@@ -26,6 +28,9 @@ class ProductsViewModel(
     private val _image = MutableLiveData<Int>()
     val image: LiveData<Int> = _image
 
+    private val _query = MutableLiveData<String>()
+    val query: LiveData<String> = _query
+
     init {
         getProducts()
     }
@@ -33,16 +38,18 @@ class ProductsViewModel(
     class Factory(
         private val method: Int,
         private val id: Int?,
-        private val token: String?
+        private val token: String?,
+        private val keyword: String?
     ): ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ProductsViewModel(method, id, token) as T
+            return ProductsViewModel(method, id, token, keyword) as T
         }
     }
 
     private fun getProducts() {
+        if (method == SEARCH) _query.value = keyword!!
         viewModelScope.launch {
             _status.value = View.VISIBLE
             try {
@@ -52,6 +59,7 @@ class ProductsViewModel(
                     BUYER -> Api.retrofitService.getAllProducts(token!!)
                     COLLECTION -> Api.retrofitService.getCollections(token!!)
                     FEEDS -> Api.retrofitService.getFeeds(token!!)
+                    SEARCH -> Api.retrofitService.searchProduct(token!!, SearchRequest(keyword!!))
                     // USER_PRODUCT and SELLER request same
                     else -> Api.retrofitService.getUserProduct(token, id!!)
                 }

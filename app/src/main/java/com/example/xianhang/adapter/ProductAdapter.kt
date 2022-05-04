@@ -1,6 +1,7 @@
 package com.example.xianhang.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -14,6 +15,7 @@ import com.example.xianhang.R
 import com.example.xianhang.databinding.ProductListItemBinding
 import com.example.xianhang.model.Product
 import com.example.xianhang.model.ProductItem
+import com.example.xianhang.order.OrderActivity
 import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
 
 const val PRODUCT = "product"
@@ -23,12 +25,14 @@ const val IMAGE_URL = "image_url"
 const val METHOD = "method"
 const val PRICE = "price"
 const val TO = "to"
+const val QUERY = "query"
 
 const val SELLER = 0
 const val BUYER = 1
 const val USER_PRODUCT = 2
 const val COLLECTION = 3
 const val FEEDS = 4
+const val SEARCH = 5
 
 class ProductAdapter(private val method: Int, private val context: Context?):
     ListAdapter<ProductItem, ProductAdapter.ProductItemViewHolder>(DiffCallback) {
@@ -60,7 +64,7 @@ class ProductAdapter(private val method: Int, private val context: Context?):
         private fun setDetails(product: Product, method: Int) {
             if (method == SELLER) {
                 "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
-            } else if (method == BUYER || method == COLLECTION) {
+            } else if (method == BUYER || method == COLLECTION || method == SEARCH || method == FEEDS) {
                 "$${product.price} | ${product.username}".also { binding.productDetails.text = it }
             } else if (method == USER_PRODUCT) {
                 "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
@@ -102,6 +106,13 @@ class ProductAdapter(private val method: Int, private val context: Context?):
                 holder.view.setOnClickListener(
                     Navigation.createNavigateOnClickListener(R.id.action_userFragment_to_productDetailsFragment, bundle)
                 )
+            }
+            SEARCH -> {
+                holder.view.setOnClickListener {
+                    val intent = Intent(context, OrderActivity::class.java)
+                    intent.putExtra(PRODUCT_ITEM, product)
+                    context?.startActivity(intent)
+                }
             }
         }
     }

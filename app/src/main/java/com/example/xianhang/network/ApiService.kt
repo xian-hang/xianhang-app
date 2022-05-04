@@ -41,6 +41,9 @@ interface ApiService {
     @POST("user/logout/")
     suspend fun logout(@Header(AUTH) authToken: String): DefaultResponse
 
+    @POST("product/search/")
+    suspend fun searchProduct(@Header(AUTH) authToken: String, @Body data: SearchRequest): ProductsResponse
+
     @POST("user/resent/")
     suspend fun resend(@Body studentId: String): DefaultResponse
 

@@ -35,7 +35,7 @@ class UserFragment : Fragment() {
     private val productsViewModel: ProductsViewModel by viewModels {
         val id = arguments?.getInt(ID)
         println("user id = $id")
-        ProductsViewModel.Factory(USER_PRODUCT, id, null)
+        ProductsViewModel.Factory(USER_PRODUCT, id, null, null)
     }
     private val userViewModel: UserViewModel by viewModels()
     var userId: Int? = null

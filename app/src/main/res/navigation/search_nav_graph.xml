@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_nav_graph"
+    app:startDestination="@id/searchProductsFragment">
+
+    <fragment
+        android:id="@+id/searchProductsFragment"
+        android:name="com.example.xianhang.search.SearchProductsFragment"
+        android:label="SearchProductsFragment" >
+        <action
+            android:id="@+id/action_searchProductsFragment_to_buy_product_nav_graph"
+            app:destination="@id/buy_product_nav_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchUsersFragment"
+        android:name="com.example.xianhang.search.SearchUsersFragment"
+        android:label="SearchUsersFragment" />
+    <include app:graph="@navigation/buy_product_nav_graph" />
+</navigation>

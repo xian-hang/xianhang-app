@@ -29,7 +29,7 @@ class ProductFragment : Fragment() {
         val id = sharedPreferences?.getInt(ID, 0)
         val token = sharedPreferences?.getString(TOKEN, null)
         println("id = " + id.toString())
-        ProductsViewModel.Factory(SELLER, id, token)
+        ProductsViewModel.Factory(SELLER, id, token, null)
     }
 
     override fun onCreateView(
