@@ -50,6 +50,7 @@ class SellProductFragment : Fragment() {
     private lateinit var binding: FragmentSellProductBinding
     private var imagePath: String = ""
     private var upload = false
+    private var imageId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,8 +84,12 @@ class SellProductFragment : Fragment() {
     }
 
     private fun prefillProduct(product: Product) {
-        val imageUrl = arguments?.getString(IMAGE_URL)
-        val imgUrl = imageUrl!!.toUri().buildUpon().scheme("https").build()
+        val imageUrl = arguments?.getString(IMAGE_URL) ?: ""
+        if (imageUrl.isNotEmpty()) {
+            val arr = imageUrl.split('/')
+            imageId = arr[arr.size - 1].toInt()
+        }
+        val imgUrl = imageUrl.toUri().buildUpon().scheme("https").build()
         binding.image.load(imgUrl) {
             placeholder(R.mipmap.ic_loading)
             error(R.mipmap.ic_image_placeholder)
@@ -128,10 +133,10 @@ class SellProductFragment : Fragment() {
                     println("edit product success")
                     // TODO: fix edit image
                     if (upload) {
-                        //if (binding.image.tag != R.mipmap.ic_image_placeholder) {
                         println("run delete image")
                         try {
-                            val res1 = Api.retrofitService.deleteProductImage(token, product.id!!)
+                            // TODO: change product.id to image.id
+                            val res1 = Api.retrofitService.deleteProductImage(token, imageId!!)
                             if (!resOk(res1)) {
                                 Toast.makeText(requireActivity(), "image delete failed", Toast.LENGTH_LONG).show()
                             }
