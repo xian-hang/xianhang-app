@@ -69,6 +69,6 @@ dependencies {
     // Coil
     implementation "io.coil-kt:coil:1.1.1"
 
-    //ksp("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
-    //kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.2"
+    // debugImplementation because LeakCanary should only run in debug builds.
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }

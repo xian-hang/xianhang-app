@@ -85,7 +85,7 @@ class UserFragment : Fragment() {
 
     private fun report() {
         val bundle = bundleOf(ID to userId)
-        findNavController().navigate(R.id.action_userFragment_to_reportFragment, bundle)
+        findNavController().navigate(R.id.action_userFragment2_to_reportFragment2, bundle)
     }
 
     private fun like() {
