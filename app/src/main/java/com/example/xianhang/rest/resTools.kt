@@ -33,6 +33,8 @@ fun resOk(resp: Any): Boolean {
         return resp.code == 200
     } else if (resp is UsersResponse) {
         return resp.code == 200
+    } else if (resp is NoticeResponse) {
+        return resp.code == 200
     }
     return false
 }

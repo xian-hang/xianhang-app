@@ -167,4 +167,7 @@ interface ApiService {
         @Part image: MultipartBody.Part,
         @Part("reportId") reportId: RequestBody
     ): DefaultResponse
+
+    @GET("report/notice/")
+    suspend fun getNotification(@Header(AUTH) authToken: String): NoticeResponse
 }

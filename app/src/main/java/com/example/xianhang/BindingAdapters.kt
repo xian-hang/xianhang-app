@@ -5,9 +5,11 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.xianhang.adapter.NoticeAdapter
 import com.example.xianhang.adapter.OrderAdapter
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.UserAdapter
+import com.example.xianhang.model.Notice
 import com.example.xianhang.model.OrderItem
 import com.example.xianhang.model.ProductItem
 import com.example.xianhang.network.response.UserBody
@@ -34,6 +36,14 @@ fun bindUsers(recyclerView: RecyclerView, users: List<UserBody>?) {
     println("submit list")
     println("users = $users")
     adapter.submitList(users)
+}
+
+@BindingAdapter("listnotice")
+fun bindNotices(recyclerView: RecyclerView, notices: List<Notice>?) {
+    val adapter = recyclerView.adapter as NoticeAdapter
+    println("submit list")
+    println("notices = $notices")
+    adapter.submitList(notices)
 }
 
 @BindingAdapter("imageUrl")

@@ -9,6 +9,7 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout-v23/fragment_view_product.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_change_password.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_notice.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_order.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_order_status.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_product.xml" value="0.22826086956521738" />
@@ -22,6 +23,8 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_follow.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_login.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_notice.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_notices.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_order.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_orders.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_paid.xml" value="0.22826086956521738" />
@@ -39,6 +42,7 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_unpaid.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_user.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_view_product.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/notice_list_item.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/order_item.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/product_list_item.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/product_show_item.xml" value="0.22826086956521738" />

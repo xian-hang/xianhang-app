@@ -22,6 +22,7 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.login.LoginFragment.Companion.USER
 import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.network.Api
+import com.example.xianhang.notification.NoticeActivity
 import com.example.xianhang.order.OrderStatusActivity
 import com.example.xianhang.order.ViewOrdersActivity
 import com.example.xianhang.product.ProductActivity
@@ -149,9 +150,9 @@ class ProfileFragment : Fragment() {
         startActivity(intent)
     }
 
-    // TODO: implement
     private fun changeActivityNotifications() {
-        Toast.makeText(requireActivity(), "not yet implement", Toast.LENGTH_LONG).show()
+        val intent = Intent(context, NoticeActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showLogoutDialog() {
