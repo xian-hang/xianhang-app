@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.xianhang.search.SearchActivity
 import com.example.xianhang.adapter.BUYER
+import com.example.xianhang.adapter.FEEDS
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.QUERY
 import com.example.xianhang.databinding.FragmentHomeBinding
@@ -38,6 +39,12 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.products.adapter = ProductAdapter(BUYER, context)
+
+        // TODO: test it
+        println("run testing")
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+        viewModel.setProducts(context, BUYER, token!!, null)
 
         return binding.root
     }

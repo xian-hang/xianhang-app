@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.example.xianhang.product.OrdersFragment"
-        android:label="OrdersFragment" >
+        android:label="订单" >
         <action
             android:id="@+id/action_ordersFragment_to_viewOrderActivity"
             app:destination="@id/viewOrderActivity" />

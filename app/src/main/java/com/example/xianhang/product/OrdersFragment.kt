@@ -38,7 +38,8 @@ class OrdersFragment : Fragment() {
         binding.viewModel = viewModel
         val method = activity?.intent?.extras?.getInt(METHOD)
         binding.orders.adapter = OrderAdapter(method!!, ALL, context)
-        binding.title.text = if (method == BUYER) "购买订单" else if (method == SELLER) "出售订单" else "订单"
+        binding.title.text = if (method == SELLER) "出售订单" else ""
+        if (method != SELLER) binding.title.visibility = View.GONE
 
         return binding.root
     }

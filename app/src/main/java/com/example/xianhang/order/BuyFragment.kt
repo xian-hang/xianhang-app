@@ -1,6 +1,7 @@
 package com.example.xianhang.order
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -67,12 +68,15 @@ class BuyFragment : Fragment() {
                 if (resOk(context, resp)) {
                     val id = resp.orderId
                     val bundle = bundleOf(ID to id)
-                    findNavController().navigate(R.id.action_buyFragment_to_viewOrderActivity, bundle)
+                    val intent = Intent(context, OrderStatusActivity::class.java)
+                    intent.putExtra(POSITION, 0)
+                    startActivity(intent)
+                    // findNavController().navigate(R.id.action_buyFragment_to_viewOrderActivity, bundle)
                 }
             } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
             }
         }
     }

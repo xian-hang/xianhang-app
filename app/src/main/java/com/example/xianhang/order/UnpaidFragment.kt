@@ -12,6 +12,7 @@ import com.example.xianhang.adapter.OrderAdapter
 import com.example.xianhang.databinding.FragmentUnpaidBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.model.SHIPPED
 import com.example.xianhang.model.UNPAID
 
 class UnpaidFragment : Fragment() {
@@ -33,8 +34,11 @@ class UnpaidFragment : Fragment() {
         binding = FragmentUnpaidBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        val method = BUYER
-        binding.orders.adapter = OrderAdapter(method, UNPAID, context)
+        binding.orders.adapter = OrderAdapter(BUYER, UNPAID, context)
+
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+        viewModel.setOrders(context, token!!, BUYER, UNPAID)
 
         return binding.root
     }

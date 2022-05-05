@@ -58,7 +58,7 @@ class OrderFragment : Fragment() {
 
         println("token = $token")
         if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
 

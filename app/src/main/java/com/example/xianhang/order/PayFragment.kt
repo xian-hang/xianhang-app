@@ -59,7 +59,7 @@ class PayFragment : Fragment() {
 
     private fun setStatus() {
         val text = binding.cost.text
-        val needed = viewModel.price.value.toString().toDouble()
+        val needed = viewModel.price.value.toString().toDouble() + viewModel.postage.value.toString().toDouble()
         if (text.isEmpty()) {
             Toast.makeText(context, "please fill the price", Toast.LENGTH_LONG).show()
             return
@@ -86,7 +86,7 @@ class PayFragment : Fragment() {
                         viewModel.updateStatus(PAID, true)
                     }
                     val bundle = bundleOf(ID to viewModel.order.value!!.id)
-                    findNavController().navigate(to!!, bundle)
+                    findNavController().navigate(R.id.action_payFragment_to_orderFragment, bundle)
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

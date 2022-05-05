@@ -96,7 +96,7 @@ class OrderViewModel: ViewModel() {
         println("isBuyer = $isBuyer")
         println("status = ${o.status}")
         _disAction.value = if (o.status == UNPAID && isBuyer && o.postage == null) false
-        else if (o.status == UNPAID && !isBuyer && o.postage != null) true
+        else if (o.status == UNPAID && !isBuyer && o.postage != null) false
         else true
         _visAction.value = when (o.status) {
             UNPAID -> if (isBuyer) View.VISIBLE else if (o.tradingMethod == DELIVERY) View.VISIBLE else View.GONE

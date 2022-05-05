@@ -48,7 +48,7 @@ interface ApiService {
     suspend fun searchUser(@Header(AUTH) authToken: String, @Body data: SearchRequest): UsersResponse
 
     @POST("user/resent/")
-    suspend fun resend(@Body studentId: String): DefaultResponse
+    suspend fun resend(@Body studentId: StudentId): DefaultResponse
 
     @GET("user/profile/")
     suspend fun getProfile(@Header(AUTH) authToken: String): ProfileResponse

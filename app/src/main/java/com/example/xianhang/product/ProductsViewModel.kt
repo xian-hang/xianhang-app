@@ -2,6 +2,7 @@ package com.example.xianhang.product
 
 import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.xianhang.adapter.*
 import com.example.xianhang.model.ProductItem
@@ -72,6 +73,39 @@ class ProductsViewModel(
                 _products.value = listOf()
             }
         }
+    }
+
+    fun setProducts(context: Context?, method: Int, token: String, id: Int?) {
+        viewModelScope.launch {
+            _status.value = View.VISIBLE
+            try {
+                // TODO: test it
+                val resp = when (method) {
+                    BUYER -> Api.retrofitService.getAllProducts(token)
+                    COLLECTION -> Api.retrofitService.getCollections(token)
+                    FEEDS -> Api.retrofitService.getFeeds(token)
+                    else -> Api.retrofitService.getUserProduct(token, id!!)
+                }
+                if (resOk(context, resp)) {
+                    _status.value = View.GONE
+                    _products.value = resp.products
+                } else {
+                    _status.value = View.GONE
+                    println("get Products failed")
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
+                setError()
+            } catch (e: Exception) {
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                setError()
+            }
+        }
+    }
+
+    private fun setError() {
+        _status.value = View.GONE
+        _products.value = listOf()
     }
 
     private fun getProducts() {

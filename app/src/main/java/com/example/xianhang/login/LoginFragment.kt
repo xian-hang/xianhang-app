@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
 import com.example.xianhang.databinding.FragmentLoginBinding
 import com.example.xianhang.model.LoginUser
+import com.example.xianhang.model.StudentId
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk
 import com.google.android.material.textfield.TextInputEditText
@@ -44,6 +45,7 @@ class LoginFragment : Fragment() {
         if (userId != null) {
             binding.verifyEmail.text = resources.getString(R.string.verify_email, userId)
             binding.resent.text = resources.getString(R.string.resend)
+            requestSent()
             binding.resent.setOnClickListener {
                 requestResent()
             }
@@ -63,12 +65,31 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun requestSent() {
+        val userId = arguments?.getString(USER)
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                println("userId = $userId")
+                val resp = Api.retrofitService.resend(StudentId(userId!!))
+                if (!resOk(context, resp)) {
+                    println("email send not ok")
+                }
+            } catch (e: HttpException) {
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                // TODO: check connection
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun requestResent() {
         val userId = arguments?.getString(USER)
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 println("userId = $userId")
-                val resp = Api.retrofitService.resend(userId!!)
+                val resp = Api.retrofitService.resend(StudentId(userId!!))
                 if (resOk(context, resp)) {
                     Toast.makeText(context, "Resent", Toast.LENGTH_LONG).show()
                 }

@@ -12,6 +12,7 @@ import com.example.xianhang.adapter.OrderAdapter
 import com.example.xianhang.databinding.FragmentSentBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.model.PAID
 import com.example.xianhang.model.SHIPPED
 
 class SentFragment : Fragment() {
@@ -33,8 +34,11 @@ class SentFragment : Fragment() {
         binding = FragmentSentBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        val method = BUYER
-        binding.orders.adapter = OrderAdapter(method, SHIPPED, context)
+        binding.orders.adapter = OrderAdapter(BUYER, SHIPPED, context)
+
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+        viewModel.setOrders(context, token!!, BUYER, SHIPPED)
 
         return binding.root
     }

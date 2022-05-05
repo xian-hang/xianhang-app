@@ -33,9 +33,18 @@ class PaidFragment : Fragment() {
         binding = FragmentPaidBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        val method = BUYER
-        binding.orders.adapter = OrderAdapter(method, PAID, context)
+        binding.orders.adapter = OrderAdapter(BUYER, PAID, context)
+
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val token = sharedPreferences?.getString(TOKEN, null)
+        viewModel.setOrders(context, token!!, BUYER, PAID)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        println("paid fragment view created")
     }
 }
