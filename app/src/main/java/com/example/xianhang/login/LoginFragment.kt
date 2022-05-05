@@ -28,10 +28,6 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,9 +54,12 @@ class LoginFragment : Fragment() {
             requestLogin()
         }
 
-        val newUser = getView()?.findViewById<TextView>(R.id.new_user)
-        newUser?.setOnClickListener {
+        binding.newUser.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
+        binding.forgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
     }
 
@@ -71,15 +70,15 @@ class LoginFragment : Fragment() {
                 println("userId = $userId")
                 val resp = Api.retrofitService.resend(userId!!)
                 if (resOk(resp)) {
-                    Toast.makeText(requireActivity(), "Resent", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Resent", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
         }
@@ -112,17 +111,17 @@ class LoginFragment : Fragment() {
                     editor?.apply()
                     findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
                 } else if (resp.role == 1) {
-                    Toast.makeText(requireActivity(), "Admin User please use web login", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Admin User please use web login", Toast.LENGTH_LONG).show()
                 } else {
                     val code = resp.code
                     val role = resp.role
-                    Toast.makeText(requireActivity(), "code: $code, role: $role", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "code: $code, role: $role", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
             binding.progressBar.visibility = View.GONE
@@ -131,11 +130,11 @@ class LoginFragment : Fragment() {
 
     private fun checkData(userId: String, password: String): Boolean {
         if (userId.isEmpty()) {
-            Toast.makeText(requireActivity(), "Please fill your Id", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please fill your Id", Toast.LENGTH_LONG).show()
             return false
         }
         if (password.isEmpty()) {
-            Toast.makeText(requireActivity(), "Please fill your password", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please fill your password", Toast.LENGTH_LONG).show()
             return false
         }
         return true

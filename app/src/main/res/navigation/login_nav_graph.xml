@@ -24,10 +24,17 @@
         <action
             android:id="@+id/action_loginFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
         android:name="com.example.xianhang.home.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.xianhang.login.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment" />
 </navigation>

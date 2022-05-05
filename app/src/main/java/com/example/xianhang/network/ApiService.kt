@@ -41,6 +41,9 @@ interface ApiService {
     @POST("user/logout/")
     suspend fun logout(@Header(AUTH) authToken: String): DefaultResponse
 
+    @POST("user/forgot/password/")
+    suspend fun forgotPassword(@Body studentId: StudentId): DefaultResponse
+
     @POST("user/search/")
     suspend fun searchUser(@Header(AUTH) authToken: String, @Body data: SearchRequest): UsersResponse
 

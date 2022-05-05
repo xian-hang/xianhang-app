@@ -10,6 +10,10 @@ data class UserId(
     @Json(name = "userId") val id: Int
 )
 
+data class StudentId(
+    @Json(name = "studentId") val id: String
+)
+
 data class StatusId(
     val status: Int
 )
