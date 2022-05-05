@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import com.example.xianhang.*
 import com.example.xianhang.adapter.BUYER
 import com.example.xianhang.adapter.METHOD
@@ -24,6 +25,7 @@ import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.network.Api
 import com.example.xianhang.notification.NoticeActivity
 import com.example.xianhang.order.OrderStatusActivity
+import com.example.xianhang.order.POSITION
 import com.example.xianhang.order.ViewOrdersActivity
 import com.example.xianhang.product.ProductActivity
 import com.example.xianhang.rest.resOk
@@ -74,14 +76,18 @@ class ProfileFragment : Fragment() {
         val toPay = view.findViewById<ImageButton>(R.id.to_pay)
         val toSend = view.findViewById<ImageButton>(R.id.to_send)
         val toReceive = view.findViewById<ImageButton>(R.id.to_receive)
+        val intent = Intent(context, OrderStatusActivity::class.java)
         toPay.setOnClickListener {
-            startActivity(Intent(requireActivity(), OrderStatusActivity::class.java))
+            intent.putExtra(POSITION, 0)
+            startActivity(intent)
         }
         toSend.setOnClickListener {
-            startActivity(Intent(requireActivity(), OrderStatusActivity::class.java))
+            intent.putExtra(POSITION, 1)
+            startActivity(intent)
         }
         toReceive.setOnClickListener {
-            startActivity(Intent(requireActivity(), OrderStatusActivity::class.java))
+            intent.putExtra(POSITION, 2)
+            startActivity(intent)
         }
     }
 

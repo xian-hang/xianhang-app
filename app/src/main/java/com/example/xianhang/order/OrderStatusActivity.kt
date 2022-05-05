@@ -8,6 +8,8 @@ import com.example.xianhang.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
+const val POSITION = "position"
+
 class OrderStatusActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,5 +26,7 @@ class OrderStatusActivity : AppCompatActivity() {
                 2 -> tab.text = "待收货"
             }
         }.attach()
+        val position = intent?.extras?.getInt(POSITION)
+        tab.getTabAt(position!!)?.select()
     }
 }

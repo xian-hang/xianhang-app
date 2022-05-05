@@ -10,11 +10,17 @@
             type="com.example.xianhang.order.OrdersViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".order.PaidFragment">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.status}" />
 
         <TextView
             android:id="@+id/title"
@@ -31,10 +37,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_below="@+id/title"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:listorder="@{viewModel.orders}"
             tools:listitem="@layout/order_item" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
 
