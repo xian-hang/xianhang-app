@@ -35,7 +35,7 @@ class UserFragment : Fragment() {
     private val productsViewModel: ProductsViewModel by viewModels {
         val id = activity?.intent?.extras?.getInt(ID)
         println("user id = $id")
-        ProductsViewModel.Factory(USER_PRODUCT, id, null, null)
+        ProductsViewModel.Factory(USER_PRODUCT, id, null, null, context)
     }
     private val userViewModel: UserViewModel by viewModels()
     var userId: Int? = null
@@ -118,7 +118,7 @@ class UserFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.getUser(token!!, id)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     progressBar.visibility = View.GONE
                     username.text = resp.username
                     userId.text = resp.userId

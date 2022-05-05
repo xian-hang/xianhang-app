@@ -71,12 +71,10 @@ class PostageFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.setPostage(token, id, PostageReqeust(postage))
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     val bundle = bundleOf(ID to id)
                     viewModel.setPostage(postage)
                     findNavController().navigate(R.id.action_postageFragment_to_orderFragment, bundle)
-                } else {
-                    Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

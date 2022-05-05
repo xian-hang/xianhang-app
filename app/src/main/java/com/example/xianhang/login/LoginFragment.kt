@@ -69,10 +69,8 @@ class LoginFragment : Fragment() {
             try {
                 println("userId = $userId")
                 val resp = Api.retrofitService.resend(userId!!)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     Toast.makeText(context, "Resent", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
@@ -101,7 +99,7 @@ class LoginFragment : Fragment() {
             println("post login request")
             try {
                 val resp = Api.retrofitService.login(user)
-                if (resOk(resp) && resp.role == 0) {
+                if (resOk(context, resp) && resp.role == 0) {
                     editor?.putInt(ID, resp.id)
                     editor?.putString(USER, userId)
                     editor?.putString(PASSWORD, password)
@@ -111,11 +109,7 @@ class LoginFragment : Fragment() {
                     editor?.apply()
                     findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
                 } else if (resp.role == 1) {
-                    Toast.makeText(context, "Admin User please use web login", Toast.LENGTH_LONG).show()
-                } else {
-                    val code = resp.code
-                    val role = resp.role
-                    Toast.makeText(context, "code: $code, role: $role", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "管理员请使用网页端登录", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

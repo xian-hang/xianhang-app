@@ -46,19 +46,15 @@ class UserViewModel: ViewModel() {
             try {
                 if (likeId == null) {
                     val resp = Api.retrofitService.like(token, UserId(userId!!))
-                    if (resOk(resp)) {
+                    if (resOk(context, resp)) {
                         likeId = resp.likeId
                         Toast.makeText(context, "liked", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context, "like failed", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     val resp = Api.retrofitService.unlike(token, likeId!!)
-                    if (resOk(resp)) {
+                    if (resOk(context, resp)) {
                         likeId = null
                         Toast.makeText(context, "unliked", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                     }
                 }
             } catch (e: HttpException) {
@@ -77,19 +73,15 @@ class UserViewModel: ViewModel() {
             try {
                 if (followId == null) {
                     val resp = Api.retrofitService.follow(token, UserId(userId!!))
-                    if (resOk(resp)) {
+                    if (resOk(context, resp)) {
                         followId = resp.followId
                         Toast.makeText(context, "followed", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context, "follow failed", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     val resp = Api.retrofitService.unfollow(token, followId!!)
-                    if (resOk(resp)) {
+                    if (resOk(context, resp)) {
                         followId = null
                         Toast.makeText(context, "unfollowed", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                     }
                 }
             } catch (e: HttpException) {

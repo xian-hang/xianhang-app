@@ -26,7 +26,7 @@ class SearchProductsFragment : Fragment() {
         val token = sharedPreferences?.getString(LoginFragment.TOKEN, null)
         val query = activity?.intent?.extras?.getString(QUERY)
         println("token = " + token?.isNotEmpty().toString())
-        ProductsViewModel.Factory(SEARCH, null, token, query!!)
+        ProductsViewModel.Factory(SEARCH, null, token, query!!, context)
     }
 
     override fun onCreateView(
@@ -52,7 +52,7 @@ class SearchProductsFragment : Fragment() {
                     return false
                 }
                 binding.search.clearFocus()
-                viewModel.search(token, query)
+                viewModel.search(context, token, query)
                 return false
             }
 

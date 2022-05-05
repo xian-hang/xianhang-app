@@ -1,5 +1,6 @@
 package com.example.xianhang.search
 
+import android.content.Context
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,12 +21,12 @@ class UsersViewModel: ViewModel() {
     private val _status = MutableLiveData<Int>()
     val status: LiveData<Int> = _status
 
-    fun setUser(token: String, keyword: String) {
+    fun setUser(context: Context?, token: String, keyword: String) {
         viewModelScope.launch {
             _status.value = View.VISIBLE
             try {
                 val resp = Api.retrofitService.searchUser(token, SearchRequest(keyword))
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     println("get users")
                     println(resp.users)
                     _users.value = resp.users

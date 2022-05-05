@@ -69,7 +69,7 @@ class OrderFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.getOrder(token!!, id!!)
                 println(resp)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     val isBuyer = resp.order.userId == userId
                     binding.viewModel!!.setOrder(resp.order, isBuyer)
                     binding.action.setOnClickListener {
@@ -78,8 +78,6 @@ class OrderFragment : Fragment() {
                     binding.cancel.setOnClickListener {
                         cancel(isBuyer)
                     }
-                } else {
-                    Toast.makeText(requireActivity(), "view order failed", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

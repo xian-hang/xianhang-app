@@ -69,10 +69,8 @@ class ChangePasswordActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.editPassword(token!!, data)
-                if (resOk(resp)) {
+                if (resOk(that, resp)) {
                     startActivity(Intent(that, MainActivity::class.java))
-                } else {
-                    Toast.makeText(that, "Failed to change", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(that, e.message(), Toast.LENGTH_LONG).show()

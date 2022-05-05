@@ -25,7 +25,7 @@ class OrdersFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
         val method = activity?.intent?.extras?.getInt(METHOD)
         println("token = " + token.toString())
-        OrdersViewModel.Factory(method!!, token!!, ALL)
+        OrdersViewModel.Factory(method!!, token!!, ALL, context)
     }
 
     override fun onCreateView(

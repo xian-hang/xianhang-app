@@ -1,5 +1,6 @@
 package com.example.xianhang.order
 
+import android.content.Context
 import android.view.View
 import androidx.lifecycle.*
 import com.example.xianhang.adapter.BUYER
@@ -14,7 +15,8 @@ import java.lang.Exception
 class OrdersViewModel(
     private val method: Int,
     private val token: String,
-    private val getStatus: Int
+    private val getStatus: Int,
+    private val context: Context?
 ): ViewModel() {
     private val _orders = MutableLiveData<List<OrderItem>>()
     val orders: LiveData<List<OrderItem>> = _orders
@@ -29,12 +31,13 @@ class OrdersViewModel(
     class Factory(
         private val method: Int,
         private val token: String,
-        private val getStatus: Int
+        private val getStatus: Int,
+        private val context: Context?
     ): ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return OrdersViewModel(method, token, getStatus) as T
+            return OrdersViewModel(method, token, getStatus, context) as T
         }
     }
 
@@ -52,12 +55,11 @@ class OrdersViewModel(
                     }
                 }
                 else Api.retrofitService.getSoldOrders(token)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     println("resp = $resp")
                     _status.value = View.GONE
                     _orders.value = resp.orders
                 } else {
-                    println("get orders failed")
                     setError()
                 }
             } catch (e: HttpException) {

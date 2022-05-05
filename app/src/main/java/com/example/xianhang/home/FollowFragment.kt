@@ -25,7 +25,7 @@ class FollowFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
         println("token = " + token?.isNotEmpty().toString())
-        ProductsViewModel.Factory(FEEDS, null, token, null)
+        ProductsViewModel.Factory(FEEDS, null, token, null, context)
     }
 
     override fun onCreateView(

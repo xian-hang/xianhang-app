@@ -87,12 +87,10 @@ class ReportFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.createReport(token, ReportRequest(content, reportUserId!!))
                 val res  = uploadImage(token, File(imagePath), resp.reportId)
-                if (resOk(resp) && resOk(res)) {
+                if (resOk(context, resp) && resOk(context, res)) {
                     Toast.makeText(context, "Report success", Toast.LENGTH_LONG).show()
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
-                } else {
-                    Toast.makeText(context, "Report failed", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

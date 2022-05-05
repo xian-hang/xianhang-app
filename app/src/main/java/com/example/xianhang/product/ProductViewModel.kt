@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.lang.Exception
 
-class ProductViewModel(private val token: String, private val id: Int) : ViewModel() {
+class ProductViewModel(private val token: String, private val id: Int, context: Context?) : ViewModel() {
     private val _product = MutableLiveData<Product?>()
     val product: LiveData<Product?> = _product
 
@@ -39,14 +39,14 @@ class ProductViewModel(private val token: String, private val id: Int) : ViewMod
     var collectId: Int? = null
 
     init {
-        getProduct(token, id)
+        getProduct(token, id, context)
     }
 
-    class Factory(private val token: String, private val id: Int): ViewModelProvider.Factory {
+    class Factory(private val token: String, private val id: Int, private val context: Context?): ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ProductViewModel(token, id) as T
+            return ProductViewModel(token, id, context) as T
         }
     }
 
@@ -58,22 +58,16 @@ class ProductViewModel(private val token: String, private val id: Int) : ViewMod
                 if (collectId != null) {
                     println("uncollect")
                     val resp = Api.retrofitService.uncollect(token, collectId!!)
-                    if (resOk(resp)) {
+                    if (resOk(context, resp)) {
                         collectId = null
                         Toast.makeText(context, "uncollected", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                     }
                 } else {
                     println("collect")
                     val resp = Api.retrofitService.collect(token, ProductId(productId!!))
-                    if (resOk(resp)) {
+                    if (resOk(context, resp)) {
                         collectId = resp.collectionId
                         Toast.makeText(context, "collected", Toast.LENGTH_LONG).show()
-                    } else {
-                        println(resp.code)
-                        println(resp)
-                        Toast.makeText(context, "collect failed", Toast.LENGTH_LONG).show()
                     }
                 }
             } catch (e: HttpException) {
@@ -85,7 +79,7 @@ class ProductViewModel(private val token: String, private val id: Int) : ViewMod
         }
     }
 
-    private fun getProduct(token: String, id: Int) {
+    private fun getProduct(token: String, id: Int, context: Context?) {
         println("============== show Product ==============")
         viewModelScope.launch {
             _status.value = View.VISIBLE
@@ -93,7 +87,7 @@ class ProductViewModel(private val token: String, private val id: Int) : ViewMod
             try {
                 println("id = $id")
                 val resp = Api.retrofitService.getProduct(token, id)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     println("resOk")
                     _status.value = View.GONE
                     if (resp.images.isNotEmpty()) {

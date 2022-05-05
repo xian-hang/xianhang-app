@@ -31,7 +31,7 @@ class ProductDetailsFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
         productItem = activity?.intent?.extras?.getParcelable(PRODUCT_ITEM)
         println("id = ${productItem?.product?.id}")
-        ProductViewModel.Factory(token!!, productItem!!.product.id!!)
+        ProductViewModel.Factory(token!!, productItem!!.product.id!!, context)
     }
     private val orderViewModel: OrderViewModel by activityViewModels()
     private var token: String? = null

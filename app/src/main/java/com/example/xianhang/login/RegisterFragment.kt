@@ -58,7 +58,7 @@ class RegisterFragment : Fragment() {
             println("post register request")
             try {
                 val resp = Api.retrofitService.register(user)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     binding.progressBar.visibility = View.GONE
                     val bundle = bundleOf(USER to userId)
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)

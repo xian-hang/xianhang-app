@@ -24,11 +24,10 @@ class NoticesViewModel: ViewModel() {
             try {
                 _status.value = View.VISIBLE
                 val resp = Api.retrofitService.getNotification(token)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     _status.value = View.GONE
                     _notices.value = resp.notices
                 } else {
-                    println("get notices failed")
                     setError()
                 }
             } catch (e: HttpException) {

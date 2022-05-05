@@ -41,7 +41,7 @@ class SearchUsersFragment : Fragment() {
                     return false
                 }
                 binding.search.clearFocus()
-                viewModel.setUser(token!!, query)
+                viewModel.setUser(context, token!!, query)
                 return false
             }
 

@@ -108,7 +108,7 @@ class ProfileFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.getProfile(token)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     progressBar.visibility = View.GONE
                     _id = resp.id!!
                     username.text = resp.username
@@ -187,7 +187,7 @@ class ProfileFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.logout(token)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     editor?.putString(ROLE, null)
                     editor?.putString(TOKEN, null)
                     editor?.putBoolean(REMEMBER, false)
@@ -195,8 +195,6 @@ class ProfileFragment : Fragment() {
 
                     val intent = Intent(context, LoginActivity::class.java)
                     context?.startActivity(intent)
-                } else {
-                    Toast.makeText(requireActivity(), "Logout Error", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
@@ -233,7 +231,7 @@ class ProfileFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.deleteUser(token)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     editor?.putString(USER, null)
                     editor?.putString(PASSWORD, null)
                     editor?.putString(ROLE, null)
@@ -243,8 +241,6 @@ class ProfileFragment : Fragment() {
 
                     val intent = Intent(context, LoginActivity::class.java)
                     context?.startActivity(intent)
-                } else {
-                    Toast.makeText(requireActivity(), "Delete Error", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

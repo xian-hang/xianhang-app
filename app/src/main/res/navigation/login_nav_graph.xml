@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.xianhang.login.RegisterFragment"
-        android:label="@string/register"
+        android:label="注册"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.xianhang.login.LoginFragment"
-        android:label="@string/login"
+        android:label="登录"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -36,5 +36,5 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.xianhang.login.ForgotPasswordFragment"
-        android:label="ForgotPasswordFragment" />
+        android:label="忘记密码" />
 </navigation>

@@ -64,12 +64,10 @@ class BuyFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.createOrder(token!!, getData())
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     val id = resp.orderId
                     val bundle = bundleOf(ID to id)
                     findNavController().navigate(R.id.action_buyFragment_to_viewOrderActivity, bundle)
-                } else {
-                    Toast.makeText(requireActivity(), "order failed", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

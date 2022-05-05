@@ -129,17 +129,16 @@ class SellProductFragment : Fragment() {
             try {
                 println("edit product")
                 val resp = Api.retrofitService.editProduct(token, newProduct, product.id!!)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     println("edit product success")
-                    // TODO: fix edit image
                     if (upload) {
                         if (imageId != null) {
                             println("run delete image")
                             try {
                                 // TODO: change product.id to image.id
                                 val res1 = Api.retrofitService.deleteProductImage(token, imageId!!)
-                                if (!resOk(res1)) {
-                                    Toast.makeText(requireActivity(), "image delete failed", Toast.LENGTH_LONG).show()
+                                if (!resOk(context, res1)) {
+                                    println("image delete failed")
                                 }
                             } catch (e: HttpException) {
                                 println("delete image failed")
@@ -151,9 +150,8 @@ class SellProductFragment : Fragment() {
                         println("run upload image")
                         try {
                             val res2 = uploadImage(token, File(imagePath), product.id!!)
-                            if (!resOk(res2)) {
+                            if (!resOk(context, res2)) {
                                 println("upload image failed")
-                                Toast.makeText(requireActivity(), "image upload failed", Toast.LENGTH_LONG).show()
                             }
                         } catch (e: HttpException) {
                             println("upload image failed")
@@ -161,8 +159,6 @@ class SellProductFragment : Fragment() {
                     }
                     val bundle = bundleOf(PRODUCT to newProduct)
                     findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
-                } else {
-                    Toast.makeText(requireActivity(), "Create Error", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 println("http exception")
@@ -180,7 +176,7 @@ class SellProductFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
 
         if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
         if (!checkData()) return
@@ -189,22 +185,23 @@ class SellProductFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.createProduct(token, product)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     if (upload) {
                         val res = uploadImage(token, File(imagePath), resp.product.id!!)
-                        if (!resOk(res))
-                            Toast.makeText(requireActivity(), "image upload failed", Toast.LENGTH_LONG).show()
+                        if (!resOk(context, res)) {
+                            println("image upload failed",)
+                        }
                     }
                     val bundle = bundleOf(PRODUCT to resp.product)
                     findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
                 } else {
-                    Toast.makeText(requireActivity(), "Create Error", Toast.LENGTH_LONG).show()
+                    println("something wrong")
                 }
             } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection wrong
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
         }

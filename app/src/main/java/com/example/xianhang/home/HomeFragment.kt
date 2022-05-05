@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
         println("token = " + token?.isNotEmpty().toString())
-        ProductsViewModel.Factory(BUYER, null, token, null)
+        ProductsViewModel.Factory(BUYER, null, token, null, context)
     }
 
     override fun onCreateView(

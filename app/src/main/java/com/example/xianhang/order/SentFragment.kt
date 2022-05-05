@@ -22,7 +22,7 @@ class SentFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
         val method = BUYER
         println("token = " + token.toString())
-        OrdersViewModel.Factory(method, token!!, SHIPPED)
+        OrdersViewModel.Factory(method, token!!, SHIPPED, context)
     }
 
     override fun onCreateView(

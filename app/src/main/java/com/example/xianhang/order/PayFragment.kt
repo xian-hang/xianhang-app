@@ -78,7 +78,7 @@ class PayFragment : Fragment() {
                     viewModel.order.value!!.id!!,
                     OrderStatusRequest(PAID)
                 )
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                     if (viewModel.order.value!!.tradingMethod == PICKUP) {
                         viewModel.updateStatus(SHIPPED, true)
@@ -87,8 +87,6 @@ class PayFragment : Fragment() {
                     }
                     val bundle = bundleOf(ID to viewModel.order.value!!.id)
                     findNavController().navigate(to!!, bundle)
-                } else {
-                    Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

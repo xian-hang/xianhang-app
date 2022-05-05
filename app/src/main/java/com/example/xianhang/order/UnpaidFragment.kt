@@ -22,7 +22,7 @@ class UnpaidFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
         val method = BUYER
         println("token = " + token.toString())
-        OrdersViewModel.Factory(method, token!!, UNPAID)
+        OrdersViewModel.Factory(method, token!!, UNPAID, context)
     }
 
     override fun onCreateView(

@@ -36,7 +36,7 @@ class ViewProductFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
         val product = arguments?.getParcelable<Product>(PRODUCT)
         println("id = " + product?.id.toString())
-        ProductViewModel.Factory(token!!, product!!.id!!)
+        ProductViewModel.Factory(token!!, product!!.id!!, context)
     }
 
     override fun onCreateView(
@@ -94,10 +94,8 @@ class ViewProductFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.deleteProduct(id!!, token)
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     findNavController().navigate(R.id.action_viewProductFragment_to_productFragment2)
-                } else {
-                    Toast.makeText(requireActivity(), resp.message, Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

@@ -135,7 +135,7 @@ class OrderViewModel: ViewModel() {
                     order.value!!.id!!,
                     OrderStatusRequest(state)
                 )
-                if (resOk(resp)) {
+                if (resOk(context, resp)) {
                     Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                     when (state) {
                         PAID -> println("why u in here???")
@@ -143,8 +143,6 @@ class OrderViewModel: ViewModel() {
                         COMPLETE -> updateStatus(COMPLETE, isBuyer)
                         CANCEL -> updateStatus(CANCEL, isBuyer)
                     }
-                } else {
-                    Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
