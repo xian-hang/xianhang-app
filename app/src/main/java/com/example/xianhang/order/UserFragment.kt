@@ -33,7 +33,7 @@ class UserFragment : Fragment() {
 
     private lateinit var binding: FragmentUserBinding
     private val productsViewModel: ProductsViewModel by viewModels {
-        val id = arguments?.getInt(ID)
+        val id = activity?.intent?.extras?.getInt(ID)
         println("user id = $id")
         ProductsViewModel.Factory(USER_PRODUCT, id, null, null)
     }
@@ -52,7 +52,7 @@ class UserFragment : Fragment() {
         binding.productsViewModel = productsViewModel
         binding.products.adapter = ProductAdapter(USER_PRODUCT, context)
 
-        val id = arguments?.getInt(ID)
+        val id = activity?.intent?.extras?.getInt(ID)
         println("user id = $id")
         userId = id
 

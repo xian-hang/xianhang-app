@@ -89,7 +89,8 @@ class ReportFragment : Fragment() {
                 val res  = uploadImage(token, File(imagePath), resp.reportId)
                 if (resOk(resp) && resOk(res)) {
                     Toast.makeText(context, "Report success", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(R.id.action_reportFragment_to_nav_graph)
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
                 } else {
                     Toast.makeText(context, "Report failed", Toast.LENGTH_LONG).show()
                 }

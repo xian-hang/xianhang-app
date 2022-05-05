@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.xianhang.R
+import com.example.xianhang.model.User
 import com.example.xianhang.model.UserId
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk

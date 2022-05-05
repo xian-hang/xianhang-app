@@ -1,6 +1,7 @@
 package com.example.xianhang.order
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
+import com.example.xianhang.UserActivity
 import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.databinding.FragmentProductDetailsBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
@@ -70,8 +72,9 @@ class ProductDetailsFragment : Fragment() {
 
     private fun profile() {
         println("user id pass ${productItem?.product?.userId}")
-        val bundle = bundleOf(ID to productItem?.product?.userId)
-        findNavController().navigate(R.id.action_productDetailsFragment_to_userFragment, bundle)
+        val intent = Intent(context, UserActivity::class.java)
+        intent.putExtra(ID, productItem?.product?.userId)
+        startActivity(intent)
     }
 
     private fun order() {

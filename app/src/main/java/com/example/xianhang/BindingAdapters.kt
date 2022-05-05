@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.xianhang.adapter.OrderAdapter
 import com.example.xianhang.adapter.ProductAdapter
+import com.example.xianhang.adapter.UserAdapter
 import com.example.xianhang.model.OrderItem
 import com.example.xianhang.model.ProductItem
+import com.example.xianhang.network.response.UserBody
 
 @BindingAdapter("listitem")
 fun bindUserProducts(recyclerView: RecyclerView, products: List<ProductItem>?) {
@@ -24,6 +26,14 @@ fun bindOrders(recyclerView: RecyclerView, orders: List<OrderItem>?) {
     println("submit list")
     println("orders = $orders")
     adapter.submitList(orders)
+}
+
+@BindingAdapter("listuser")
+fun bindUsers(recyclerView: RecyclerView, users: List<UserBody>?) {
+    val adapter = recyclerView.adapter as UserAdapter
+    println("submit list")
+    println("users = $users")
+    adapter.submitList(users)
 }
 
 @BindingAdapter("imageUrl")

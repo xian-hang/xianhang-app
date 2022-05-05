@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".search.SearchActivity"
             android:exported="false" />
         <activity

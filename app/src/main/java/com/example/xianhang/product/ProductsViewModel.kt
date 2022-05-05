@@ -48,6 +48,30 @@ class ProductsViewModel(
         }
     }
 
+    fun search(token: String, keyword: String) {
+        viewModelScope.launch {
+            try {
+                val resp = Api.retrofitService.searchProduct(token, SearchRequest(keyword))
+                if (resOk(resp)) {
+                    _status.value = View.GONE
+                    _products.value = resp.products
+                } else {
+                    println("get products failed")
+                    _status.value = View.GONE
+                    _products.value = listOf()
+                }
+            } catch (e: HttpException) {
+                println("get products http failed")
+                _status.value = View.GONE
+                _products.value = listOf()
+            } catch (e: Exception) {
+                println("get products other failed")
+                _status.value = View.GONE
+                _products.value = listOf()
+            }
+        }
+    }
+
     private fun getProducts() {
         if (method == SEARCH) _query.value = keyword!!
         viewModelScope.launch {

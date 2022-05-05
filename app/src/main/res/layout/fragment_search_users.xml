@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.xianhang.search.UsersViewModel" />
+    </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".search.SearchUsersFragment">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search"
@@ -17,12 +28,15 @@
             android:layout_margin="10dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/products"
+            android:id="@+id/users"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/search"
             android:layout_margin="10dp"
-            tools:listitem="@layout/profile_item" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:listuser="@{viewModel.users}"
+            tools:listitem="@layout/user_list_item" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

@@ -41,8 +41,8 @@ interface ApiService {
     @POST("user/logout/")
     suspend fun logout(@Header(AUTH) authToken: String): DefaultResponse
 
-    @POST("product/search/")
-    suspend fun searchProduct(@Header(AUTH) authToken: String, @Body data: SearchRequest): ProductsResponse
+    @POST("user/search/")
+    suspend fun searchUser(@Header(AUTH) authToken: String, @Body data: SearchRequest): UsersResponse
 
     @POST("user/resent/")
     suspend fun resend(@Body studentId: String): DefaultResponse
@@ -64,6 +64,9 @@ interface ApiService {
 
     @GET("user/{id}/product/")
     suspend fun getUserProduct(@Header(AUTH) authToken: String?, @Path("id") userId: Int): ProductsResponse
+
+    @POST("product/search/")
+    suspend fun searchProduct(@Header(AUTH) authToken: String, @Body data: SearchRequest): ProductsResponse
 
     @POST("product/create/")
     suspend fun createProduct(@Header(AUTH) authToken: String, @Body data: Product): SellProductResponse
