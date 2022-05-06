@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.example.xianhang.order.ProductDetailsFragment"
-        android:label="ProductDetailsFragment" >
+        android:label="商品详情" >
         <action
             android:id="@+id/action_productDetailsFragment_to_userFragment"
             app:destination="@id/userFragment" />
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.xianhang.order.UserFragment"
-        android:label="UserFragment" >
+        android:label="用户资料" >
         <action
             android:id="@+id/action_userFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/buyFragment"
         android:name="com.example.xianhang.order.BuyFragment"
-        android:label="BuyFragment" >
+        android:label="购买商品" >
         <action
             android:id="@+id/action_buyFragment_to_viewOrderActivity"
             app:destination="@id/viewOrderActivity" />
@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.example.xianhang.home.ReportFragment"
-        android:label="ReportFragment" >
+        android:label="举报用户" >
         <action
             android:id="@+id/action_reportFragment_to_nav_graph"
             app:destination="@id/nav_graph" />
