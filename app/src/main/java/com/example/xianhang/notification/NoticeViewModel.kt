@@ -11,8 +11,12 @@ class NoticeViewModel: ViewModel() {
     private val _content = MutableLiveData<String>()
     val content: LiveData<String> = _content
 
-    fun setNotice(id: Int, content: String) {
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
+
+    fun setNotice(id: Int, content: String, title: String) {
         _id.value = String.format("#%d", id)
         _content.value = content
+        _title.value = title
     }
 }

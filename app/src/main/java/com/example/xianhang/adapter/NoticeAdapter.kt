@@ -13,6 +13,7 @@ import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.model.Notice
 
 const val CONTENT = "content"
+const val TITLE = "title"
 
 class NoticeAdapter: ListAdapter<Notice, NoticeAdapter.NoticeViewHolder>(DiffCallback) {
 
@@ -21,7 +22,7 @@ class NoticeAdapter: ListAdapter<Notice, NoticeAdapter.NoticeViewHolder>(DiffCal
 
         fun bind(notice: Notice) {
             "#${notice.reportId}".also { binding.id.text = it }
-            binding.content.text = notice.content
+            "举报${notice.reporting}结果".also { binding.content.text = it }
         }
     }
 
@@ -35,7 +36,7 @@ class NoticeAdapter: ListAdapter<Notice, NoticeAdapter.NoticeViewHolder>(DiffCal
 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         val notice = getItem(position)
-        val bundle = bundleOf(ID to notice.reportId, CONTENT to notice.content)
+        val bundle = bundleOf(ID to notice.reportId, CONTENT to notice.content, TITLE to "举报${notice.reporting}结果")
         holder.view.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_noticesFragment_to_noticeFragment, bundle)
         )

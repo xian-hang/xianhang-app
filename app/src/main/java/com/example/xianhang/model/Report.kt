@@ -7,5 +7,6 @@ data class ReportRequest(
 
 data class Notice(
     val reportId: Int,
-    val content: String
+    val content: String,
+    val reporting: String
 )

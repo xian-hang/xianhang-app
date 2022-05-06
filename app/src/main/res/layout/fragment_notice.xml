@@ -30,13 +30,26 @@
                 tools:text="#10" />
 
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/id"
+                android:text="@{viewModel.title}"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                tools:text="举报失败" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/title"
                 android:text="@{viewModel.content}"
                 android:textSize="20sp"
                 tools:text="举报失败" />

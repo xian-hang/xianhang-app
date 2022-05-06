@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.xianhang.adapter.CONTENT
+import com.example.xianhang.adapter.TITLE
 import com.example.xianhang.databinding.FragmentNoticeBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 
@@ -23,7 +24,7 @@ class NoticeFragment : Fragment() {
         binding = FragmentNoticeBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.setNotice(arguments?.getInt(ID)!!, arguments?.getString(CONTENT)!!)
+        viewModel.setNotice(arguments?.getInt(ID)!!, arguments?.getString(CONTENT)!!, arguments?.getString(TITLE)!!)
         return binding.root
     }
 }
