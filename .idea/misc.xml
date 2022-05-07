@@ -58,6 +58,9 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/menu/order_nav_menu.xml" value="0.25" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/menu/product_nav_menu.xml" value="0.25" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/mipmap-anydpi-v26/ic_image_placeholder.xml" value="0.1965" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1965" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/mipmap-anydpi-v26/ic_loading.xml" value="0.1965" />
         <entry key="app/src/main/res/drawable/ic_avatar.xml" value="0.257" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.1965" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.1965" />
