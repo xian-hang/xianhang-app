@@ -33,7 +33,7 @@
                 android:layout_marginTop="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="15dp"
-                android:text="Edit Profile"
+                android:text="编辑个人资料"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -51,7 +51,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="15dp"
-                android:text="Change Password"
+                android:text="修改用户密码"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -69,7 +69,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="15dp"
-                android:text="Selling Products"
+                android:text="卖家页面"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -87,7 +87,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="15dp"
-                android:text="My Orders"
+                android:text="我的订单"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -105,7 +105,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="15dp"
-                android:text="Notifications"
+                android:text="举报通知"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -123,7 +123,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="15dp"
-                android:text="Logout"
+                android:text="登出"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -142,7 +142,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="15dp"
-                android:text="Delete Account"
+                android:text="停用帐号"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />

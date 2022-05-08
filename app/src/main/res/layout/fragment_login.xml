@@ -34,7 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.351"
-            tools:text="Please Verify your email: 79066012@buaa.edu.cn" />
+            tools:text="@string/verify_email" />
 
         <TextView
             android:id="@+id/resent"
@@ -89,17 +89,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/remember_me"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/password"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
         <Button
             android:id="@+id/login"
-            android:layout_width="180dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/login"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

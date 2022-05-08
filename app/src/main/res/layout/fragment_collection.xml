@@ -30,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="10dp"
             android:text="@string/my_collection"
-            android:textSize="32sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView

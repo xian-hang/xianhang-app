@@ -28,7 +28,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="64dp"
                 android:text="@{viewModel.product.name}"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:text="Product Name" />
 
@@ -41,7 +41,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="64dp"
                 android:text="@{viewModel.product.username}"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 tools:text="username" />
 
             <Button
@@ -50,10 +50,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/name"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/profile"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/image"
@@ -121,10 +125,10 @@
                 android:id="@+id/stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@{@string/stock(viewModel.product.stock)}"
                 android:layout_below="@+id/num"
                 android:layout_toEndOf="@+id/num_title"
+                android:text="@{@string/stock(viewModel.product.stock)}"
+                android:textSize="16sp"
                 tools:text="stock: 10" />
 
             <TextView
@@ -232,8 +236,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
-                android:visibility="@{viewModel.uncollect}"
-                android:src="@drawable/ic_collection_outline" />
+                android:src="@drawable/ic_collection_outline"
+                android:visibility="@{viewModel.uncollect}" />
 
             <ImageView
                 android:id="@+id/collect"

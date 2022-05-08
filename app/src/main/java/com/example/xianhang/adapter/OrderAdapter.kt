@@ -52,7 +52,7 @@ class OrderAdapter(private val method: Int, private val status: Int, private val
                 COMPLETE -> "已完成"
                 else -> "已取消"
             }
-            "$${order.price} | ${order.amount} | $status".also { binding.details.text = it }
+            "$${order.price} | ${order.amount} 个物品 | $status".also { binding.details.text = it }
         }
     }
 
