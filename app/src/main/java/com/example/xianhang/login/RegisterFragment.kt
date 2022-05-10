@@ -39,7 +39,6 @@ class RegisterFragment : Fragment() {
 
         binding.register.setOnClickListener {
             println("clicked")
-            binding.progressBar.visibility = View.VISIBLE
             requestRegister(view)
         }
     }
@@ -55,6 +54,7 @@ class RegisterFragment : Fragment() {
 
         val user = CreateUser(username, userId, password)
         CoroutineScope(Dispatchers.Main).launch {
+            binding.progressBar.visibility = View.VISIBLE
             println("post register request")
             try {
                 val resp = Api.retrofitService.register(user)
