@@ -15,6 +15,7 @@ import com.example.xianhang.R
 import com.example.xianhang.databinding.ProductListItemBinding
 import com.example.xianhang.model.Product
 import com.example.xianhang.model.ProductItem
+import com.example.xianhang.network.SCHEME
 import com.example.xianhang.order.OrderActivity
 import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
 
@@ -52,7 +53,7 @@ class ProductAdapter(private val method: Int, private val context: Context?):
             if (productItem.imagesId.isNotEmpty()) {
                 imageUrl = "${IMAGE_URL}${productItem.imagesId[0]}"
             }
-            val imgUrl = imageUrl.toUri().buildUpon().scheme("https").build()
+            val imgUrl = imageUrl.toUri().buildUpon().scheme(SCHEME).build()
             binding.productImage.load(imgUrl) {
                 placeholder(R.mipmap.ic_loading)
                 error(R.drawable.ic_broken_image)

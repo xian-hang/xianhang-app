@@ -14,6 +14,7 @@ import com.example.xianhang.order.ViewOrderActivity
 import com.example.xianhang.databinding.OrderItemBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.model.*
+import com.example.xianhang.network.SCHEME
 import com.example.xianhang.product.ProductViewModel
 
 class OrderAdapter(private val method: Int, private val status: Int, private val context: Context?):
@@ -35,7 +36,7 @@ class OrderAdapter(private val method: Int, private val status: Int, private val
             if (order.imagesId.isNotEmpty()) {
                 imageUrl = "${ProductViewModel.IMAGE_URL}${order.imagesId[0]}"
             }
-            val imgUrl = imageUrl.toUri().buildUpon().scheme("https").build()
+            val imgUrl = imageUrl.toUri().buildUpon().scheme(SCHEME).build()
             binding.image.load(imgUrl) {
                 placeholder(R.mipmap.ic_loading)
                 error(R.drawable.ic_broken_image)

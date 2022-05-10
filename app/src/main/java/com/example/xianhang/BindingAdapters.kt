@@ -12,6 +12,7 @@ import com.example.xianhang.adapter.UserAdapter
 import com.example.xianhang.model.Notice
 import com.example.xianhang.model.OrderItem
 import com.example.xianhang.model.ProductItem
+import com.example.xianhang.network.SCHEME
 import com.example.xianhang.network.response.UserBody
 
 @BindingAdapter("listitem")
@@ -50,7 +51,7 @@ fun bindNotices(recyclerView: RecyclerView, notices: List<Notice>?) {
 fun bindImage(img: ImageView, imgUrl: String?) {
     imgUrl?.let {
         println("imgUrl = $it")
-        val imgUrl = imgUrl.toUri().buildUpon().scheme("http").build()
+        val imgUrl = imgUrl.toUri().buildUpon().scheme(SCHEME).build()
         println("imgUri = $imgUrl")
         println("build success")
         img.load(imgUrl) {

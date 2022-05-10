@@ -42,6 +42,7 @@ import com.example.xianhang.adapter.ACTION
 import com.example.xianhang.adapter.IMAGE_URL
 import com.example.xianhang.adapter.PRODUCT
 import com.example.xianhang.databinding.FragmentSellProductBinding
+import com.example.xianhang.network.SCHEME
 import com.example.xianhang.network.response.DefaultResponse
 import com.example.xianhang.model.Product as Product
 
@@ -89,7 +90,7 @@ class SellProductFragment : Fragment() {
             val arr = imageUrl.split('/')
             imageId = arr[arr.size - 1].toInt()
         }
-        val imgUrl = imageUrl.toUri().buildUpon().scheme("https").build()
+        val imgUrl = imageUrl.toUri().buildUpon().scheme(SCHEME).build()
         binding.image.load(imgUrl) {
             placeholder(R.mipmap.ic_loading)
             error(R.mipmap.ic_image_placeholder)

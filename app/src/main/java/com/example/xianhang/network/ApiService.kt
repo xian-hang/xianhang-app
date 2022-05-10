@@ -16,6 +16,7 @@ import retrofit2.http.*
 //const val BASE_URL = "https://x.cirno.ga/"
 //const val BASE_URL = "http://139.162.90.35:8000/"
 const val BASE_URL = "http://34.229.146.40/"
+const val SCHEME = "http"
 
 private const val AUTH = "Authorization"
 
