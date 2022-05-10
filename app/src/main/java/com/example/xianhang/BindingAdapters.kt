@@ -50,7 +50,8 @@ fun bindNotices(recyclerView: RecyclerView, notices: List<Notice>?) {
 fun bindImage(img: ImageView, imgUrl: String?) {
     imgUrl?.let {
         println("imgUrl = $it")
-        val imgUrl = imgUrl.toUri().buildUpon().scheme("https").build()
+        val imgUrl = imgUrl.toUri().buildUpon().scheme("http").build()
+        println("imgUri = $imgUrl")
         println("build success")
         img.load(imgUrl) {
             placeholder(R.mipmap.ic_loading)
