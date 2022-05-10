@@ -180,7 +180,9 @@ class SellProductFragment : Fragment() {
             Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
+        println("check product data")
         if (!checkData()) return
+        println("product data checked")
 
         val product = getData()
         CoroutineScope(Dispatchers.Main).launch {
@@ -211,6 +213,17 @@ class SellProductFragment : Fragment() {
     private fun checkData(): Boolean {
         val name = binding.productName.text.toString()
         val description = binding.productDescription.text.toString()
+
+        if (binding.productPrice.text!!.isEmpty()) {
+            Toast.makeText(requireActivity(), "Please fill in the product price", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if (binding.productStock.text!!.isEmpty()) {
+            Toast.makeText(requireActivity(), "Please fill in the product stock", Toast.LENGTH_LONG).show()
+            return false
+        }
+
         val price = binding.productPrice.text.toString().toDouble()
         val stock = binding.productStock.text.toString().toInt()
         val deliver = binding.deliver.isChecked
