@@ -17,6 +17,7 @@ import com.example.xianhang.databinding.FragmentLoginBinding
 import com.example.xianhang.model.LoginUser
 import com.example.xianhang.model.StudentId
 import com.example.xianhang.network.Api
+import com.example.xianhang.network.response.LoginResponse
 import com.example.xianhang.rest.resOk
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
@@ -121,7 +122,7 @@ class LoginFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.login(user)
                 if (resOk(context, resp) && resp.role == 0) {
-                    editor?.putInt(ID, resp.id)
+                    editor?.putInt(ID, resp.id!!)
                     editor?.putString(USER, userId)
                     editor?.putString(PASSWORD, password)
                     editor?.putInt(ROLE, resp.role)
@@ -129,9 +130,10 @@ class LoginFragment : Fragment() {
                     editor?.putBoolean(REMEMBER, rememberMe)
                     editor?.apply()
                     findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
-                } else if (resp.role == 1) {
+                } else {
                     Toast.makeText(context, "管理员请使用网页端登录", Toast.LENGTH_LONG).show()
                 }
+                println("res not ok")
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {

@@ -11,50 +11,69 @@ fun resOk(context: Context?, resp: Any): Boolean {
             return resp.code == 200
         }
         is LoginResponse -> {
+            println(resp.message)
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is RegisterResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is ProfileResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is SellProductResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is ProductsResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is GetProductResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is OrdersResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is OrderResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is CollectResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is LikeResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is FollowResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is OrderIdResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is ReportResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is UsersResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
         is NoticeResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
-        else -> return false
+        else -> {
+            Toast.makeText(context, "response not register", Toast.LENGTH_LONG).show()
+            return false
+        }
     }
 }

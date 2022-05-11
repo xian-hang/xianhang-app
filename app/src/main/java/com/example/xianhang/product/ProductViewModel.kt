@@ -90,13 +90,13 @@ class ProductViewModel(private val token: String, private val id: Int, context: 
                 if (resOk(context, resp)) {
                     println("resOk")
                     _status.value = View.GONE
-                    if (resp.images.isNotEmpty()) {
+                    if (resp.images!!.isNotEmpty()) {
                         _imageSrcUrl.value = "${IMAGE_URL}${resp.images[0]}"
                     } else {
                         _imageSrcUrl.value = ""
                     }
                     _product.value = resp.product
-                    _tradingMethod.value = when(resp.product.tradingMethod) {
+                    _tradingMethod.value = when(resp.product!!.tradingMethod) {
                         0 -> "寄送"
                         1 -> "自取"
                         2 -> "自取，寄送"

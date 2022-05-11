@@ -59,22 +59,17 @@ class RegisterFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.register(user)
                 if (resOk(context, resp)) {
-                    binding.progressBar.visibility = View.GONE
                     val bundle = bundleOf(USER to userId)
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
-                } else {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(context, "Register Error", Toast.LENGTH_LONG).show()
                 }
             } catch (e: HttpException) {
-                binding.progressBar.visibility = View.GONE
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection wrong
-                binding.progressBar.visibility = View.GONE
                 Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
+            binding.progressBar.visibility = View.GONE
         }
     }
 
@@ -89,9 +84,7 @@ class RegisterFragment : Fragment() {
         }
 
         if (password != confirmPassword) {
-            val errMsg = "password and confirm password are not same\n" +
-                    "password: " + password +
-                    "confirmPassword: " + confirmPassword
+            val errMsg = "password and confirm password are not same"
             Toast.makeText(requireActivity(), errMsg, Toast.LENGTH_LONG).show()
             return false
         }

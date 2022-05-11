@@ -66,12 +66,9 @@ class BuyFragment : Fragment() {
             try {
                 val resp = Api.retrofitService.createOrder(token!!, getData())
                 if (resOk(context, resp)) {
-                    val id = resp.orderId
-                    val bundle = bundleOf(ID to id)
                     val intent = Intent(context, OrderStatusActivity::class.java)
                     intent.putExtra(POSITION, 0)
                     startActivity(intent)
-                    // findNavController().navigate(R.id.action_buyFragment_to_viewOrderActivity, bundle)
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
@@ -96,6 +93,11 @@ class BuyFragment : Fragment() {
     }
 
     private fun checkData(): Boolean {
+
+        if (binding.name.text.isEmpty()) {
+            Toast.makeText(requireActivity(), "Please fill the name", Toast.LENGTH_LONG).show()
+            return false
+        }
 
         if (binding.phone.text.isEmpty()) {
             Toast.makeText(requireActivity(), "Please fill the phone", Toast.LENGTH_LONG).show()

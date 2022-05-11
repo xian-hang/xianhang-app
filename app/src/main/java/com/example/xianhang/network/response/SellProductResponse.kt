@@ -5,12 +5,14 @@ import com.squareup.moshi.Json
 
 data class SellProductResponse(
     val code: Int,
-    val product: Product
+    val message: String?,
+    val product: Product?
 )
 
 data class GetProductResponse(
     val code: Int,
-    val product: Product,
-    @Json(name = "image") val images: List<Int>,
+    val message: String?,
+    val product: Product?,
+    @Json(name = "image") val images: List<Int>?,
     @Json(name = "collectionId") val collectId: Int?
 )

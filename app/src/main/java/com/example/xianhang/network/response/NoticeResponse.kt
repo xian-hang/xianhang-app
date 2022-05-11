@@ -5,5 +5,6 @@ import com.squareup.moshi.Json
 
 data class NoticeResponse(
     val code: Int,
-    @Json(name = "notice") val notices: List<Notice>
+    val message: String?,
+    @Json(name = "notice") val notices: List<Notice>?
 )

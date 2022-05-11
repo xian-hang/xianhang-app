@@ -89,9 +89,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         if (newPassword != confirmPassword) {
-            val errMsg = "password and confirm password are not same\n" +
-                    "password: " + password +
-                    "confirmPassword: " + confirmPassword
+            val errMsg = "password and confirm password are not same"
             Toast.makeText(this, errMsg, Toast.LENGTH_LONG).show()
             return false
         }

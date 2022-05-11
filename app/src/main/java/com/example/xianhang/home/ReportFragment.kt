@@ -86,7 +86,7 @@ class ReportFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.createReport(token, ReportRequest(content, reportUserId!!))
-                val res  = uploadImage(token, File(imagePath), resp.reportId)
+                val res  = uploadImage(token, File(imagePath), resp.reportId!!)
                 if (resOk(context, resp) && resOk(context, res)) {
                     Toast.makeText(context, "Report success", Toast.LENGTH_LONG).show()
                     val intent = Intent(context, MainActivity::class.java)

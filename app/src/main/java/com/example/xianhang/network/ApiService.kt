@@ -10,12 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
-//const val BASE_URL = "http://192.168.38.131:8000/"
-//const val BASE_URL = "http://192.168.0.117:8000/"
-//const val BASE_URL = "https://xianhang.herokuapp.com/"
-//const val BASE_URL = "https://x.cirno.ga/"
-//const val BASE_URL = "http://139.162.90.35:8000/"
-const val BASE_URL = "http://18.205.90.245/"
+const val BASE_URL = "http://xianhang.ga/api/"
 const val SCHEME = "http"
 
 private const val AUTH = "Authorization"

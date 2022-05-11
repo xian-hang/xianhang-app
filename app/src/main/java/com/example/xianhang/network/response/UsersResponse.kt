@@ -15,5 +15,6 @@ data class UserBody(
 
 data class UsersResponse(
     val code: Int,
-    @Json(name = "user") val users: List<UserBody>
+    val message: String?,
+    @Json(name = "user") val users: List<UserBody>?
 )

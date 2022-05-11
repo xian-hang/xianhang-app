@@ -190,7 +190,7 @@ class SellProductFragment : Fragment() {
                 val resp = Api.retrofitService.createProduct(token, product)
                 if (resOk(context, resp)) {
                     if (upload) {
-                        val res = uploadImage(token, File(imagePath), resp.product.id!!)
+                        val res = uploadImage(token, File(imagePath), resp.product!!.id!!)
                         if (!resOk(context, res)) {
                             println("image upload failed",)
                         }

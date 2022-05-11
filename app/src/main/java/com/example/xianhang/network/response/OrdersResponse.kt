@@ -5,5 +5,6 @@ import com.squareup.moshi.Json
 
 data class OrdersResponse(
     val code: Int,
-    @Json(name = "result") val orders: List<OrderItem>
+    val message: String?,
+    @Json(name = "result") val orders: List<OrderItem>?
 )

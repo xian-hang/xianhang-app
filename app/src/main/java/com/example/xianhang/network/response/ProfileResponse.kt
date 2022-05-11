@@ -12,15 +12,16 @@ enum class Status {
 
 data class ProfileResponse(
     val code: Int,
+    val message: String?,
     val id: Int?,
-    val username: String,
-    @Json(name = "studentId") val userId: String,
-    val introduction: String,
-    val role: Int,
-    val soldItem: Int,
-    @Json(name = "rating") val credit: Double,
-    val status: Int,
+    val username: String?,
+    @Json(name = "studentId") val userId: String?,
+    val introduction: String?,
+    val role: Int?,
+    val soldItem: Int?,
+    @Json(name = "rating") val credit: Double?,
+    val status: Int?,
     val likeId: Int?,
     @Json(name = "followershipId") val followId: Int?,
-    @Json(name = "totalLike") val likes: Int
+    @Json(name = "totalLike") val likes: Int?
 )
