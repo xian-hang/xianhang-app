@@ -68,7 +68,6 @@ class OrderFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.getOrder(token!!, id!!)
-                println(resp)
                 if (resOk(context, resp)) {
                     val isBuyer = resp.order!!.userId == userId
                     binding.viewModel!!.setOrder(resp.order, isBuyer)

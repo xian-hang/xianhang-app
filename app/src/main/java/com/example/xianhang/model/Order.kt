@@ -23,7 +23,9 @@ data class Order(
     val name: String,
     @Json(name = "phoneNum") val phone: String,
     val tradingMethod: Int,
-    @Json(name = "deliveringAddr") val address: String?
+    @Json(name = "deliveringAddr") val address: String?,
+    @Json(name = "pname") val productName: String?,
+    val sellerId: Int?
 ): Parcelable
 
 @Parcelize

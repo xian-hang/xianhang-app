@@ -21,8 +21,11 @@ class OrderViewModel: ViewModel() {
     private val _order = MutableLiveData<Order>()
     val order: LiveData<Order> = _order
 
-    private val _product = MutableLiveData<Product>()
-    val product: LiveData<Product> = _product
+    private val _product = MutableLiveData<Product?>()
+    val product: LiveData<Product?> = _product
+
+    private val _name = MutableLiveData<String>()
+    val name: LiveData<String> = _name
 
     private val _price = MutableLiveData<Double>()
     val price: LiveData<Double> = _price
@@ -60,6 +63,7 @@ class OrderViewModel: ViewModel() {
     // for buy fragment
     fun previewOrder(p: Product, a: Int, t: Int) {
         _product.value = p
+        _name.value = p.name
         _amount.value = a
         _tradingMethod.value = when (t) {
             DELIVERY -> "寄送"
@@ -69,13 +73,14 @@ class OrderViewModel: ViewModel() {
         _visAddr.value = if (t == DELIVERY) View.VISIBLE
         else View.GONE
         _visCancel.value = View.GONE
-        updatePrice()
+        _price.value = p.price * a
     }
 
     // for view exists order
     fun setOrder(o: Order, isBuyer: Boolean) {
         _order.value = o
-        _product.value = o.product!!
+        _name.value = o.productName
+        _product.value = o.product
         _amount.value = o.amount
         _tradingMethod.value = when (o.tradingMethod) {
             DELIVERY -> "邮寄"
@@ -119,7 +124,7 @@ class OrderViewModel: ViewModel() {
             DELIVERY -> View.VISIBLE
             else -> View.GONE
         }
-        updatePrice()
+        _price.value = o.price
     }
 
     fun setPostage(p: Double) {
@@ -176,14 +181,9 @@ class OrderViewModel: ViewModel() {
             else -> View.GONE
         }
         _visCancel.value = when (state) {
-            UNPAID -> View.VISIBLE
+            UNPAID -> if (isBuyer) View.VISIBLE else View.GONE
             PAID -> View.VISIBLE
             else -> View.GONE
         }
-    }
-
-    private fun updatePrice() {
-        _price.value = (amount.value?.toDouble() ?: 0.0) *
-                (product.value?.price ?: 0.0)
     }
 }

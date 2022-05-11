@@ -10,8 +10,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
-const val BASE_URL = "http://xianhang.ga/api/"
-const val SCHEME = "http"
+const val BASE_URL = "https://xianhang.ga/api/"
+const val SCHEME = "https"
 
 private const val AUTH = "Authorization"
 

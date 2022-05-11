@@ -29,7 +29,7 @@ class OrderAdapter(private val method: Int, private val status: Int, private val
             println(order)
             val product = order.order.product
 
-            binding.name.text = product?.name ?: "商品不存在"
+            binding.name.text = order.order.productName
             setDetails(order.order, method)
 
             var imageUrl = ""

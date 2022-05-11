@@ -89,7 +89,7 @@ class BuyFragment : Fragment() {
         var address: String? = null
         if (tradingMethod == DELIVERY) address = binding.address.text.toString()
 
-        return OrderRequest(price, amount, productId!!, name, phoneNum, tradingMethod, address)
+        return OrderRequest(price * amount, amount, productId!!, name, phoneNum, tradingMethod, address)
     }
 
     private fun checkData(): Boolean {
