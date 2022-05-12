@@ -20,6 +20,7 @@
                 layout="@layout/profile_item" />
 
             <include
+                android:id="@+id/track"
                 layout="@layout/track_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

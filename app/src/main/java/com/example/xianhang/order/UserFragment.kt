@@ -16,6 +16,7 @@ import com.example.xianhang.R
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.USER_PRODUCT
 import com.example.xianhang.databinding.FragmentUserBinding
+import com.example.xianhang.home.ProfileViewModel
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
@@ -37,7 +38,8 @@ class UserFragment : Fragment() {
         println("user id = $id")
         ProductsViewModel.Factory(USER_PRODUCT, id, null, null, context)
     }
-    private val userViewModel: UserViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
+
     var userId: Int? = null
     var token: String? = null
 
@@ -48,8 +50,9 @@ class UserFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentUserBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        binding.userViewModel = userViewModel
+        binding.profileViewModel = profileViewModel
         binding.productsViewModel = productsViewModel
+        binding.profile.viewModel = profileViewModel
         binding.products.adapter = ProductAdapter(USER_PRODUCT, context)
 
         val id = activity?.intent?.extras?.getInt(ID)
@@ -62,9 +65,10 @@ class UserFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpProfile(view, userId!!)
+        profileViewModel.setProfile(context, token!!, userId!!)
 
         binding.like.setOnClickListener {
             like()
@@ -83,61 +87,27 @@ class UserFragment : Fragment() {
         }
     }
 
+
     private fun report() {
         val bundle = bundleOf(ID to userId)
         findNavController().navigate(R.id.action_userFragment2_to_reportFragment2, bundle)
     }
+
 
     private fun like() {
         if (token == null) {
             Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
             return
         }
-        binding.userViewModel!!.setLike(context, token!!, userId)
+        profileViewModel.setLike(context, token!!, userId)
     }
+
 
     private fun follow() {
         if (token == null) {
             Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
             return
         }
-        binding.userViewModel!!.setFollow(context, token!!, userId)
-    }
-
-    private fun setUpProfile(view: View, id: Int) {
-        if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        val username = view.findViewById<TextView>(R.id.username)
-        val userId = view.findViewById<TextView>(R.id.userId)
-        val details = view.findViewById<TextView>(R.id.details)
-        val introduction = view.findViewById<TextView>(R.id.introduction)
-        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val resp = Api.retrofitService.getUser(token!!, id)
-                if (resOk(context, resp)) {
-                    progressBar.visibility = View.GONE
-                    username.text = resp.username
-                    userId.text = resp.userId
-                    introduction.text = resp.introduction
-                    details.text = resources.getString(
-                        R.string.profile_details,
-                        String.format("%.2f", resp.credit),
-                        resp.likes,
-                        resp.soldItem
-                    )
-                    binding.userViewModel!!.init(context, resp.likeId, resp.followId)
-                }
-            } catch (e: HttpException) {
-                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                // TODO: check connection wrong
-                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-                e.printStackTrace()
-            }
-        }
+        profileViewModel.setFollow(context, token!!, userId)
     }
 }

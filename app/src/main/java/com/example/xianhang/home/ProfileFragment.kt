@@ -10,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import com.example.xianhang.*
 import com.example.xianhang.adapter.BUYER
 import com.example.xianhang.adapter.METHOD
 import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.FragmentProfileBinding
+import com.example.xianhang.databinding.ProfileItemBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.PASSWORD
 import com.example.xianhang.login.LoginFragment.Companion.REMEMBER
@@ -38,8 +40,9 @@ import java.lang.Exception
 
 class ProfileFragment : Fragment() {
 
-    private var _id: Int = 0
     private lateinit var binding: FragmentProfileBinding
+    private val viewModel: ProfileViewModel by viewModels()
+    private var token: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,15 +50,29 @@ class ProfileFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        binding.profile.viewModel = viewModel
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpProfile(view)
-        setUpTracking(view)
+        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        token = sharePreferences?.getString(TOKEN, null)
 
-        binding.editProfile.setOnClickListener { changeActivityEditProfile(view) }
+        if (token == null) {
+            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        viewModel.setProfile(context, token!!)
+        setUpTracking()
+        setUpList()
+    }
+
+    private fun setUpList() {
+        binding.editProfile.setOnClickListener { changeActivityEditProfile() }
         binding.changePassword.setOnClickListener { changeActivityChangePassword() }
         binding.sellingProducts.setOnClickListener { changeActivityProducts() }
         binding.orders.setOnClickListener { changeActivityMyOrders() }
@@ -64,7 +81,7 @@ class ProfileFragment : Fragment() {
         binding.deleteAccount.setOnClickListener { showDeleteAccountDialog() }
     }
 
-    private fun setUpTracking(view: View) {
+    private fun setUpTracking() {
         val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharePreferences?.getString(TOKEN, null)
 
@@ -73,67 +90,24 @@ class ProfileFragment : Fragment() {
             return
         }
 
-        val toPay = view.findViewById<ImageButton>(R.id.to_pay)
-        val toSend = view.findViewById<ImageButton>(R.id.to_send)
-        val toReceive = view.findViewById<ImageButton>(R.id.to_receive)
         val intent = Intent(context, OrderStatusActivity::class.java)
-        toPay.setOnClickListener {
+        binding.track.toPay.setOnClickListener {
             intent.putExtra(POSITION, 0)
             startActivity(intent)
         }
-        toSend.setOnClickListener {
+        binding.track.toSend.setOnClickListener {
             intent.putExtra(POSITION, 1)
             startActivity(intent)
         }
-        toReceive.setOnClickListener {
+        binding.track.toReceive.setOnClickListener {
             intent.putExtra(POSITION, 2)
             startActivity(intent)
         }
     }
 
-    private fun setUpProfile(view: View) {
-        val sharePreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharePreferences?.getString(TOKEN, null)
-
-        if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        val username = view.findViewById<TextView>(R.id.username)
-        val userId = view.findViewById<TextView>(R.id.userId)
-        val details = view.findViewById<TextView>(R.id.details)
-        val introduction = view.findViewById<TextView>(R.id.introduction)
-        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val resp = Api.retrofitService.getProfile(token)
-                if (resOk(context, resp)) {
-                    progressBar.visibility = View.GONE
-                    _id = resp.id!!
-                    username.text = resp.username
-                    userId.text = resp.userId
-                    introduction.text = resp.introduction
-                    details.text = resources.getString(
-                        R.string.profile_details,
-                        String.format("%.2f", resp.credit),
-                        resp.likes,
-                        resp.soldItem
-                    )
-                }
-            } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                // TODO: check connection wrong
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
-                e.printStackTrace()
-            }
-        }
-    }
-
-    private fun changeActivityEditProfile(view: View) {
-        val username = view.findViewById<TextView>(R.id.username).text.toString()
-        val introduction = view.findViewById<TextView>(R.id.introduction).text.toString()
+    private fun changeActivityEditProfile() {
+        val username = binding.profile.username.text.toString()
+        val introduction = binding.profile.introduction.text.toString()
         val intent = Intent(requireActivity(), EditProfileActivity::class.java)
         intent.putExtra("username", username)
         intent.putExtra("introduction", introduction)
