@@ -21,12 +21,7 @@ import com.example.xianhang.product.ProductsViewModel
 class CollectionFragment : Fragment() {
 
     private lateinit var binding: FragmentCollectionBinding
-    private val viewModel: ProductsViewModel by viewModels {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-        println("token = " + token?.isNotEmpty().toString())
-        ProductsViewModel.Factory(COLLECTION, null, token, null, context)
-    }
+    private val viewModel: ProductsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -91,7 +91,7 @@ class ProductAdapter(private val method: Int, private val context: Context?):
     private fun setClickListener(method: Int, product: ProductItem, holder: ProductItemViewHolder) {
         when (method) {
             SELLER -> {
-                val bundle = bundleOf(PRODUCT to product.product)
+                val bundle = bundleOf(PRODUCT_ITEM to product)
                 holder.view.setOnClickListener (
                     Navigation.createNavigateOnClickListener(R.id.action_productFragment2_to_viewProductFragment, bundle)
                 )

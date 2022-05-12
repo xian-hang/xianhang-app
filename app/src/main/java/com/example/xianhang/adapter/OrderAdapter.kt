@@ -15,7 +15,7 @@ import com.example.xianhang.databinding.OrderItemBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.model.*
 import com.example.xianhang.network.SCHEME
-import com.example.xianhang.product.ProductViewModel
+import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
 
 class OrderAdapter(private val method: Int, private val status: Int, private val context: Context?):
     ListAdapter<OrderItem, OrderAdapter.OrderItemViewHolder>(DiffCallback) {
@@ -34,7 +34,7 @@ class OrderAdapter(private val method: Int, private val status: Int, private val
 
             var imageUrl = ""
             if (order.imagesId.isNotEmpty()) {
-                imageUrl = "${ProductViewModel.IMAGE_URL}${order.imagesId[0]}"
+                imageUrl = "$IMAGE_URL${order.imagesId[0]}"
             }
             val imgUrl = imageUrl.toUri().buildUpon().scheme(SCHEME).build()
             binding.image.load(imgUrl) {

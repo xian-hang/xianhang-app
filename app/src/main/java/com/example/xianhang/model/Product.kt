@@ -24,5 +24,6 @@ data class Product(
 @Parcelize
 data class ProductItem(
     val product: Product,
-    @Json(name = "image") val imagesId: List<Int>
+    @Json(name = "image") val imagesId: List<Int>,
+    @Json(name = "collectionId") val collectId: Int?
 ): Parcelable

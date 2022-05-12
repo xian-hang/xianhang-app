@@ -33,15 +33,11 @@ import java.lang.Exception
 class UserFragment : Fragment() {
 
     private lateinit var binding: FragmentUserBinding
-    private val productsViewModel: ProductsViewModel by viewModels {
-        val id = activity?.intent?.extras?.getInt(ID)
-        println("user id = $id")
-        ProductsViewModel.Factory(USER_PRODUCT, id, null, null, context)
-    }
+    private val productsViewModel: ProductsViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
 
-    var userId: Int? = null
-    var token: String? = null
+    private var userId: Int? = null
+    private var token: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.xianhang.model.Product
 import com.example.xianhang.model.ProductId
+import com.example.xianhang.model.ProductItem
 import com.example.xianhang.network.Api
 import com.example.xianhang.network.BASE_URL
 import com.example.xianhang.network.response.DefaultResponse
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.lang.Exception
 
-class ProductViewModel(private val token: String, private val id: Int, context: Context?) : ViewModel() {
+class ProductViewModel: ViewModel() {
     private val _product = MutableLiveData<Product?>()
     val product: LiveData<Product?> = _product
 
@@ -38,19 +39,31 @@ class ProductViewModel(private val token: String, private val id: Int, context: 
 
     var collectId: Int? = null
 
-    init {
-        getProduct(token, id, context)
-    }
+    fun setProduct(productItem: ProductItem) {
+        _status.value = View.GONE
 
-    class Factory(private val token: String, private val id: Int, private val context: Context?): ViewModelProvider.Factory {
+        collectId = productItem.collectId
+        println("collectId = ${productItem.collectId}")
+        _collected.value = if (collectId == null) View.GONE else View.VISIBLE
+        _uncollect.value = if (collectId != null) View.GONE else View.VISIBLE
+        println("collected = ${collected.value}, uncollect = ${uncollect.value}")
 
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ProductViewModel(token, id, context) as T
+        if (productItem.imagesId.isNotEmpty()) {
+            _imageSrcUrl.value = "${IMAGE_URL}${productItem.imagesId[0]}"
+        } else {
+            _imageSrcUrl.value = ""
         }
+        _product.value = productItem.product
+        _tradingMethod.value = when(productItem.product.tradingMethod) {
+            0 -> "寄送"
+            1 -> "自取"
+            2 -> "自取，寄送"
+            else -> ""
+        }
+        _visibility.value = if (productItem.product.tradingMethod > 0) View.VISIBLE else View.GONE
     }
 
-    fun setId(context: Context?, productId: Int?) {
+    fun collect(context: Context?, token: String, productId: Int?) {
         _collected.value = if (collectId != null) View.GONE else View.VISIBLE
         _uncollect.value = if (collectId == null) View.GONE else View.VISIBLE
         viewModelScope.launch {
@@ -77,59 +90,6 @@ class ProductViewModel(private val token: String, private val id: Int, context: 
                 Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-    private fun getProduct(token: String, id: Int, context: Context?) {
-        println("============== show Product ==============")
-        viewModelScope.launch {
-            _status.value = View.VISIBLE
-            println("status Loading")
-            try {
-                println("id = $id")
-                val resp = Api.retrofitService.getProduct(token, id)
-                if (resOk(context, resp)) {
-                    println("resOk")
-                    _status.value = View.GONE
-                    if (resp.images!!.isNotEmpty()) {
-                        _imageSrcUrl.value = "${IMAGE_URL}${resp.images[0]}"
-                    } else {
-                        _imageSrcUrl.value = ""
-                    }
-                    _product.value = resp.product
-                    _tradingMethod.value = when(resp.product!!.tradingMethod) {
-                        0 -> "寄送"
-                        1 -> "自取"
-                        2 -> "自取，寄送"
-                        else -> ""
-                    }
-                    _visibility.value = if (resp.product.tradingMethod > 0) View.VISIBLE else View.GONE
-                    println("collectId = ${resp.collectId}")
-                    collectId = resp.collectId
-                    _collected.value = if (resp.collectId == null) View.GONE else View.VISIBLE
-                    _uncollect.value = if (resp.collectId != null) View.GONE else View.VISIBLE
-                } else {
-                    println(resp)
-                    println("resNotOk")
-                    setError()
-                }
-            } catch (e: HttpException) {
-                println("http exception")
-                setError()
-            } catch (e: Exception) {
-                println(e.message)
-                setError()
-            }
-        }
-    }
-
-    private fun setError() {
-        _status.value = View.GONE
-        _imageSrcUrl.value = ""
-        _product.value = null
-        _tradingMethod.value = ""
-        _visibility.value = View.GONE
-        _collected.value = View.GONE
-        _uncollect.value = View.VISIBLE
     }
 
     companion object {

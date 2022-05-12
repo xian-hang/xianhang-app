@@ -18,15 +18,6 @@ class ProfileViewModel: ViewModel() {
     var likeId: Int? = null
     var followId: Int? = null
 
-    private val _visLike = MutableLiveData<Int>()
-    val visLike: LiveData<Int> = _visLike
-
-    private val _visUnLike = MutableLiveData<Int>()
-    val visUnLike: LiveData<Int> = _visUnLike
-
-    private val _follow = MutableLiveData<String>()
-    val follow: LiveData<String> = _follow
-
     private val _status = MutableLiveData<Int>()
     val status: LiveData<Int> = _status
 
@@ -39,6 +30,7 @@ class ProfileViewModel: ViewModel() {
     private val _detail = MutableLiveData<String>()
     val detail: LiveData<String> = _detail
 
+    // these three data still not use
     private val _credit = MutableLiveData<Double>()
     val credit: LiveData<Double> = _credit
 
@@ -50,6 +42,15 @@ class ProfileViewModel: ViewModel() {
 
     private val _intro = MutableLiveData<String>()
     val intro: LiveData<String> = _intro
+
+    private val _visLike = MutableLiveData<Int>()
+    val visLike: LiveData<Int> = _visLike
+
+    private val _visUnLike = MutableLiveData<Int>()
+    val visUnLike: LiveData<Int> = _visUnLike
+
+    private val _follow = MutableLiveData<String>()
+    val follow: LiveData<String> = _follow
 
     fun setProfile(context: Context?, token: String) {
         viewModelScope.launch {
@@ -82,6 +83,7 @@ class ProfileViewModel: ViewModel() {
             }
         }
     }
+
 
     fun setProfile(context: Context?, token: String, id: Int) {
         viewModelScope.launch {
@@ -116,6 +118,7 @@ class ProfileViewModel: ViewModel() {
         }
     }
 
+
     private fun init(context: Context?, likeId: Int?, followId: Int?) {
         _visLike.value = if (likeId != null) View.VISIBLE else View.GONE
         _visUnLike.value = if (likeId == null) View.VISIBLE else View.GONE
@@ -125,6 +128,7 @@ class ProfileViewModel: ViewModel() {
         this.likeId = likeId
         this.followId = followId
     }
+
 
     fun setLike(context: Context?, token: String, userId: Int?) {
         println("likeId = $likeId")
@@ -155,6 +159,7 @@ class ProfileViewModel: ViewModel() {
             }
         }
     }
+
 
     fun setFollow(context: Context?, token: String, userId: Int?) {
         println("FollowId = $followId")

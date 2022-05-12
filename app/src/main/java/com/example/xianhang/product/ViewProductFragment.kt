@@ -15,10 +15,12 @@ import com.example.xianhang.R
 import com.example.xianhang.adapter.ACTION
 import com.example.xianhang.adapter.IMAGE_URL
 import com.example.xianhang.adapter.PRODUCT
+import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.databinding.FragmentViewProductBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.Product
+import com.example.xianhang.model.ProductItem
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,13 +33,9 @@ import java.lang.Exception
 class ViewProductFragment : Fragment() {
 
     private lateinit var binding: FragmentViewProductBinding
-    private val viewModel: ProductViewModel by viewModels {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-        val product = arguments?.getParcelable<Product>(PRODUCT)
-        println("id = " + product?.id.toString())
-        ProductViewModel.Factory(token!!, product!!.id!!, context)
-    }
+    private val viewModel: ProductViewModel by viewModels()
+    private var productItem: ProductItem? = null
+    private var token: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +45,22 @@ class ViewProductFragment : Fragment() {
         binding = FragmentViewProductBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        productItem = arguments?.getParcelable(PRODUCT_ITEM)
+        viewModel.setProduct(productItem!!)
+
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        token = sharedPreferences?.getString(TOKEN, null)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (token == null) {
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
 
         binding.edit.setOnClickListener {
             navigateEdit()

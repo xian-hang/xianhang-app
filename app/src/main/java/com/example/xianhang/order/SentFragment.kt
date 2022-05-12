@@ -18,13 +18,7 @@ import com.example.xianhang.model.SHIPPED
 class SentFragment : Fragment() {
 
     private lateinit var binding: FragmentSentBinding
-    private val viewModel: OrdersViewModel by viewModels {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-        val method = BUYER
-        println("token = " + token.toString())
-        OrdersViewModel.Factory(method, token!!, SHIPPED, context)
-    }
+    private val viewModel: OrdersViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

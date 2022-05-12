@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.xianhang.R
 import com.example.xianhang.adapter.ACTION
 import com.example.xianhang.login.LoginFragment.Companion.ID
@@ -24,13 +22,7 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 class ProductFragment : Fragment() {
 
     private lateinit var binding: FragmentProductBinding
-    private val viewModel: ProductsViewModel by viewModels {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val id = sharedPreferences?.getInt(ID, 0)
-        val token = sharedPreferences?.getString(TOKEN, null)
-        println("id = " + id.toString())
-        ProductsViewModel.Factory(SELLER, id, token, null, context)
-    }
+    private val viewModel: ProductsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +39,16 @@ class ProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val id = sharedPreferences?.getInt(ID, 0)
+        val token = sharedPreferences?.getString(TOKEN, null)
 
+        if (token == null) {
+            Toast.makeText(context, "Please Login", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        viewModel.setProducts(context, SELLER, token, id)
         binding.sellProduct.setOnClickListener {
             createProduct()
         }

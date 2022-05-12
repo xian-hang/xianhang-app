@@ -23,12 +23,7 @@ import com.example.xianhang.product.ProductsViewModel
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: ProductsViewModel by viewModels {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-        println("token = " + token?.isNotEmpty().toString())
-        ProductsViewModel.Factory(BUYER, null, token, null, context)
-    }
+    private val viewModel: ProductsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

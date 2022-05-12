@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="com.example.xianhang.product.OrdersFragment"
+        android:name="com.example.xianhang.order.OrdersFragment"
         android:label="fragment_order"
         tools:layout="@layout/fragment_orders" >
         <action

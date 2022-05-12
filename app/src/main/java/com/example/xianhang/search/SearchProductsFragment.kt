@@ -21,13 +21,7 @@ import com.example.xianhang.product.ProductsViewModel
 class SearchProductsFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchProductsBinding
-    private val viewModel: ProductsViewModel by viewModels {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(LoginFragment.TOKEN, null)
-        val query = activity?.intent?.extras?.getString(QUERY)
-        println("token = " + token?.isNotEmpty().toString())
-        ProductsViewModel.Factory(SEARCH, null, token, query!!, context)
-    }
+    private val viewModel: ProductsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

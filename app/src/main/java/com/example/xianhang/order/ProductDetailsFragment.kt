@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -26,13 +25,7 @@ class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
     private var productItem: ProductItem? = null
-    private val productViewModel: ProductViewModel by viewModels {
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences?.getString(TOKEN, null)
-        productItem = activity?.intent?.extras?.getParcelable(PRODUCT_ITEM)
-        println("id = ${productItem?.product?.id}")
-        ProductViewModel.Factory(token!!, productItem!!.product.id!!, context)
-    }
+    private val productViewModel: ProductViewModel by viewModels()
     private val orderViewModel: OrderViewModel by activityViewModels()
     private var token: String? = null
 
@@ -44,6 +37,9 @@ class ProductDetailsFragment : Fragment() {
         binding = FragmentProductDetailsBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = productViewModel
+        productItem = activity?.intent?.extras?.getParcelable(PRODUCT_ITEM)
+        productViewModel.setProduct(productItem!!)
+
         return binding.root
     }
 
@@ -57,7 +53,6 @@ class ProductDetailsFragment : Fragment() {
         }
 
         binding.buy.setOnClickListener {
-            println("order")
             order()
         }
 
@@ -91,10 +86,10 @@ class ProductDetailsFragment : Fragment() {
 
     private fun collect() {
         if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
-        binding.viewModel!!.setId(context, productItem?.product?.id)
+        binding.viewModel!!.collect(context, token!!, productItem?.product?.id)
     }
 
     private fun checkData(): Boolean {
