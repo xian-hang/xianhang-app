@@ -33,18 +33,27 @@ class SearchProductsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.products.adapter = ProductAdapter(SEARCH, context)
 
-        val query = activity?.intent?.extras?.getString(QUERY)
-        binding.search.setQuery(query!!, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(context, "Please Login", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val query = activity?.intent?.extras?.getString(QUERY)
+        binding.search.setQuery(query!!, false)
+
+        viewModel.search(context, token, query)
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query == null) return false
-                if (token == null) {
-                    Toast.makeText(context, "Please Login", Toast.LENGTH_LONG).show()
-                    return false
-                }
                 binding.search.clearFocus()
                 viewModel.search(context, token, query)
                 return false
@@ -55,6 +64,5 @@ class SearchProductsFragment : Fragment() {
             }
         })
 
-        return binding.root
     }
 }
