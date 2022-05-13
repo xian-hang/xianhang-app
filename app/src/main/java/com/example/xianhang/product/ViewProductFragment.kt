@@ -6,20 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
 import com.example.xianhang.adapter.ACTION
-import com.example.xianhang.adapter.IMAGE_URL
-import com.example.xianhang.adapter.PRODUCT
 import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.databinding.FragmentViewProductBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
-import com.example.xianhang.model.Product
 import com.example.xianhang.model.ProductItem
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk
@@ -72,9 +68,7 @@ class ViewProductFragment : Fragment() {
     }
 
     private fun navigateEdit() {
-        val product = arguments?.getParcelable<Product>(PRODUCT)
-        val imageUrl = viewModel.imageSrcUrl.value
-        val bundle = bundleOf(PRODUCT to product, ACTION to "edit", IMAGE_URL to imageUrl)
+        val bundle = bundleOf(PRODUCT_ITEM to productItem, ACTION to "edit")
         findNavController().navigate(R.id.action_viewProductFragment_to_sellProductFragment, bundle)
     }
 

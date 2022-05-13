@@ -52,6 +52,11 @@ class ProductFragment : Fragment() {
         binding.sellProduct.setOnClickListener {
             createProduct()
         }
+
+        binding.refresh.setOnRefreshListener {
+            viewModel.setProducts(context, SELLER, token, id)
+            binding.refresh.isRefreshing = false
+        }
     }
 
     private fun createProduct() {

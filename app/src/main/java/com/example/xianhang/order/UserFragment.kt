@@ -58,6 +58,12 @@ class UserFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         token = sharedPreferences?.getString(TOKEN, null)
 
+        productsViewModel.setProducts(context, USER_PRODUCT, token!!, userId)
+        binding.refresh.setOnRefreshListener {
+            productsViewModel.setProducts(context, USER_PRODUCT, token!!, userId)
+            binding.refresh.isRefreshing = false
+        }
+
         return binding.root
     }
 

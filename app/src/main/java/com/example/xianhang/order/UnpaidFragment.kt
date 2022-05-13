@@ -34,6 +34,11 @@ class UnpaidFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
         viewModel.setOrders(context, token!!, BUYER, UNPAID)
 
+        binding.refresh.setOnRefreshListener {
+            viewModel.setOrders(context, token, BUYER, UNPAID)
+            binding.refresh.isRefreshing = false
+        }
+
         return binding.root
     }
 }

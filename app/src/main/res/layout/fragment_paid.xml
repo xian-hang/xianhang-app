@@ -10,27 +10,32 @@
             type="com.example.xianhang.order.OrdersViewModel" />
     </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".order.PaidFragment">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="@{viewModel.status}" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/orders"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:listorder="@{viewModel.orders}"
-            tools:listitem="@layout/order_item" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".order.PaidFragment">
 
-    </RelativeLayout>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="@{viewModel.status}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:listorder="@{viewModel.orders}"
+                tools:listitem="@layout/order_item" />
+
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
 

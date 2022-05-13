@@ -8,39 +8,44 @@
             type="com.example.xianhang.product.ProductsViewModel" />
     </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".home.FollowFragment">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.status}"
-            android:layout_centerInParent="true" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="@string/feeds" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/products"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:listitem="@{viewModel.products}"
-            tools:listitem="@layout/product_list_item" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".home.FollowFragment">
 
-    </RelativeLayout>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.status}"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@string/feeds" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:listitem="@{viewModel.products}"
+                tools:listitem="@layout/product_list_item" />
+
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

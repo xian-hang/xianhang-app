@@ -35,15 +35,14 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.File
 import android.Manifest
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import coil.load
 import com.example.xianhang.adapter.ACTION
-import com.example.xianhang.adapter.IMAGE_URL
-import com.example.xianhang.adapter.PRODUCT
+import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.databinding.FragmentSellProductBinding
 import com.example.xianhang.network.SCHEME
-import com.example.xianhang.network.response.DefaultResponse
+import com.example.xianhang.network.response.ImageResponse
+import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
 import com.example.xianhang.model.Product as Product
 
 class SellProductFragment : Fragment() {
@@ -70,10 +69,9 @@ class SellProductFragment : Fragment() {
         }
 
         if (type == "edit") {
-            val product = arguments?.getParcelable<Product>(PRODUCT)
-            prefillProduct(product!!)
+            prefillProduct()
             binding.sell.setOnClickListener {
-                requestEditProduct(product)
+                requestEditProduct()
             }
         } else {
             binding.sell.setOnClickListener {
@@ -84,13 +82,18 @@ class SellProductFragment : Fragment() {
         return binding.root
     }
 
-    private fun prefillProduct(product: Product) {
-        val imageUrl = arguments?.getString(IMAGE_URL) ?: ""
-        if (imageUrl.isNotEmpty()) {
-            val arr = imageUrl.split('/')
-            imageId = arr[arr.size - 1].toInt()
+    private fun prefillProduct() {
+        val productItem = arguments?.getParcelable<ProductItem>(PRODUCT_ITEM)
+        val product = productItem!!.product
+        var imageUrl = ""
+        if (productItem.imagesId.isNotEmpty()) {
+            imageId = productItem.imagesId[0]
+            imageUrl = "$IMAGE_URL${imageId}"
         }
+        println("prefill product")
+        println(imageUrl)
         val imgUrl = imageUrl.toUri().buildUpon().scheme(SCHEME).build()
+        println(imgUrl)
         binding.image.load(imgUrl) {
             placeholder(R.mipmap.ic_loading)
             error(R.mipmap.ic_image_placeholder)
@@ -112,7 +115,10 @@ class SellProductFragment : Fragment() {
             binding.pickupAddress.setText(product.address)
     }
 
-    private fun requestEditProduct(product: Product) {
+    private fun requestEditProduct() {
+        val productItem = arguments?.getParcelable<ProductItem>(PRODUCT_ITEM)
+        val product = productItem!!.product
+
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
 
@@ -151,6 +157,7 @@ class SellProductFragment : Fragment() {
                         println("run upload image")
                         try {
                             val res2 = uploadImage(token, File(imagePath), product.id!!)
+                            imageId = res2.imageId
                             if (!resOk(context, res2)) {
                                 println("upload image failed")
                             }
@@ -158,7 +165,8 @@ class SellProductFragment : Fragment() {
                             println("upload image failed")
                         }
                     }
-                    val bundle = bundleOf(PRODUCT to newProduct)
+                    val images = if (imageId == null) listOf() else listOf(imageId!!)
+                    val bundle = bundleOf(PRODUCT_ITEM to ProductItem(newProduct, images, null))
                     findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
                 }
             } catch (e: HttpException) {
@@ -180,22 +188,24 @@ class SellProductFragment : Fragment() {
             Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
-        println("check product data")
         if (!checkData()) return
-        println("product data checked")
 
         val product = getData()
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.createProduct(token, product)
+                var imageId: Int? = null
                 if (resOk(context, resp)) {
                     if (upload) {
                         val res = uploadImage(token, File(imagePath), resp.product!!.id!!)
+                        imageId = res.imageId
                         if (!resOk(context, res)) {
                             println("image upload failed",)
                         }
                     }
-                    val bundle = bundleOf(PRODUCT to resp.product)
+                    val images = if (imageId == null) listOf() else listOf(imageId)
+                    val productItem = ProductItem(product, images, null)
+                    val bundle = bundleOf(PRODUCT_ITEM to productItem)
                     findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
                 } else {
                     println("something wrong")
@@ -278,7 +288,7 @@ class SellProductFragment : Fragment() {
         return Product(null, name, description, price, stock, tradingMethod, address, null, null)
     }
 
-    private suspend fun uploadImage(token: String, image: File, id: Int): DefaultResponse {
+    private suspend fun uploadImage(token: String, image: File, id: Int): ImageResponse {
         val reqImage = image.asRequestBody("image/*".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData(
             "image",

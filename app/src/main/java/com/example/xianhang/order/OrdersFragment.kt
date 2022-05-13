@@ -54,5 +54,11 @@ class OrdersFragment : Fragment() {
         if (method != SELLER) binding.title.visibility = View.GONE
 
         viewModel.setOrders(context, token!!, method!!, ALL)
+
+        binding.refresh.setOnRefreshListener {
+            viewModel.setOrders(context, token!!, method!!, ALL)
+            binding.refresh.isRefreshing = false
+        }
+
     }
 }

@@ -13,83 +13,88 @@
             type="com.example.xianhang.home.ProfileViewModel" />
     </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".order.UserFragment">
-
-        <include
-            android:id="@+id/profile"
-            layout="@layout/profile_item" />
-
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile"
-            android:layout_margin="15dp"
-            android:layout_toStartOf="@+id/follow"
-            android:src="@drawable/ic_like_32"
-            android:visibility="@{profileViewModel.visLike}" />
-
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/unlike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile"
-            android:layout_margin="15dp"
-            android:layout_toStartOf="@+id/follow"
-            android:visibility="@{profileViewModel.visUnLike}"
-            android:src="@drawable/ic_like_outlined_32" />
-
-        <Button
-            android:id="@+id/follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile"
-            android:layout_marginVertical="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/report"
-            android:text="@{profileViewModel.follow}"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="@string/follow" />
-
-        <Button
-            android:id="@+id/report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile"
-            android:layout_alignParentEnd="true"
-            android:layout_marginVertical="10dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#ff0000"
-            android:text="@string/report"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/product_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/report"
-            android:layout_alignParentStart="true"
-            android:layout_margin="10dp"
-            android:text="@string/product_cn"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/products"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/product_title"
-            android:layout_margin="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:listitem="@{productsViewModel.products}"
-            tools:listitem="@layout/product_list_item" />
+            android:layout_height="match_parent"
+            tools:context=".order.UserFragment">
 
-    </RelativeLayout>
+            <include
+                android:id="@+id/profile"
+                layout="@layout/profile_item" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile"
+                android:layout_margin="15dp"
+                android:layout_toStartOf="@+id/follow"
+                android:src="@drawable/ic_like_32"
+                android:visibility="@{profileViewModel.visLike}" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/unlike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile"
+                android:layout_margin="15dp"
+                android:layout_toStartOf="@+id/follow"
+                android:visibility="@{profileViewModel.visUnLike}"
+                android:src="@drawable/ic_like_outlined_32" />
+
+            <Button
+                android:id="@+id/follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile"
+                android:layout_marginVertical="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/report"
+                android:text="@{profileViewModel.follow}"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="@string/follow" />
+
+            <Button
+                android:id="@+id/report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#ff0000"
+                android:text="@string/report"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/product_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/report"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:text="@string/product_cn"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/product_title"
+                android:layout_margin="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:listitem="@{productsViewModel.products}"
+                tools:listitem="@layout/product_list_item" />
+
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

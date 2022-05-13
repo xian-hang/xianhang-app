@@ -34,6 +34,11 @@ class SentFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
         viewModel.setOrders(context, token!!, BUYER, SHIPPED)
 
+        binding.refresh.setOnRefreshListener {
+            viewModel.setOrders(context, token, BUYER, SHIPPED)
+            binding.refresh.isRefreshing = false
+        }
+
         return binding.root
     }
 }

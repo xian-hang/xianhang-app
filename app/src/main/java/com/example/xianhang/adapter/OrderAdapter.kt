@@ -95,7 +95,12 @@ class OrderAdapter(private val method: Int, private val status: Int, private val
         }
 
         override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
-            return oldItem.order.id == newItem.order.id
+            return oldItem.imagesId == newItem.imagesId &&
+                   oldItem.order.price == newItem.order.price &&
+                   oldItem.order.address == newItem.order.address &&
+                   oldItem.order.amount == newItem.order.amount &&
+                   oldItem.order.name == newItem.order.name &&
+                   oldItem.order.phone == newItem.order.phone
         }
     }
 }

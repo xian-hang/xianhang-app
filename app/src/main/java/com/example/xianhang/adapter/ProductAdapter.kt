@@ -22,7 +22,6 @@ import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
 const val PRODUCT = "product"
 const val PRODUCT_ITEM = "product_item"
 const val ACTION = "action"
-const val IMAGE_URL = "image_url"
 const val METHOD = "method"
 const val PRICE = "price"
 const val TO = "to"
@@ -119,7 +118,15 @@ class ProductAdapter(private val method: Int, private val context: Context?):
         }
 
         override fun areContentsTheSame(oldItem: ProductItem, newItem: ProductItem): Boolean {
-            return oldItem.product.id == newItem.product.id
+            return oldItem.imagesId == newItem.imagesId &&
+                   oldItem.product.price == newItem.product.price &&
+                   oldItem.product.name == newItem.product.name &&
+                   oldItem.product.stock == newItem.product.stock &&
+                   oldItem.product.username == newItem.product.username &&
+                   oldItem.product.address == newItem.product.address &&
+                   oldItem.product.description == newItem.product.description &&
+                   oldItem.product.tradingMethod == newItem.product.tradingMethod &&
+                   oldItem.collectId == newItem.collectId
         }
     }
 }

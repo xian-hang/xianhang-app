@@ -10,35 +10,40 @@
             type="com.example.xianhang.product.ProductsViewModel" />
     </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".product.ProductFragment">
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="@{viewModel.status}" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sell_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/sell_product"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/products_item"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sell_product"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:listitem="@{viewModel.products}"
-            tools:listitem="@layout/product_list_item" />
+            tools:context=".product.ProductFragment">
 
-    </RelativeLayout>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="@{viewModel.status}" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sell_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/sell_product"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/products_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sell_product"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:listitem="@{viewModel.products}"
+                tools:listitem="@layout/product_list_item" />
+
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

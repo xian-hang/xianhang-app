@@ -87,7 +87,7 @@ interface ApiService {
         @Header(AUTH) authToken: String,
         @Part image: MultipartBody.Part,
         @Part("productId") productId: RequestBody
-    ): DefaultResponse
+    ): ImageResponse
 
     @DELETE("product/image/{id}/delete/")
     suspend fun deleteProductImage(

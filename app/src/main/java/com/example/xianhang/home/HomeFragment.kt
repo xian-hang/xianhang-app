@@ -35,11 +35,14 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.products.adapter = ProductAdapter(BUYER, context)
 
-        // TODO: test it
-        println("run testing")
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences?.getString(TOKEN, null)
         viewModel.setProducts(context, BUYER, token!!, null)
+
+        binding.refresh.setOnRefreshListener {
+            viewModel.setProducts(context, BUYER, token, null)
+            binding.refresh.isRefreshing = false
+        }
 
         return binding.root
     }

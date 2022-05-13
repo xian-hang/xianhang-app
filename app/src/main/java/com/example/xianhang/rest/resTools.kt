@@ -71,6 +71,10 @@ fun resOk(context: Context?, resp: Any): Boolean {
             if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             return resp.code == 200
         }
+        is ImageResponse -> {
+            if (resp.code != 200) Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
+            return resp.code == 200
+        }
         else -> {
             Toast.makeText(context, "response not register", Toast.LENGTH_LONG).show()
             return false
