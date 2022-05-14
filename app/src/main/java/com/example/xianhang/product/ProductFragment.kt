@@ -1,6 +1,7 @@
 package com.example.xianhang.product
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -60,7 +61,8 @@ class ProductFragment : Fragment() {
     }
 
     private fun createProduct() {
-        val bundle = bundleOf(ACTION to "create")
-        findNavController().navigate(R.id.action_productFragment2_to_sellProductFragment, bundle)
+        val intent = Intent(context, SellActivity::class.java)
+        intent.putExtra(ACTION, "create")
+        startActivity(intent)
     }
 }

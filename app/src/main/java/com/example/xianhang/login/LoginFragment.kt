@@ -130,6 +130,7 @@ class LoginFragment : Fragment() {
                     editor?.putBoolean(REMEMBER, rememberMe)
                     editor?.apply()
                     findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+                    activity?.finish()
                 }
                 println("res not ok")
             } catch (e: HttpException) {

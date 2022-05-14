@@ -115,11 +115,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun changeActivityChangePassword() {
-        startActivity(Intent(requireActivity(), ChangePasswordActivity::class.java))
+        startActivity(Intent(context, ChangePasswordActivity::class.java))
     }
 
     private fun changeActivityProducts() {
-        val intent = Intent(requireActivity(), ProductActivity::class.java)
+        val intent = Intent(context, ProductActivity::class.java)
         intent.putExtra(METHOD, SELLER)
         startActivity(intent)
     }
@@ -169,6 +169,7 @@ class ProfileFragment : Fragment() {
 
                     val intent = Intent(context, LoginActivity::class.java)
                     context?.startActivity(intent)
+                    activity?.finish()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
@@ -215,6 +216,7 @@ class ProfileFragment : Fragment() {
 
                     val intent = Intent(context, LoginActivity::class.java)
                     context?.startActivity(intent)
+                    activity?.finish()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()

@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".product.ProductManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".product.SellActivity"
+            android:exported="false" />
+        <activity
             android:name=".notification.NoticeActivity"
             android:exported="false" />
         <activity

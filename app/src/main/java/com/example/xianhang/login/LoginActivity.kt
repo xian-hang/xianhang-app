@@ -38,7 +38,9 @@ class LoginActivity : AppCompatActivity() {
             ?: return
 
         val remember = sharedPreferences.getBoolean(REMEMBER, false)
-        if (remember)
+        if (remember) {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 }

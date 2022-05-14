@@ -17,6 +17,7 @@ import com.example.xianhang.model.Product
 import com.example.xianhang.model.ProductItem
 import com.example.xianhang.network.SCHEME
 import com.example.xianhang.order.OrderActivity
+import com.example.xianhang.product.ProductManageActivity
 import com.example.xianhang.product.ProductViewModel.Companion.IMAGE_URL
 
 const val PRODUCT = "product"
@@ -90,10 +91,11 @@ class ProductAdapter(private val method: Int, private val context: Context?):
     private fun setClickListener(method: Int, product: ProductItem, holder: ProductItemViewHolder) {
         when (method) {
             SELLER -> {
-                val bundle = bundleOf(PRODUCT_ITEM to product)
-                holder.view.setOnClickListener (
-                    Navigation.createNavigateOnClickListener(R.id.action_productFragment2_to_viewProductFragment, bundle)
-                )
+                holder.view.setOnClickListener {
+                    val intent = Intent(context, ProductManageActivity::class.java)
+                    intent.putExtra(PRODUCT_ITEM, product)
+                    context?.startActivity(intent)
+                }
             }
             BUYER -> {
                 val bundle = bundleOf(PRODUCT_ITEM to product)

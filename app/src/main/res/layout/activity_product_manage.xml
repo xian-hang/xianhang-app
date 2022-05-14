@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.xianhang.product.ProductViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".product.ProductManageActivity">
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="64dp"
+                android:text="@{viewModel.product.name}"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                tools:text="Product Name" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_below="@+id/product_name"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:imageUrl="@{viewModel.imageSrcUrl}" />
+
+            <TextView
+                android:id="@+id/price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/product_name"
+                android:layout_toEndOf="@+id/imageView"
+                android:text="@string/price_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/product_name" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/product_name"
+                android:layout_toEndOf="@+id/price_title"
+                android:layout_alignParentEnd="true"
+                android:text="@{@string/price(viewModel.product.price)}"
+                android:textSize="20sp"
+                tools:text="$1000000000000000" />
+
+            <TextView
+                android:id="@+id/stock_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/price"
+                android:layout_toEndOf="@+id/imageView"
+                android:text="@string/stock_title"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@{String.valueOf(viewModel.product.stock)}"
+                android:textSize="20sp"
+                android:layout_toEndOf="@+id/stock_title"
+                android:layout_below="@id/price"
+                tools:text="100000000000000000" />
+
+            <TextView
+                android:id="@+id/trading_method_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/trading_method_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/imageView"
+                android:layout_below="@+id/stock" />
+
+            <TextView
+                android:id="@+id/trading_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="@{viewModel.tradingMethod}"
+                android:textSize="20sp"
+                android:layout_below="@+id/trading_method_title"
+                android:layout_toEndOf="@+id/imageView"
+                tools:text="自取，寄送" />
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/product_description_cn"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/trading_method"
+                android:layout_alignParentStart="true"
+                tools:text="商品叙述" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@{viewModel.product.description}"
+                android:textSize="20sp"
+                android:layout_below="@+id/description_title"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                tools:text="这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒这个人很懒" />
+
+            <TextView
+                android:id="@+id/address_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/pickup_address_cn"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/description"
+                android:visibility="@{viewModel.visibility}" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@{viewModel.product.address}"
+                android:textSize="20sp"
+                android:visibility="@{viewModel.visibility}"
+                android:layout_below="@+id/address_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                tools:text="学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区学院路校区" />
+
+            <Button
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/edit_product"
+                android:textStyle="bold"
+                android:layout_below="@+id/address"
+                android:layout_alignParentStart="true"
+                />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:backgroundTint="#ff0000"
+                android:text="@string/delete_product"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/edit"
+                android:layout_below="@+id/address" />
+        </RelativeLayout>
+    </ScrollView>
+
+</layout>
+
