@@ -41,12 +41,16 @@ class ForgotPasswordFragment : Fragment() {
         }
 
         CoroutineScope(Dispatchers.Main).launch {
+            binding.progress.visibility = View.VISIBLE
             try {
                 val resp = Api.retrofitService.forgotPassword(StudentId(userId))
+                binding.progress.visibility = View.GONE
                 Toast.makeText(context, resp.message, Toast.LENGTH_LONG).show()
             } catch (e: HttpException) {
+                binding.progress.visibility = View.GONE
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
+                binding.progress.visibility = View.GONE
                 Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
             }
         }
