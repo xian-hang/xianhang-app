@@ -85,8 +85,7 @@ class PayFragment : Fragment() {
                     } else {
                         viewModel.updateStatus(PAID, true)
                     }
-                    val bundle = bundleOf(ID to viewModel.order.value!!.id)
-                    findNavController().navigate(R.id.action_payFragment_to_orderFragment, bundle)
+                    findNavController().popBackStack()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

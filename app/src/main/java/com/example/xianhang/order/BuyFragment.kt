@@ -69,6 +69,7 @@ class BuyFragment : Fragment() {
                     val intent = Intent(context, OrderStatusActivity::class.java)
                     intent.putExtra(POSITION, 0)
                     startActivity(intent)
+                    activity?.finish()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

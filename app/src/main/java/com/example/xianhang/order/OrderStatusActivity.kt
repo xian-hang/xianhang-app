@@ -1,10 +1,13 @@
 package com.example.xianhang.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.example.xianhang.R
 import com.example.xianhang.adapter.ViewPagerAdapter
+import com.example.xianhang.home.MainActivity
+import com.example.xianhang.product.TO_PROFILE
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -28,5 +31,11 @@ class OrderStatusActivity : AppCompatActivity() {
         }.attach()
         val position = intent?.extras?.getInt(POSITION)
         tab.getTabAt(position!!)?.select()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(TO_PROFILE, true)
+        startActivity(intent)
     }
 }

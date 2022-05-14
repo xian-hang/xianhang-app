@@ -25,9 +25,14 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
 
         val isProfile = intent?.extras?.getBoolean(TO_PROFILE)
+        println(isProfile)
         if (isProfile != null) {
             val graph = navController.navInflater.inflate(R.navigation.main_nav_graph)
             graph.setStartDestination(R.id.profileFragment)
+            navHostFragment.navController.graph = graph
+        } else {
+            val graph = navController.navInflater.inflate(R.navigation.main_nav_graph)
+            graph.setStartDestination(R.id.homeFragment)
             navHostFragment.navController.graph = graph
         }
     }

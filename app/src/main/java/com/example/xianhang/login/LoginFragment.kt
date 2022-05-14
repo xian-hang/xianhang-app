@@ -2,6 +2,7 @@ package com.example.xianhang.login
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
 import com.example.xianhang.databinding.FragmentLoginBinding
+import com.example.xianhang.home.MainActivity
 import com.example.xianhang.model.LoginUser
 import com.example.xianhang.model.StudentId
 import com.example.xianhang.network.Api
@@ -129,10 +131,11 @@ class LoginFragment : Fragment() {
                     editor?.putString(TOKEN, "Token " + resp.token)
                     editor?.putBoolean(REMEMBER, rememberMe)
                     editor?.apply()
-                    findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+                    startActivity(Intent(context, MainActivity::class.java))
                     activity?.finish()
+                } else {
+                    println("res not ok")
                 }
-                println("res not ok")
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {

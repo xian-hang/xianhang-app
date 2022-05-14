@@ -154,7 +154,7 @@ class ProfileFragment : Fragment() {
         val token = sharePreferences?.getString(TOKEN, null)
 
         if (token == null) {
-            Toast.makeText(requireActivity(), "User Must Login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "User Must Login", Toast.LENGTH_LONG).show()
             return
         }
 

@@ -75,6 +75,7 @@ class PostageFragment : Fragment() {
                     val bundle = bundleOf(ID to id)
                     viewModel.setPostage(postage)
                     findNavController().navigate(R.id.action_postageFragment_to_orderFragment, bundle)
+                    activity?.finish()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()

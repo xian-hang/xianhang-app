@@ -109,7 +109,6 @@ class ProductManageActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         val intent = Intent(this, ProductActivity::class.java)
         intent.putExtra(METHOD, SELLER)
         startActivity(intent)
