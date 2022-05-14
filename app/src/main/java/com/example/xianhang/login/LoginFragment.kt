@@ -53,7 +53,6 @@ class LoginFragment : Fragment() {
         }
 
         binding.login.setOnClickListener {
-            binding.progressBar.visibility = View.VISIBLE
             requestLogin()
         }
 
@@ -118,6 +117,7 @@ class LoginFragment : Fragment() {
 
         val user = LoginUser(userId, password)
         CoroutineScope(Dispatchers.Main).launch {
+            binding.progressBar.visibility = View.VISIBLE
             println("post login request")
             try {
                 val resp = Api.retrofitService.login(user)
@@ -130,8 +130,6 @@ class LoginFragment : Fragment() {
                     editor?.putBoolean(REMEMBER, rememberMe)
                     editor?.apply()
                     findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
-                } else {
-                    Toast.makeText(context, "管理员请使用网页端登录", Toast.LENGTH_LONG).show()
                 }
                 println("res not ok")
             } catch (e: HttpException) {
