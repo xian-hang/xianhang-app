@@ -95,6 +95,7 @@ class ReportFragment : Fragment() {
                     }
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
+                    activity?.finish()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
