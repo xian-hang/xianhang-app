@@ -58,7 +58,7 @@ class BuyFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
 
         if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
         }
         if (!checkData()) return
 
@@ -90,7 +90,7 @@ class BuyFragment : Fragment() {
         var address: String? = null
         if (tradingMethod == DELIVERY) address = binding.address.text.toString()
 
-        return OrderRequest(price * amount, amount, productId!!, name, phoneNum, tradingMethod, address)
+        return OrderRequest(price, amount, productId!!, name, phoneNum, tradingMethod, address)
     }
 
     private fun checkData(): Boolean {

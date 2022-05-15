@@ -116,8 +116,7 @@ class OrderViewModel: ViewModel() {
             else -> ""
         }
         _visCancel.value = when (o.status) {
-            UNPAID -> View.VISIBLE
-            PAID -> View.VISIBLE
+            UNPAID -> if (isBuyer) View.VISIBLE else View.GONE
             else -> View.GONE
         }
         _visAddr.value = when (o.tradingMethod) {
