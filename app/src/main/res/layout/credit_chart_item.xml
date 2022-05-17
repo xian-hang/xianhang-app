@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/credit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="false"
+                android:indeterminateOnly="false"
+                android:progressDrawable="@drawable/progress"
+                android:layout_toStartOf="@+id/likes"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:rotation="-90"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="点赞数：0" />
+
+            <TextView
+                android:id="@+id/sold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/likes"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_alignStart="@+id/likes"
+                android:layout_marginBottom="20dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="出售物品：0" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

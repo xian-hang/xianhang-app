@@ -46,6 +46,9 @@
     <string name="sell_cn">出售</string>
     <string name="description">Description</string>
     <string name="product_description_cn">商品叙述</string>
+    <string name="profile_credit">信誉分: %s%%</string>
+    <string name="profile_likes">点赞: %d</string>
+    <string name="profile_sold">售出物品: %d</string>
     <string name="profile_details">信誉分 %s%% | 点赞 %d | 售出物品 %d</string>
     <string name="stock_title">库存：</string>
     <string name="price_title">售价：</string>

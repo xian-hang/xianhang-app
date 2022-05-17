@@ -9,14 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import com.example.xianhang.*
 import com.example.xianhang.adapter.BUYER
 import com.example.xianhang.adapter.METHOD
 import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.FragmentProfileBinding
-import com.example.xianhang.databinding.ProfileItemBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.PASSWORD
 import com.example.xianhang.login.LoginFragment.Companion.REMEMBER
@@ -62,7 +59,7 @@ class ProfileFragment : Fragment() {
         token = sharePreferences?.getString(TOKEN, null)
 
         if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
 

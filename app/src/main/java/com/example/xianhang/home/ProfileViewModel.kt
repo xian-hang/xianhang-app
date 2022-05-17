@@ -27,18 +27,17 @@ class ProfileViewModel: ViewModel() {
     private val _username = MutableLiveData<String>()
     val username: LiveData<String> = _username
 
-    private val _detail = MutableLiveData<String>()
-    val detail: LiveData<String> = _detail
+    private val _creditText = MutableLiveData<String>()
+    val creditText: LiveData<String> = _creditText
 
-    // these three data still not use
-    private val _credit = MutableLiveData<Double>()
-    val credit: LiveData<Double> = _credit
+    private val _credit = MutableLiveData<Int>()
+    val credit: LiveData<Int> = _credit
 
-    private val _likes = MutableLiveData<Int>()
-    val likes: LiveData<Int> = _likes
+    private val _likes = MutableLiveData<String>()
+    val likes: LiveData<String> = _likes
 
-    private val _sold = MutableLiveData<Int>()
-    val sold: LiveData<Int> = _sold
+    private val _sold = MutableLiveData<String>()
+    val sold: LiveData<String> = _sold
 
     private val _intro = MutableLiveData<String>()
     val intro: LiveData<String> = _intro
@@ -61,15 +60,10 @@ class ProfileViewModel: ViewModel() {
                     _status.value = View.GONE
                     _userId.value = resp.userId!!
                     _username.value = resp.username!!
-                    _credit.value = resp.credit!!
-                    _likes.value = resp.likes!!
-                    _sold.value = resp.soldItem!!
-                    _detail.value = context?.resources!!.getString(
-                        R.string.profile_details,
-                        String.format("%.2f", resp.credit),
-                        resp.likes,
-                        resp.soldItem
-                    )
+                    _credit.value = resp.credit!!.toInt()
+                    _creditText.value = context?.resources!!.getString(R.string.profile_credit, String.format("%.2f", resp.credit))
+                    _likes.value = context.resources.getString(R.string.profile_likes, resp.likes!!)
+                    _sold.value = context.resources.getString(R.string.profile_sold, resp.soldItem!!)
                     _intro.value = resp.introduction!!
                 } else {
                     setError()
@@ -94,15 +88,10 @@ class ProfileViewModel: ViewModel() {
                     _status.value = View.GONE
                     _userId.value = resp.userId!!
                     _username.value = resp.username!!
-                    _credit.value = resp.credit!!
-                    _likes.value = resp.likes!!
-                    _sold.value = resp.soldItem!!
-                    _detail.value = context?.resources!!.getString(
-                        R.string.profile_details,
-                        String.format("%.2f", resp.credit),
-                        resp.likes,
-                        resp.soldItem
-                    )
+                    _credit.value = resp.credit!!.toInt()
+                    _creditText.value = context?.resources!!.getString(R.string.profile_credit, String.format("%.2f", resp.credit))
+                    _likes.value = context.resources.getString(R.string.profile_likes, resp.likes!!)
+                    _sold.value = context.resources.getString(R.string.profile_sold, resp.soldItem!!)
                     _intro.value = resp.introduction!!
                     init(context, resp.likeId, resp.followId)
                 } else {
@@ -192,15 +181,14 @@ class ProfileViewModel: ViewModel() {
         }
     }
 
-
     private fun setError() {
         _status.value = View.GONE
         _userId.value = ""
         _username.value = ""
-        _detail.value = ""
+        _creditText.value = ""
+        _credit.value = 0
+        _likes.value = ""
+        _sold.value = ""
         _intro.value = ""
-        _credit.value = 0.0
-        _likes.value = 0
-        _sold.value = 0
     }
 }

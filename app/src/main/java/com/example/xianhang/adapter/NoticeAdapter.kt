@@ -49,7 +49,8 @@ class NoticeAdapter: ListAdapter<Notice, NoticeAdapter.NoticeViewHolder>(DiffCal
         }
 
         override fun areContentsTheSame(oldItem: Notice, newItem: Notice): Boolean {
-            return oldItem.reportId == newItem.reportId
+            return oldItem.reporting == newItem.reporting &&
+            oldItem.content == newItem.content
         }
     }
 }

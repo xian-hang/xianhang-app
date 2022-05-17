@@ -6,8 +6,10 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/drawable/ic_broken_image.xml" value="0.169" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/drawable/ic_collection.xml" value="0.169" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/drawable/ic_collection_outline.xml" value="0.169" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/drawable/progress.xml" value="0.1965" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout-v23/fragment_view_product.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_change_password.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_chat.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_edit_profile.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_forgot_password.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_login.xml" value="0.22826086956521738" />
@@ -23,7 +25,11 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_view_order.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_view_orders.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/activity_view_product.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/chat_list_item.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/credit_chart_item.xml" value="0.20521590423257802" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_buy.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_chat.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_chats.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_collection.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_follow.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_forgot_password.xml" value="0.22826086956521738" />
@@ -97,5 +103,5 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16_PREVIEW" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

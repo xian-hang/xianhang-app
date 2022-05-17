@@ -5,10 +5,8 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.xianhang.adapter.NoticeAdapter
-import com.example.xianhang.adapter.OrderAdapter
-import com.example.xianhang.adapter.ProductAdapter
-import com.example.xianhang.adapter.UserAdapter
+import com.example.xianhang.adapter.*
+import com.example.xianhang.model.ChatItem
 import com.example.xianhang.model.Notice
 import com.example.xianhang.model.OrderItem
 import com.example.xianhang.model.ProductItem
@@ -45,6 +43,14 @@ fun bindNotices(recyclerView: RecyclerView, notices: List<Notice>?) {
     println("submit list")
     println("notices = $notices")
     adapter.submitList(notices)
+}
+
+@BindingAdapter("listchats")
+fun bindChats(recyclerView: RecyclerView, chats: List<ChatItem>) {
+    val adapter = recyclerView.adapter as ChatAdapter
+    println("submit list")
+    println("chats = $chats")
+    adapter.submitList(chats)
 }
 
 @BindingAdapter("imageUrl")
