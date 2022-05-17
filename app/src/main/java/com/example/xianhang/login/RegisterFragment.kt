@@ -77,8 +77,8 @@ class RegisterFragment : Fragment() {
                           userId: String,
                           password: String,
                           confirmPassword: String): Boolean {
-        if (username.length < 4) {
-            val errMsg = "username length must more than or equal 4\n"
+        if (username.isEmpty()) {
+            val errMsg = "please fill in the username\n"
             Toast.makeText(requireActivity(), errMsg, Toast.LENGTH_LONG).show()
             return false
         }
