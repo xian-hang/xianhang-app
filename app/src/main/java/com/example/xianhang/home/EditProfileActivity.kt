@@ -62,6 +62,7 @@ class EditProfileActivity : AppCompatActivity() {
                 val resp = Api.retrofitService.editProfile(token, data)
                 if (resOk(that, resp)) {
                     startActivity(Intent(that, MainActivity::class.java))
+                    finish()
                 }
             } catch (e: HttpException) {
                 Toast.makeText(that, e.message(), Toast.LENGTH_LONG).show()

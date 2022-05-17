@@ -203,7 +203,7 @@ class SellProductFragment : Fragment() {
                         }
                     }
                     val images = if (imageId == null) listOf() else listOf(imageId)
-                    val productItem = ProductItem(product, images, null)
+                    val productItem = ProductItem(resp.product!!, images, null)
                     val bundle = bundleOf(PRODUCT_ITEM to productItem)
                     findNavController().navigate(R.id.action_sellProductFragment_to_viewProductFragment, bundle)
                 } else {

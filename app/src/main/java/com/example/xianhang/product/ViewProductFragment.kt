@@ -42,6 +42,7 @@ class ViewProductFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         productItem = arguments?.getParcelable(PRODUCT_ITEM)
+        println("product id = ${productItem?.product?.id}")
         viewModel.setProduct(productItem!!)
 
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)

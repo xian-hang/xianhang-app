@@ -202,7 +202,7 @@ class SellActivity : AppCompatActivity() {
                         }
                     }
                     val images = if (imageId == null) listOf() else listOf(imageId)
-                    val productItem = ProductItem(product, images, null)
+                    val productItem = ProductItem(resp.product!!, images, null)
 
                     val intent = Intent(context, ProductManageActivity::class.java)
                     intent.putExtra(PRODUCT_ITEM, productItem)

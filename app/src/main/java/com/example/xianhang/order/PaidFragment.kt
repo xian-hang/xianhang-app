@@ -40,10 +40,4 @@ class PaidFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        println("paid fragment view created")
-    }
 }
