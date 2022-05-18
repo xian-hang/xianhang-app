@@ -16,7 +16,7 @@ class ChatAdapter: ListAdapter<ChatItem, ChatAdapter.ChatViewHolder>(DiffCallbac
         fun bind(chat: ChatItem) {
             binding.username.text = chat.username
             binding.message.text = chat.message
-            binding.time.text = chat.time
+            binding.time.text = chat.lastMessage?.time
         }
     }
 

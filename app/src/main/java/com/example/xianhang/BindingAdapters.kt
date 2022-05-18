@@ -6,10 +6,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.xianhang.adapter.*
-import com.example.xianhang.model.ChatItem
-import com.example.xianhang.model.Notice
-import com.example.xianhang.model.OrderItem
-import com.example.xianhang.model.ProductItem
+import com.example.xianhang.model.*
 import com.example.xianhang.network.SCHEME
 import com.example.xianhang.network.response.UserBody
 
@@ -46,11 +43,19 @@ fun bindNotices(recyclerView: RecyclerView, notices: List<Notice>?) {
 }
 
 @BindingAdapter("listchats")
-fun bindChats(recyclerView: RecyclerView, chats: List<ChatItem>) {
+fun bindChats(recyclerView: RecyclerView, chats: List<ChatItem>?) {
     val adapter = recyclerView.adapter as ChatAdapter
     println("submit list")
     println("chats = $chats")
     adapter.submitList(chats)
+}
+
+@BindingAdapter("listmessages")
+fun bindMessages(recyclerView: RecyclerView, messages: MutableList<Message>?) {
+    val adapter = recyclerView.adapter as MessageAdapter
+    println("submit list")
+    println("messages = $messages")
+    adapter.submitList(messages)
 }
 
 @BindingAdapter("imageUrl")

@@ -11,9 +11,16 @@
         <action
             android:id="@+id/action_userFragment2_to_reportFragment2"
             app:destination="@id/reportFragment2" />
+        <action
+            android:id="@+id/action_userFragment2_to_chatFragment3"
+            app:destination="@id/chatFragment3" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment2"
         android:name="com.example.xianhang.home.ReportFragment"
         android:label="举报用户" />
+    <fragment
+        android:id="@+id/chatFragment3"
+        android:name="com.example.xianhang.chat.ChatFragment"
+        android:label="ChatFragment" />
 </navigation>

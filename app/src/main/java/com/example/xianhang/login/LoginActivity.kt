@@ -19,13 +19,13 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rememberLogin()
         setContentView(R.layout.activity_login)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
         setupActionBarWithNavController(navController)
+
+        rememberLogin()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -34,8 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
     @SuppressLint("CommitPrefEdits")
     private fun rememberLogin() {
-        val sharedPreferences = getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE)
-            ?: return
+        val sharedPreferences = getSharedPreferences(LOGIN_PREF, Context.MODE_PRIVATE) ?: return
 
         val remember = sharedPreferences.getBoolean(REMEMBER, false)
         if (remember) {
@@ -43,4 +42,5 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }

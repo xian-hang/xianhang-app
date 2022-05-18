@@ -17,6 +17,7 @@
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -78,11 +79,24 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/inbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/report"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:text="私聊"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
                 <TextView
                     android:id="@+id/product_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/report"
+                    android:layout_below="@+id/inbox"
                     android:layout_alignParentStart="true"
                     android:layout_margin="10dp"
                     android:text="@string/product_cn"
@@ -100,8 +114,6 @@
                     tools:listitem="@layout/product_list_item" />
 
             </RelativeLayout>
-
-
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

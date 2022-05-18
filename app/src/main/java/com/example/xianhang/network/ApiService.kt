@@ -13,9 +13,9 @@ import retrofit2.http.*
 const val BASE_URL = "https://xianhang.ga/api/"
 const val SCHEME = "https"
 
-private const val AUTH = "Authorization"
+const val AUTH = "Authorization"
 
-private val moshi = Moshi.Builder()
+val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
@@ -173,4 +173,7 @@ interface ApiService {
 
     @GET("report/notice/")
     suspend fun getNotification(@Header(AUTH) authToken: String): NoticeResponse
+
+    @GET("chat/list/")
+    suspend fun getChatList(@Header(AUTH) authToken: String): ChatResponse
 }

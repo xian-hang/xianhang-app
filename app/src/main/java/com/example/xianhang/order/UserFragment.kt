@@ -1,6 +1,7 @@
 package com.example.xianhang.order
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.example.xianhang.home.ProfileViewModel
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.login.LoginFragment.Companion.USERNAME
 import com.example.xianhang.model.UserId
 import com.example.xianhang.network.Api
 import com.example.xianhang.product.ProductsViewModel
@@ -87,6 +89,10 @@ class UserFragment : Fragment() {
         binding.report.setOnClickListener {
             report()
         }
+
+        binding.inbox.setOnClickListener {
+            chat()
+        }
     }
 
 
@@ -98,7 +104,7 @@ class UserFragment : Fragment() {
 
     private fun like() {
         if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
         profileViewModel.setLike(context, token!!, userId)
@@ -107,9 +113,20 @@ class UserFragment : Fragment() {
 
     private fun follow() {
         if (token == null) {
-            Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
         profileViewModel.setFollow(context, token!!, userId)
+    }
+
+
+    private fun chat() {
+        val username = binding.profile.username.text
+        val bundle = bundleOf(ID to userId, USERNAME to username)
+        if (token == null) {
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            return
+        }
+        findNavController().navigate(R.id.action_userFragment2_to_chatFragment3, bundle)
     }
 }

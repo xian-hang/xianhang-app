@@ -163,6 +163,7 @@ class LoginFragment : Fragment() {
         const val LOGIN_PREF = "login_preferences"
         const val ID = "id"
         const val USER = "userId"
+        const val USERNAME = "username"
         const val PASSWORD = "password"
         const val ROLE = "user_role"
         const val TOKEN = "auth_token"

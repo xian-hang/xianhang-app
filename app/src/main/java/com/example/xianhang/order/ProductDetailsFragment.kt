@@ -94,22 +94,22 @@ class ProductDetailsFragment : Fragment() {
 
     private fun checkData(): Boolean {
         if (binding.num.text.isEmpty()) {
-            Toast.makeText(requireActivity(), "Please fill the amount", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please fill the amount", Toast.LENGTH_LONG).show()
             return false
         }
 
         if (binding.num.text.toString().toInt() <= 0) {
-            Toast.makeText(requireActivity(), "amount must more than 0", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "amount must more than 0", Toast.LENGTH_LONG).show()
             return false
         }
 
         if (binding.num.text.toString().toInt() > productItem!!.product.stock) {
-            Toast.makeText(requireActivity(), "amount can\'t more than stock", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "amount can\'t more than stock", Toast.LENGTH_LONG).show()
             return false
         }
 
         if (binding.tradingMethod.checkedRadioButtonId == -1) {
-            Toast.makeText(requireActivity(), "Please choose a trading method", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please choose a trading method", Toast.LENGTH_LONG).show()
             return false
         }
 

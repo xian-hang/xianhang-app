@@ -96,17 +96,17 @@ class BuyFragment : Fragment() {
     private fun checkData(): Boolean {
 
         if (binding.name.text.isEmpty()) {
-            Toast.makeText(requireActivity(), "Please fill the name", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please fill the name", Toast.LENGTH_LONG).show()
             return false
         }
 
         if (binding.phone.text.isEmpty()) {
-            Toast.makeText(requireActivity(), "Please fill the phone", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please fill the phone", Toast.LENGTH_LONG).show()
             return false
         }
 
         if (binding.phone.text.length != 11) {
-            Toast.makeText(requireActivity(), "phone number length must be 11", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "phone number length must be 11", Toast.LENGTH_LONG).show()
             return false
         }
 
@@ -114,7 +114,7 @@ class BuyFragment : Fragment() {
         else DELIVERY
         var address: String? = null
         if (tradingMethod == DELIVERY && binding.address.text.isEmpty()) {
-            Toast.makeText(requireActivity(), "Please fill the address", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please fill the address", Toast.LENGTH_LONG).show()
             return false
         }
 
