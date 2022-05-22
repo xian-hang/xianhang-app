@@ -1,22 +1,44 @@
 package com.example.xianhang.adapter
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.xianhang.R
+import com.example.xianhang.chat.CHAT
+import com.example.xianhang.chat.ChatActivity
 import com.example.xianhang.databinding.ChatListItemBinding
+import com.example.xianhang.login.LoginFragment.Companion.ID
+import com.example.xianhang.login.LoginFragment.Companion.USERNAME
 import com.example.xianhang.model.ChatItem
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
-class ChatAdapter: ListAdapter<ChatItem, ChatAdapter.ChatViewHolder>(DiffCallback) {
-
-    private lateinit var listener: OnItemClickListener
+class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapter.ChatViewHolder>(DiffCallback) {
 
     class ChatViewHolder(private var binding: ChatListItemBinding): RecyclerView.ViewHolder(binding.root) {
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(chat: ChatItem) {
             binding.username.text = chat.username
-            binding.message.text = chat.message
-            binding.time.text = chat.lastMessage?.time
+            binding.message.text = chat.lastMessage!!.message
+
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
+            val datetimeParse = LocalDateTime.parse(chat.lastMessage.time!!, formatter)
+            val diff = ChronoUnit.HOURS.between(datetimeParse, LocalDateTime.now())
+            if (diff >= 24) {
+                binding.time.text = datetimeParse.format(DateTimeFormatter.ofPattern("MM-dd"))
+            } else {
+                binding.time.text = datetimeParse.format(DateTimeFormatter.ofPattern("kk:mm"))
+            }
         }
     }
 
@@ -28,18 +50,17 @@ class ChatAdapter: ListAdapter<ChatItem, ChatAdapter.ChatViewHolder>(DiffCallbac
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chat = getItem(position)
         holder.bind(chat)
-
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(chat: ChatItem)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
+        val bundle = bundleOf(CHAT to chat.id)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ChatActivity::class.java)
+            intent.putExtra(USERNAME, chat.username)
+            intent.putExtra(ID, chat.userId)
+            context.startActivity(intent)
+        }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<ChatItem>() {

@@ -3,6 +3,7 @@ package com.example.xianhang.network
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.os.SystemClock.sleep
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Data
@@ -17,6 +18,7 @@ import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 private const val WS_URL = "wss://xianhang.ga/ws/chat/"
 private const val DISCONNECT = 1000
@@ -72,6 +74,7 @@ class WebSocketService: Service() {
         val token = sharedPreferences.getString(TOKEN, null)
         println("service token = $token")
         val request = Request.Builder().addHeader(AUTH, token!!).url(WS_URL).build()
+
         webSocket = client.newWebSocket(request, object: WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 super.onOpen(webSocket, response)

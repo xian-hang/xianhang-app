@@ -45,11 +45,14 @@ class ChatFragment : Fragment() {
         binding.viewModel = viewModel
 
         // set title
-        (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString(USERNAME)
+        var title = arguments?.getString(USERNAME)
+        if (title == null) title = activity?.intent?.getStringExtra(USERNAME)
+        (activity as AppCompatActivity).supportActionBar?.title = title
 
         // get arguments
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        id = arguments?.getInt(ID, 0)
+        id = arguments?.getInt(ID)
+        if (id == null) id = activity?.intent?.getIntExtra(ID, 0)
         token = sharedPreferences?.getString(TOKEN, null)
         val myId = sharedPreferences?.getInt(ID, 0)
 
@@ -79,9 +82,12 @@ class ChatFragment : Fragment() {
 
     private fun observer(): Observer<MutableList<Message>> {
         return Observer { messages ->
-            adapter.notifyDataSetChanged()
-            if (messages.isNotEmpty())
+            if (messages.isNotEmpty()) {
+                adapter.notifyItemInserted(messages.size - 1)
                 binding.messages.scrollToPosition(messages.size - 1)
+            } else {
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 
@@ -95,5 +101,9 @@ class ChatFragment : Fragment() {
             return false
         }
         return true
+    }
+
+    private fun checkWebsocket() {
+
     }
 }
