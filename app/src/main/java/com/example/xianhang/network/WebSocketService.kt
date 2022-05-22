@@ -3,6 +3,7 @@ package com.example.xianhang.network
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
@@ -29,7 +30,17 @@ class WebSocketService: Service() {
     private lateinit var workManager: WorkManager
 
     companion object {
-        val chats = mutableMapOf<Int, MutableLiveData<MutableList<Message>>>()
+        val userToChat = mutableMapOf<Int, Int>()
+        val chats = mutableMapOf<Int, MutableList<Message>>()
+        val liveChats = mutableMapOf<Int, MutableLiveData<MutableList<Message>>>()
+
+        fun getChatFromUser(userId: Int): LiveData<MutableList<Message>> {
+            if (!userToChat.containsKey(userId)) {
+                return MutableLiveData()
+            }
+            val id = userToChat[userId]
+            return liveChats[id]!!
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
