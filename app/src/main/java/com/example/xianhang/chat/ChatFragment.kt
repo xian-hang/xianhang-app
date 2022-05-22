@@ -102,8 +102,4 @@ class ChatFragment : Fragment() {
         }
         return true
     }
-
-    private fun checkWebsocket() {
-
-    }
 }

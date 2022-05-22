@@ -31,8 +31,9 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
             binding.username.text = chat.username
             binding.message.text = chat.lastMessage!!.message
 
+            val datetime = chat.lastMessage!!.time
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
-            val datetimeParse = LocalDateTime.parse(chat.lastMessage.time!!, formatter)
+            val datetimeParse = LocalDateTime.parse(datetime, formatter)
             val diff = ChronoUnit.HOURS.between(datetimeParse, LocalDateTime.now())
             if (diff >= 24) {
                 binding.time.text = datetimeParse.format(DateTimeFormatter.ofPattern("MM-dd"))
@@ -70,7 +71,8 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
 
         override fun areContentsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {
             return oldItem.username == newItem.username &&
-                   oldItem.message == newItem.message
+                   oldItem.message == newItem.message &&
+                   oldItem.lastMessage?.time == newItem.lastMessage?.time
         }
     }
 }

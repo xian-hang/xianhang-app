@@ -10,10 +10,13 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.xianhang.adapter.ChatAdapter
 import com.example.xianhang.databinding.FragmentChatsBinding
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
+import com.example.xianhang.model.ChatItem
+import com.example.xianhang.model.Message
 
 const val CHAT = "chat"
 
@@ -22,17 +25,19 @@ class ChatsFragment : Fragment() {
     private lateinit var binding: FragmentChatsBinding
     private val viewModel: ChatsViewModel by viewModels()
     private var token: String? = null
+    private lateinit var adapter: ChatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val adapter = ChatAdapter(requireContext())
-
         binding = FragmentChatsBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        viewModel.chatList.observe(this, observer())
+
+        adapter = ChatAdapter(requireContext())
         binding.chats.adapter = adapter
 
         return binding.root
@@ -50,6 +55,12 @@ class ChatsFragment : Fragment() {
             return
         }
 
-        viewModel.setChats(context, token!!)
+        // viewModel.setChats(context, token!!)
+    }
+
+    private fun observer(): Observer<List<ChatItem>> {
+        return Observer { chats ->
+            adapter.notifyDataSetChanged()
+        }
     }
 }

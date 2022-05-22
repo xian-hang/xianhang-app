@@ -5,14 +5,14 @@ import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.xianhang.model.Chat
 import com.example.xianhang.model.ChatItem
+import com.example.xianhang.model.Message
 import com.example.xianhang.network.Api
+import com.example.xianhang.network.WebSocketService.Companion.chatItems
 import com.example.xianhang.network.WebSocketService.Companion.chats
+import com.example.xianhang.network.WebSocketService.Companion.liveChatItem
 import com.example.xianhang.network.WebSocketService.Companion.liveChats
 import com.example.xianhang.rest.resOk
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class ChatsViewModel: ViewModel() {
     val status: LiveData<Int> = _status
 
     private val _chats = MutableLiveData<List<ChatItem>>()
-    val chatList: LiveData<List<ChatItem>> = _chats
+    val chatList: LiveData<List<ChatItem>> = liveChatItem
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setChats(context: Context?, token: String) {

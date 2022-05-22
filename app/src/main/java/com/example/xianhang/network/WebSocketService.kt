@@ -13,6 +13,7 @@ import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.Chat
+import com.example.xianhang.model.ChatItem
 import com.example.xianhang.model.Message
 import okhttp3.*
 import okio.ByteString
@@ -32,16 +33,18 @@ class WebSocketService: Service() {
     private lateinit var workManager: WorkManager
 
     companion object {
-        val userToChat = mutableMapOf<Int, Int>()
+        val userToChat = mutableMapOf<Int, Chat>()
         val chats = mutableMapOf<Int, MutableList<Message>>()
         val liveChats = mutableMapOf<Int, MutableLiveData<MutableList<Message>>>()
+        val chatItems = mutableMapOf<Int, ChatItem>()
+        val liveChatItem = MutableLiveData<List<ChatItem>>()
 
         fun getChatFromUser(userId: Int): LiveData<MutableList<Message>> {
             if (!userToChat.containsKey(userId)) {
                 return MutableLiveData()
             }
-            val id = userToChat[userId]
-            return liveChats[id]!!
+            val chat = userToChat[userId]
+            return liveChats[chat!!.id]!!
         }
     }
 
