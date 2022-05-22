@@ -17,6 +17,7 @@
         android:theme="@style/Theme.XianHang"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <service android:name=".network.WebSocketService" />
         <activity
             android:name=".chat.ChatActivity"
             android:exported="false" />

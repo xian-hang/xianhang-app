@@ -18,16 +18,16 @@
                 android:id="@+id/credit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="false"
+                android:layout_marginTop="20dp"
+                android:layout_toStartOf="@+id/likes"
                 android:indeterminateOnly="false"
                 android:progressDrawable="@drawable/progress"
-                android:layout_toStartOf="@+id/likes"
+                android:rotation="-90"
                 android:scaleX="1"
                 android:scaleY="1"
-                android:rotation="-90"
                 tools:progress="60" />
 
             <TextView

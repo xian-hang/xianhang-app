@@ -20,7 +20,7 @@ class ViewOrderActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
     }
 
-    override fun navigateUpTo(upIntent: Intent?): Boolean {
-        return navController.navigateUp() || super.navigateUpTo(upIntent)
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

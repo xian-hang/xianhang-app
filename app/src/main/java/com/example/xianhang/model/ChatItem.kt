@@ -9,3 +9,11 @@ data class ChatItem(
     val username: String?,
     val userId: Int?
 )
+
+data class Chat(
+    @Json(name = "chatId") val id: Int,
+    val message: MutableList<Message>?,
+    val username: String?,
+    val userId: Int?,
+    val unread: Int?
+)

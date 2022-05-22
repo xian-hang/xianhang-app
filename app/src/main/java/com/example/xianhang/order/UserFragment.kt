@@ -127,6 +127,7 @@ class UserFragment : Fragment() {
             Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
+
         findNavController().navigate(R.id.action_userFragment2_to_chatFragment3, bundle)
     }
 }

@@ -370,6 +370,7 @@ class SellActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         val type = intent?.extras?.getString(ACTION)
         if (type == "edit") {
             val productItem = intent?.extras?.getParcelable<ProductItem>(PRODUCT_ITEM)

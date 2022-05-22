@@ -7,5 +7,6 @@ data class Message(
     @Json(name = "authorId") val userId: Int?,
     @Json(name = "author") val username: String?,
     val message: String?,
-    val time: String?
+    val time: String?,
+    val unread: Boolean?
 )
