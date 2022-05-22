@@ -35,11 +35,19 @@
                 android:text="@string/sell_product"
                 android:textStyle="bold" />
 
+            <include
+                android:id="@+id/sold_info"
+                layout="@layout/sold_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/sell_product" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/products_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sell_product"
+                android:layout_below="@+id/sold_info"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:listitem="@{viewModel.products}"
                 tools:listitem="@layout/product_list_item" />

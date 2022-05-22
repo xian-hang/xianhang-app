@@ -19,6 +19,7 @@ data class ProfileResponse(
     val introduction: String?,
     val role: Int?,
     val soldItem: Int?,
+    @Json(name = "totalSales") val sales: Double?,
     @Json(name = "rating") val credit: Double?,
     val status: Int?,
     val likeId: Int?,

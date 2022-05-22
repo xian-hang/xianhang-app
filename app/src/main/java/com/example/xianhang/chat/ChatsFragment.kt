@@ -54,8 +54,6 @@ class ChatsFragment : Fragment() {
             Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
             return
         }
-
-        // viewModel.setChats(context, token!!)
     }
 
     private fun observer(): Observer<List<ChatItem>> {

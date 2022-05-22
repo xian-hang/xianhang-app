@@ -20,6 +20,9 @@ import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.FragmentProductBinding
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 
+const val SOLD = "sold"
+const val SALES = "sales"
+
 class ProductFragment : Fragment() {
 
     private lateinit var binding: FragmentProductBinding
@@ -34,6 +37,8 @@ class ProductFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.productsItem.adapter = ProductAdapter(SELLER, context)
+
+        fillInfo()
 
         return binding.root
     }
@@ -58,6 +63,13 @@ class ProductFragment : Fragment() {
             viewModel.setProducts(context, SELLER, token, id)
             binding.refresh.isRefreshing = false
         }
+    }
+
+    private fun fillInfo() {
+        val sold = activity?.intent?.getIntExtra(SOLD, 0)
+        val sales = activity?.intent?.getDoubleExtra(SALES, 0.0)
+        "售出物品: $sold".also { binding.soldInfo.sold.text = it }
+        binding.soldInfo.sales.text = String.format("售出价格: $%.2f", sales)
     }
 
     private fun createProduct() {

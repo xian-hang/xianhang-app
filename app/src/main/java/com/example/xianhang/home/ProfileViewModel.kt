@@ -51,6 +51,9 @@ class ProfileViewModel: ViewModel() {
     private val _follow = MutableLiveData<String>()
     val follow: LiveData<String> = _follow
 
+    private val _totalSales = MutableLiveData<Double>()
+    val totalSales: LiveData<Double> = _totalSales
+
     fun setProfile(context: Context?, token: String) {
         viewModelScope.launch {
             _status.value = View.VISIBLE
@@ -65,6 +68,7 @@ class ProfileViewModel: ViewModel() {
                     _likes.value = context.resources.getString(R.string.profile_likes, resp.likes!!)
                     _sold.value = context.resources.getString(R.string.profile_sold, resp.soldItem!!)
                     _intro.value = resp.introduction!!
+                    _totalSales.value = resp.sales!!
                 } else {
                     setError()
                 }

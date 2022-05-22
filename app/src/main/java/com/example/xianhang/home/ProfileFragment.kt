@@ -27,6 +27,8 @@ import com.example.xianhang.order.OrderStatusActivity
 import com.example.xianhang.order.POSITION
 import com.example.xianhang.order.ViewOrdersActivity
 import com.example.xianhang.product.ProductActivity
+import com.example.xianhang.product.SALES
+import com.example.xianhang.product.SOLD
 import com.example.xianhang.rest.resOk
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -118,6 +120,8 @@ class ProfileFragment : Fragment() {
     private fun changeActivityProducts() {
         val intent = Intent(context, ProductActivity::class.java)
         intent.putExtra(METHOD, SELLER)
+        intent.putExtra(SOLD, viewModel.sold.value)
+        intent.putExtra(SALES, viewModel.totalSales.value)
         startActivity(intent)
     }
 
