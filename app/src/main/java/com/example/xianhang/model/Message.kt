@@ -8,5 +8,5 @@ data class Message(
     @Json(name = "author") val username: String?,
     val message: String?,
     val time: String?,
-    val unread: Boolean?
+    var unread: Boolean?
 )

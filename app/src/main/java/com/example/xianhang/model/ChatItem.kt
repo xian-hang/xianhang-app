@@ -15,5 +15,5 @@ data class Chat(
     val message: MutableList<Message>?,
     val username: String?,
     val userId: Int?,
-    val unread: Int?
+    var unread: Int?
 )

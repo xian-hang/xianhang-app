@@ -57,7 +57,7 @@ class ChatsFragment : Fragment() {
     }
 
     private fun observer(): Observer<List<ChatItem>> {
-        return Observer { chats ->
+        return Observer { _ ->
             adapter.notifyDataSetChanged()
         }
     }

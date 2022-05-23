@@ -7,11 +7,18 @@ import com.example.xianhang.model.Message
 import com.example.xianhang.network.WebSocketService.Companion.chats
 import com.example.xianhang.network.WebSocketService.Companion.getChatFromUser
 import com.example.xianhang.network.WebSocketService.Companion.liveChats
+import com.example.xianhang.network.webSocket
+import org.json.JSONObject
 
 class MessageViewModel: ViewModel() {
     var messages: LiveData<MutableList<Message>>? = null
 
     fun initMessages(userId: Int) {
         messages = getChatFromUser(userId)
+        val json = JSONObject().apply {
+            put("type", "readMessage")
+            put("userId", userId)
+        }
+        webSocket.send(json.toString())
     }
 }

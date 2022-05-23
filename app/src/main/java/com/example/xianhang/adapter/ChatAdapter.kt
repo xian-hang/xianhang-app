@@ -2,6 +2,7 @@ package com.example.xianhang.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -30,6 +31,8 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
         fun bind(chat: ChatItem) {
             binding.username.text = chat.username
             binding.message.text = chat.lastMessage!!.message
+            if (chat.lastMessage!!.unread == true) binding.message.typeface = Typeface.DEFAULT_BOLD
+            else binding.message.typeface = Typeface.DEFAULT
 
             val datetime = chat.lastMessage!!.time
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
@@ -40,6 +43,11 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
             } else {
                 binding.time.text = datetimeParse.format(DateTimeFormatter.ofPattern("kk:mm"))
             }
+        }
+
+        fun read(chat: ChatItem) {
+            chat.lastMessage!!.unread = false
+            binding.message.typeface = Typeface.DEFAULT
         }
     }
 
@@ -61,6 +69,7 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
             intent.putExtra(USERNAME, chat.username)
             intent.putExtra(ID, chat.userId)
             context.startActivity(intent)
+            holder.read(chat)
         }
     }
 
@@ -72,7 +81,8 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
         override fun areContentsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {
             return oldItem.username == newItem.username &&
                    oldItem.message == newItem.message &&
-                   oldItem.lastMessage?.time == newItem.lastMessage?.time
+                   oldItem.lastMessage?.time == newItem.lastMessage?.time &&
+                   oldItem.lastMessage?.unread == newItem.lastMessage?.unread
         }
     }
 }
