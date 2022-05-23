@@ -18,9 +18,12 @@ import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.login.LoginFragment.Companion.USERNAME
+import com.example.xianhang.model.ChatItem
 import com.example.xianhang.model.Message
 import com.example.xianhang.network.AUTH
 import com.example.xianhang.network.MESSAGE
+import com.example.xianhang.network.WebSocketService.Companion.chatItems
+import com.example.xianhang.network.WebSocketService.Companion.userToChat
 import com.example.xianhang.network.webSocket
 import okhttp3.*
 import org.json.JSONObject
@@ -59,6 +62,7 @@ class ChatFragment : Fragment() {
         // init messages
         viewModel.initMessages(id!!)
         viewModel.messages?.observe(this, observer())
+        viewModel.chatList.observe(this, newObserver())
 
         // setup adapter
         adapter = MessageAdapter(context, myId!!)
@@ -88,6 +92,12 @@ class ChatFragment : Fragment() {
             } else {
                 adapter.notifyDataSetChanged()
             }
+        }
+    }
+
+    private fun newObserver(): Observer<List<ChatItem>> {
+        return Observer { _ ->
+            viewModel.setChat(id!!, adapter, binding.messages)
         }
     }
 

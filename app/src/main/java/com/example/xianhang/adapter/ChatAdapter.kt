@@ -31,6 +31,7 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
         fun bind(chat: ChatItem) {
             binding.username.text = chat.username
             binding.message.text = chat.lastMessage!!.message
+            
             if (chat.lastMessage!!.unread == true) binding.message.typeface = Typeface.DEFAULT_BOLD
             else binding.message.typeface = Typeface.DEFAULT
 

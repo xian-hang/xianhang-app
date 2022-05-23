@@ -39,6 +39,9 @@ class ReceiveWorker(ctx: Context, params: WorkerParameters): Worker(ctx, params)
             } else if (messages[0] == '1') {
                 addMessage(messages.substring(1))
                 Result.success()
+            } else if (messages[0] == '2') {
+                addChat(messages.substring(1))
+                Result.success()
             } else {
                 Result.failure()
             }
@@ -68,6 +71,7 @@ class ReceiveWorker(ctx: Context, params: WorkerParameters): Worker(ctx, params)
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalStdlibApi::class)
     private fun addMessage(message: String) {
         val jsonAdapter: JsonAdapter<Message> = moshi.adapter()
@@ -86,6 +90,25 @@ class ReceiveWorker(ctx: Context, params: WorkerParameters): Worker(ctx, params)
             lastMessage = data
             this.message = data.message
         }
+        liveChatItem.postValue(chatItems.values.sortedByDescending {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
+            val datetimeParse = LocalDateTime.parse(it.lastMessage!!.time!!, formatter)
+            datetimeParse
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun addChat(chat: String) {
+        val jsonAdapter: JsonAdapter<Chat> = moshi.adapter()
+        val data = jsonAdapter.fromJson(chat)
+        val key = data!!.id
+
+        userToChat[data.userId!!] = data
+        chats[key] = data.message!!
+        liveChats[key] = MutableLiveData()
+        liveChats[key]!!.postValue(chats[key])
+        chatItems[key] = ChatItem(key, data.message.last().message, data.message.last(), data.username, data.userId)
         liveChatItem.postValue(chatItems.values.sortedByDescending {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
             val datetimeParse = LocalDateTime.parse(it.lastMessage!!.time!!, formatter)

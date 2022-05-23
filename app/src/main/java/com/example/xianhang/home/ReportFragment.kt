@@ -86,6 +86,7 @@ class ReportFragment : Fragment() {
         println("report")
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                binding.progressBar.visibility = View.VISIBLE
                 val resp = Api.retrofitService.createReport(token, ReportRequest(content, reportUserId!!))
                 println("resp.message = ${resp.message}")
                 if (resOk(context, resp)) {
@@ -97,10 +98,13 @@ class ReportFragment : Fragment() {
                     startActivity(intent)
                     activity?.finish()
                 }
+                binding.progressBar.visibility = View.GONE
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
+                binding.progressBar.visibility = View.GONE
             } catch (e: Exception) {
                 Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                binding.progressBar.visibility = View.GONE
             }
         }
     }

@@ -22,6 +22,8 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.login.LoginFragment.Companion.USER
 import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.network.Api
+import com.example.xianhang.network.WebSocketService
+import com.example.xianhang.network.WebSocketService.Companion.dataClear
 import com.example.xianhang.notification.NoticeActivity
 import com.example.xianhang.order.OrderStatusActivity
 import com.example.xianhang.order.POSITION
@@ -168,6 +170,8 @@ class ProfileFragment : Fragment() {
                     editor?.putBoolean(REMEMBER, false)
                     editor?.apply()
 
+                    context?.stopService(Intent(activity?.applicationContext, WebSocketService::class.java))
+                    dataClear()
                     val intent = Intent(context, LoginActivity::class.java)
                     context?.startActivity(intent)
                     activity?.finish()
@@ -214,6 +218,9 @@ class ProfileFragment : Fragment() {
                     editor?.putString(TOKEN, null)
                     editor?.putBoolean(REMEMBER, false)
                     editor?.apply()
+
+                    context?.stopService(Intent(activity?.applicationContext, WebSocketService::class.java))
+                    dataClear()
 
                     val intent = Intent(context, LoginActivity::class.java)
                     context?.startActivity(intent)

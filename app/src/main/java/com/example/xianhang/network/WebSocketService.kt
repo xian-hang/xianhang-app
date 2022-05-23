@@ -29,7 +29,10 @@ const val FETCH_MESSAGE = "fetch_message"
 const val NEW_MESSAGE = "new_message"
 
 class WebSocketService: Service() {
-    private val client = OkHttpClient()
+    private val client = OkHttpClient.Builder()
+        .pingInterval(10, TimeUnit.SECONDS)
+        .retryOnConnectionFailure(true)
+        .build()
     private lateinit var workManager: WorkManager
 
     companion object {
@@ -39,12 +42,20 @@ class WebSocketService: Service() {
         val chatItems = mutableMapOf<Int, ChatItem>()
         val liveChatItem = MutableLiveData<List<ChatItem>>()
 
-        fun getChatFromUser(userId: Int): LiveData<MutableList<Message>> {
+        fun getChatFromUser(userId: Int): LiveData<MutableList<Message>>? {
             if (!userToChat.containsKey(userId)) {
                 return MutableLiveData()
             }
             val chat = userToChat[userId]
-            return liveChats[chat!!.id]!!
+            return liveChats[chat!!.id]
+        }
+
+        fun dataClear() {
+            userToChat.clear()
+            chats.clear()
+            liveChats.clear()
+            chatItems.clear()
+            liveChatItem.value = listOf()
         }
     }
 
