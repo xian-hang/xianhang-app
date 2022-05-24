@@ -137,11 +137,11 @@ class WebSocketService: Service() {
 
     private fun connect() {
         val sharedPreferences = getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        val token = sharedPreferences.getString(TOKEN, null)
+        val token = sharedPreferences.getString(TOKEN, null) ?: return
         println("service token = $token")
 
         client.connectionPool.evictAll()
-        val request = Request.Builder().addHeader(AUTH, token!!).url(WS_URL).build()
+        val request = Request.Builder().addHeader(AUTH, token).url(WS_URL).build()
         webSocket = client.newWebSocket(request, ChatListener(this))
     }
 
