@@ -2,9 +2,11 @@ package com.example.xianhang.network
 
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock.sleep
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Data
@@ -16,9 +18,13 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.Chat
 import com.example.xianhang.model.ChatItem
 import com.example.xianhang.model.Message
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.adapter
 import okhttp3.*
 import okio.ByteString
 import org.json.JSONObject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -102,11 +108,13 @@ class WebSocketService: Service() {
             super.onMessage(webSocket, text)
             kotlin.run {
                 println("message: $text")
-                val data = Data.Builder().putString(MESSAGE, text).build()
-                val builder = OneTimeWorkRequestBuilder<ReceiveWorker>()
-                    .setInputData(data)
-                    .build()
-                service.workManager.enqueue(builder)
+                service.process(text)
+
+                // val data = Data.Builder().putString(MESSAGE, text).build()
+                // val builder = OneTimeWorkRequestBuilder<ReceiveWorker>()
+                //     .setInputData(data)
+                //     .build()
+                // service.workManager.enqueue(builder)
             }
         }
     }
@@ -149,8 +157,8 @@ class WebSocketService: Service() {
         if (connected || connectTimes >= 20) return
         try {
             println("reconnect ${connectTimes + 1} times")
-            Thread.sleep(10000)
             connect()
+            Thread.sleep(10000)
             connectTimes++
         } catch (e: InterruptedException) {
             e.printStackTrace()
@@ -160,5 +168,85 @@ class WebSocketService: Service() {
     private fun disconnect() {
         webSocket.cancel()
         webSocket.close(DISCONNECT, "disconnect")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun process(text: String) {
+        if (text.isEmpty()) return
+        when (text[0]) {
+            '0' -> fetchToMessages(text.substring(1))
+            '1' -> addMessage(text.substring(1))
+            '2' -> addChat(text.substring(1))
+            else -> return
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun fetchToMessages(messages: String) {
+        val jsonAdapter: JsonAdapter<FetchMessage> = moshi.adapter()
+        val data = jsonAdapter.fromJson(messages)
+        for (chat in data!!.chats) {
+            val key = chat.id
+            chats[key] = chat.message!!
+            userToChat[chat.userId!!] = chat
+            liveChats[key] = MutableLiveData()
+            liveChats[key]!!.postValue(chat.message)
+            chatItems[key] = ChatItem(key, chat.message.last().message, chat.message.last(), chat.username, chat.userId, chat.unread!!)
+        }
+        liveChatItem.postValue(chatItems.values.sortedByDescending {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
+            val datetimeParse = LocalDateTime.parse(it.lastMessage!!.time!!, formatter)
+            datetimeParse
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun addMessage(message: String) {
+        val sharedPreferences = getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        val id = sharedPreferences.getInt(ID, 0)
+
+        val jsonAdapter: JsonAdapter<Message> = moshi.adapter()
+        val data = jsonAdapter.fromJson(message)
+        val key = data!!.id
+        println("keys = ${chats.keys}")
+        if (!chats.containsKey(key)) {
+            println("add chat")
+            chats[key] = mutableListOf()
+            liveChats[key] = MutableLiveData()
+        }
+        println("add message")
+        chats[key]!!.add(data)
+        liveChats[key]!!.postValue(chats[key])
+        chatItems[key]!!.apply {
+            lastMessage = data
+            this.message = data.message
+            if (data.userId != id) this.unread++
+        }
+        liveChatItem.postValue(chatItems.values.sortedByDescending {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
+            val datetimeParse = LocalDateTime.parse(it.lastMessage!!.time!!, formatter)
+            datetimeParse
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun addChat(chat: String) {
+        val jsonAdapter: JsonAdapter<Chat> = moshi.adapter()
+        val data = jsonAdapter.fromJson(chat)
+        val key = data!!.id
+
+        userToChat[data.userId!!] = data
+        chats[key] = data.message!!
+        liveChats[key] = MutableLiveData()
+        liveChats[key]!!.postValue(chats[key])
+        chatItems[key] = ChatItem(key, data.message.last().message, data.message.last(), data.username, data.userId, data.unread!!)
+        liveChatItem.postValue(chatItems.values.sortedByDescending {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
+            val datetimeParse = LocalDateTime.parse(it.lastMessage!!.time!!, formatter)
+            datetimeParse
+        })
     }
 }
