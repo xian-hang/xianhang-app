@@ -4,13 +4,9 @@ import android.app.Service
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.os.SystemClock.sleep
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
@@ -18,11 +14,10 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.Chat
 import com.example.xianhang.model.ChatItem
 import com.example.xianhang.model.Message
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.adapter
 import okhttp3.*
-import okio.ByteString
-import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -34,6 +29,10 @@ lateinit var webSocket: WebSocket
 
 const val FETCH_MESSAGE = "fetch_message"
 const val NEW_MESSAGE = "new_message"
+
+data class FetchMessage(
+    @Json(name = "result") val chats: List<Chat>
+)
 
 class WebSocketService: Service() {
     private val client = OkHttpClient.Builder()

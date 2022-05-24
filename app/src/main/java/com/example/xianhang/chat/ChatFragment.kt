@@ -10,8 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
 import com.example.xianhang.adapter.MessageAdapter
 import com.example.xianhang.databinding.FragmentChatBinding
 import com.example.xianhang.login.LoginFragment.Companion.ID
@@ -20,12 +18,7 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.login.LoginFragment.Companion.USERNAME
 import com.example.xianhang.model.ChatItem
 import com.example.xianhang.model.Message
-import com.example.xianhang.network.AUTH
-import com.example.xianhang.network.MESSAGE
-import com.example.xianhang.network.WebSocketService.Companion.chatItems
-import com.example.xianhang.network.WebSocketService.Companion.userToChat
 import com.example.xianhang.network.webSocket
-import okhttp3.*
 import org.json.JSONObject
 
 class ChatFragment : Fragment() {
