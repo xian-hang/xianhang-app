@@ -52,7 +52,7 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
         }
 
         fun read(chat: ChatItem) {
-            chat.lastMessage!!.unread = false
+            chat.unread = 0
             binding.unread.visibility = View.GONE
         }
     }
