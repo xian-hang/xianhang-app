@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_resentFragment"
+            app:destination="@id/resentFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -37,4 +40,8 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.xianhang.login.ForgotPasswordFragment"
         android:label="忘记密码" />
+    <fragment
+        android:id="@+id/resentFragment"
+        android:name="com.example.xianhang.login.ResentFragment"
+        android:label="ResentFragment" />
 </navigation>

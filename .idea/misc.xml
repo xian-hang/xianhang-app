@@ -48,6 +48,7 @@
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_profile.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_register.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_report.xml" value="0.22826086956521738" />
+        <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_resent.xml" value="0.20521590423257802" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_search_products.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_search_users.xml" value="0.22826086956521738" />
         <entry key="..\:/xianhang/xianhang-app/app/src/main/res/layout/fragment_sell_product.xml" value="0.22826086956521738" />
@@ -107,5 +108,5 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16_PREVIEW" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
