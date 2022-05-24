@@ -65,6 +65,17 @@ class WebSocketService: Service() {
             chatItems.clear()
             liveChatItem.value = listOf()
         }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun read(userId: Int) {
+            val id = userToChat[userId]!!.id
+            chatItems[id]!!.unread = 0
+            liveChatItem.postValue(chatItems.values.sortedByDescending {
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
+                val datetimeParse = LocalDateTime.parse(it.lastMessage!!.time!!, formatter)
+                datetimeParse
+            })
+        }
     }
 
     class ChatListener(private val service: WebSocketService): WebSocketListener() {
@@ -103,17 +114,12 @@ class WebSocketService: Service() {
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onMessage(webSocket: WebSocket, text: String) {
             super.onMessage(webSocket, text)
             kotlin.run {
                 println("message: $text")
                 service.process(text)
-
-                // val data = Data.Builder().putString(MESSAGE, text).build()
-                // val builder = OneTimeWorkRequestBuilder<ReceiveWorker>()
-                //     .setInputData(data)
-                //     .build()
-                // service.workManager.enqueue(builder)
             }
         }
     }

@@ -93,9 +93,6 @@ class ProductManageActivity : AppCompatActivity() {
             try {
                 val resp = Api.retrofitService.deleteProduct(id!!, token!!)
                 if (resOk(context, resp)) {
-                    val intent = Intent(context, ProductActivity::class.java)
-                    intent.putExtra(METHOD, SELLER)
-                    startActivity(intent)
                     finish()
                 }
             } catch (e: HttpException) {
@@ -106,11 +103,5 @@ class ProductManageActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-    }
-
-    override fun onBackPressed() {
-        val intent = Intent(this, ProductActivity::class.java)
-        intent.putExtra(METHOD, SELLER)
-        startActivity(intent)
     }
 }

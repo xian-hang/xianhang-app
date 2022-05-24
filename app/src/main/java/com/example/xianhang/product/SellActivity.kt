@@ -161,9 +161,6 @@ class SellActivity : AppCompatActivity() {
                     }
                     val images = if (imageId == null) listOf() else listOf(imageId!!)
 
-                    val intent = Intent(context, ProductManageActivity::class.java)
-                    intent.putExtra(PRODUCT_ITEM, ProductItem(newProduct, images, null))
-                    startActivity(intent)
                     println("edit finish")
                     finish()
                 }
@@ -192,21 +189,13 @@ class SellActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val resp = Api.retrofitService.createProduct(token!!, product)
-                var imageId: Int? = null
                 if (resOk(context, resp)) {
                     if (upload) {
                         val res = uploadImage(token!!, File(imagePath), resp.product!!.id!!)
-                        imageId = res.imageId
                         if (!resOk(context, res)) {
                             println("image upload failed",)
                         }
                     }
-                    val images = if (imageId == null) listOf() else listOf(imageId)
-                    val productItem = ProductItem(resp.product!!, images, null)
-
-                    val intent = Intent(context, ProductManageActivity::class.java)
-                    intent.putExtra(PRODUCT_ITEM, productItem)
-                    startActivity(intent)
                     println("sell finish")
                     finish()
                 }
@@ -371,16 +360,16 @@ class SellActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val type = intent?.extras?.getString(ACTION)
-        if (type == "edit") {
-            val productItem = intent?.extras?.getParcelable<ProductItem>(PRODUCT_ITEM)
-            val intent = Intent(this, ProductManageActivity::class.java)
-            intent.putExtra(PRODUCT_ITEM, productItem)
-            startActivity(intent)
-        } else {
-            val intent = Intent(this, ProductActivity::class.java)
-            intent.putExtra(METHOD, SELLER)
-            startActivity(intent)
-        }
+        //val type = intent?.extras?.getString(ACTION)
+        //if (type == "edit") {
+        //    val productItem = intent?.extras?.getParcelable<ProductItem>(PRODUCT_ITEM)
+        //    val intent = Intent(this, ProductManageActivity::class.java)
+        //    intent.putExtra(PRODUCT_ITEM, productItem)
+        //    startActivity(intent)
+        //} else {
+        //    val intent = Intent(this, ProductActivity::class.java)
+        //    intent.putExtra(METHOD, SELLER)
+        //    startActivity(intent)
+        //}
     }
 }

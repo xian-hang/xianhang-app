@@ -66,9 +66,9 @@ class ProductFragment : Fragment() {
     }
 
     private fun fillInfo() {
-        val sold = activity?.intent?.getIntExtra(SOLD, 0)
+        val sold = activity?.intent?.getStringExtra(SOLD)
         val sales = activity?.intent?.getDoubleExtra(SALES, 0.0)
-        "售出物品: $sold".also { binding.soldInfo.sold.text = it }
+        binding.soldInfo.sold.text = sold
         binding.soldInfo.sales.text = String.format("售出价格: $%.2f", sales)
     }
 

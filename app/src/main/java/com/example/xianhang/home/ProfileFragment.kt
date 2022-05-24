@@ -121,6 +121,7 @@ class ProfileFragment : Fragment() {
 
     private fun changeActivityProducts() {
         val intent = Intent(context, ProductActivity::class.java)
+        println(viewModel.sold.value)
         intent.putExtra(METHOD, SELLER)
         intent.putExtra(SOLD, viewModel.sold.value)
         intent.putExtra(SALES, viewModel.totalSales.value)

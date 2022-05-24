@@ -87,8 +87,8 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
         override fun areContentsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {
             return oldItem.username == newItem.username &&
                    oldItem.message == newItem.message &&
-                   oldItem.lastMessage?.time == newItem.lastMessage?.time &&
-                   oldItem.lastMessage?.unread == newItem.lastMessage?.unread
+                   oldItem.unread == newItem.unread &&
+                   oldItem.lastMessage?.time == newItem.lastMessage?.time
         }
     }
 }

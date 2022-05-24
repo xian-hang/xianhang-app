@@ -124,6 +124,7 @@ class LoginFragment : Fragment() {
         val user = LoginUser(userId, password)
         CoroutineScope(Dispatchers.Main).launch {
             binding.progressBar.visibility = View.VISIBLE
+            binding.login.isEnabled = false
             println("post login request")
             try {
                 val resp = Api.retrofitService.login(user)
@@ -137,8 +138,6 @@ class LoginFragment : Fragment() {
                     editor?.apply()
                     startActivity(Intent(context, MainActivity::class.java))
                     activity?.finish()
-                } else {
-                    println("res not ok")
                 }
             } catch (e: HttpException) {
                 Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
@@ -148,6 +147,7 @@ class LoginFragment : Fragment() {
                 e.printStackTrace()
             }
             binding.progressBar.visibility = View.GONE
+            binding.login.isEnabled = true
         }
     }
 

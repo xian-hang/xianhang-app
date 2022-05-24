@@ -1,12 +1,14 @@
 package com.example.xianhang.chat
 
 import android.content.Context.MODE_PRIVATE
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,6 +20,7 @@ import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.login.LoginFragment.Companion.USERNAME
 import com.example.xianhang.model.ChatItem
 import com.example.xianhang.model.Message
+import com.example.xianhang.network.WebSocketService.Companion.read
 import com.example.xianhang.network.webSocket
 import org.json.JSONObject
 
@@ -104,5 +107,17 @@ class ChatFragment : Fragment() {
             return false
         }
         return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onDestroyView() {
+        val json = JSONObject().apply {
+            put("type", "readMessage")
+            put("userId", id)
+        }
+        webSocket.send(json.toString())
+        read(id!!)
+
+        super.onDestroyView()
     }
 }

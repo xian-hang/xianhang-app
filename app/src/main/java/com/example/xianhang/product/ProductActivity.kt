@@ -28,9 +28,9 @@ class ProductActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra(TO_PROFILE, true)
-        startActivity(intent)
+        //val intent = Intent(this, MainActivity::class.java)
+        //intent.putExtra(TO_PROFILE, true)
+        //startActivity(intent)
         finish()
     }
 }

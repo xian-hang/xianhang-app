@@ -79,10 +79,10 @@ class OrderFragment : Fragment() {
                     }
                 }
             } catch (e: HttpException) {
-                Toast.makeText(requireActivity(), e.message(), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message(), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 // TODO: check connection wrong
-                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                 e.printStackTrace()
             }
         }
@@ -98,14 +98,17 @@ class OrderFragment : Fragment() {
             }
             PAID -> if (!isBuyer) {
                 viewModel.setStatus(context, token!!, SHIPPED, isBuyer)
+                activity?.finish()
             }
             SHIPPED -> if (isBuyer) {
                 viewModel.setStatus(context, token!!, COMPLETE, isBuyer)
+                activity?.finish()
             }
         }
     }
 
     private fun cancel(isBuyer: Boolean) {
         viewModel.setStatus(context, token!!, CANCEL, isBuyer)
+        activity?.finish()
     }
 }
