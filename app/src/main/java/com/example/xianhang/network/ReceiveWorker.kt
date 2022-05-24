@@ -62,7 +62,7 @@ class ReceiveWorker(ctx: Context, params: WorkerParameters): Worker(ctx, params)
             userToChat[chat.userId!!] = chat
             liveChats[key] = MutableLiveData()
             liveChats[key]!!.postValue(chat.message)
-            chatItems[key] = ChatItem(key, chat.message.last().message, chat.message.last(), chat.username, chat.userId)
+            chatItems[key] = ChatItem(key, chat.message.last().message, chat.message.last(), chat.username, chat.userId, chat.unread!!)
         }
         liveChatItem.postValue(chatItems.values.sortedByDescending {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
@@ -89,6 +89,7 @@ class ReceiveWorker(ctx: Context, params: WorkerParameters): Worker(ctx, params)
         chatItems[key]!!.apply {
             lastMessage = data
             this.message = data.message
+            this.unread++
         }
         liveChatItem.postValue(chatItems.values.sortedByDescending {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
@@ -108,7 +109,7 @@ class ReceiveWorker(ctx: Context, params: WorkerParameters): Worker(ctx, params)
         chats[key] = data.message!!
         liveChats[key] = MutableLiveData()
         liveChats[key]!!.postValue(chats[key])
-        chatItems[key] = ChatItem(key, data.message.last().message, data.message.last(), data.username, data.userId)
+        chatItems[key] = ChatItem(key, data.message.last().message, data.message.last(), data.username, data.userId, data.unread!!)
         liveChatItem.postValue(chatItems.values.sortedByDescending {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")
             val datetimeParse = LocalDateTime.parse(it.lastMessage!!.time!!, formatter)

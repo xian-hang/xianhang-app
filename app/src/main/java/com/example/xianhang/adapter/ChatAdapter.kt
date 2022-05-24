@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
@@ -31,11 +32,12 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
         fun bind(chat: ChatItem) {
             binding.username.text = chat.username
             binding.message.text = chat.lastMessage!!.message
-            
-            if (chat.userId == chat.lastMessage!!.userId && chat.lastMessage!!.unread == true) {
-                binding.message.typeface = Typeface.DEFAULT_BOLD
+
+            if (chat.unread > 0) {
+                binding.unread.text = "${chat.unread}"
+                binding.unread.visibility = View.VISIBLE
             } else {
-                binding.message.typeface = Typeface.DEFAULT
+                binding.unread.visibility = View.GONE
             }
 
             val datetime = chat.lastMessage!!.time
@@ -51,7 +53,7 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
 
         fun read(chat: ChatItem) {
             chat.lastMessage!!.unread = false
-            binding.message.typeface = Typeface.DEFAULT
+            binding.unread.visibility = View.GONE
         }
     }
 

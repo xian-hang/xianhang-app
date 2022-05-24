@@ -29,6 +29,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="10dp"
             android:layout_toStartOf="@+id/time"
+            android:maxLines="1"
             android:textSize="20sp"
             tools:text="this is a message" />
 
@@ -37,9 +38,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
             tools:text="10:00 a.m." />
+
+        <TextView
+            android:id="@+id/unread"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/unread_item"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            tools:text="10" />
 
         <View
             android:layout_width="match_parent"

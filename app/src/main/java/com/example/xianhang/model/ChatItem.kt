@@ -7,7 +7,8 @@ data class ChatItem(
     var message: String?,
     var lastMessage: Message?,
     val username: String?,
-    val userId: Int?
+    val userId: Int?,
+    var unread: Int = 0
 )
 
 data class Chat(
