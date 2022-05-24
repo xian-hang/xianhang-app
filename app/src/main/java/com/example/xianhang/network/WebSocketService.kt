@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.os.SystemClock.sleep
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Data
@@ -34,6 +35,8 @@ class WebSocketService: Service() {
         .retryOnConnectionFailure(true)
         .build()
     private lateinit var workManager: WorkManager
+    private var connected: Boolean = false
+    private var connectTimes = 0
 
     companion object {
         val userToChat = mutableMapOf<Int, Chat>()
@@ -56,6 +59,55 @@ class WebSocketService: Service() {
             liveChats.clear()
             chatItems.clear()
             liveChatItem.value = listOf()
+        }
+    }
+
+    class ChatListener(private val service: WebSocketService): WebSocketListener() {
+        override fun onOpen(webSocket: WebSocket, response: Response) {
+            super.onOpen(webSocket, response)
+            kotlin.run {
+                println("socket connected")
+                service.connected = true
+                service.connectTimes = 0
+            }
+        }
+
+        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+            super.onClosed(webSocket, code, reason)
+            kotlin.run {
+                service.connected = false
+                println("socket closed: $code | $reason")
+            }
+        }
+
+        override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+            super.onClosing(webSocket, code, reason)
+            kotlin.run {
+                service.connected = false
+                println("socket closing: $code | $reason")
+            }
+        }
+
+        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+            super.onFailure(webSocket, t, response)
+            kotlin.run {
+                println("socket connect failed: ${t.message}")
+                service.connected = false
+                service.reconnect()
+                t.printStackTrace()
+            }
+        }
+
+        override fun onMessage(webSocket: WebSocket, text: String) {
+            super.onMessage(webSocket, text)
+            kotlin.run {
+                println("message: $text")
+                val data = Data.Builder().putString(MESSAGE, text).build()
+                val builder = OneTimeWorkRequestBuilder<ReceiveWorker>()
+                    .setInputData(data)
+                    .build()
+                service.workManager.enqueue(builder)
+            }
         }
     }
 
@@ -87,50 +139,22 @@ class WebSocketService: Service() {
         val sharedPreferences = getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         val token = sharedPreferences.getString(TOKEN, null)
         println("service token = $token")
+
+        client.connectionPool.evictAll()
         val request = Request.Builder().addHeader(AUTH, token!!).url(WS_URL).build()
+        webSocket = client.newWebSocket(request, ChatListener(this))
+    }
 
-        webSocket = client.newWebSocket(request, object: WebSocketListener() {
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                super.onOpen(webSocket, response)
-                kotlin.run {
-                    println("socket connected")
-                }
-            }
-
-            override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                super.onClosed(webSocket, code, reason)
-                kotlin.run {
-                    println("socket closed: $code | $reason")
-                }
-            }
-
-            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                super.onClosing(webSocket, code, reason)
-                kotlin.run {
-                    println("socket closing: $code | $reason")
-                }
-            }
-
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                super.onFailure(webSocket, t, response)
-                kotlin.run {
-                    println("socket connect failed: ${t.message}")
-                    t.printStackTrace()
-                }
-            }
-
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                super.onMessage(webSocket, text)
-                kotlin.run {
-                    println("message: $text")
-                    val data = Data.Builder().putString(MESSAGE, text).build()
-                    val builder = OneTimeWorkRequestBuilder<ReceiveWorker>()
-                        .setInputData(data)
-                        .build()
-                    workManager.enqueue(builder)
-                }
-            }
-        })
+    private fun reconnect() {
+        if (connected || connectTimes >= 20) return
+        try {
+            println("reconnect ${connectTimes + 1} times")
+            Thread.sleep(10000)
+            connect()
+            connectTimes++
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
     }
 
     private fun disconnect() {

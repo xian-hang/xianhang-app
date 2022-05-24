@@ -46,9 +46,11 @@ class MainActivity : AppCompatActivity() {
         val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (service in manager.getRunningServices(Int.MAX_VALUE)) {
             if (serviceClass.name == service.service.className) {
+                println("service is running")
                 return true
             }
         }
+        println("service not running")
         return false
     }
 }

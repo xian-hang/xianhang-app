@@ -31,5 +31,6 @@ class ProductActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(TO_PROFILE, true)
         startActivity(intent)
+        finish()
     }
 }

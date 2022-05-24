@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.xianhang.adapter.ChatAdapter
 import com.example.xianhang.databinding.FragmentChatsBinding
+import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.ChatItem
@@ -37,23 +38,13 @@ class ChatsFragment : Fragment() {
         binding.viewModel = viewModel
         viewModel.chatList.observe(this, observer())
 
+        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
+        token = sharedPreferences?.getString(TOKEN, null)
+
         adapter = ChatAdapter(requireContext())
         binding.chats.adapter = adapter
 
         return binding.root
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
-        token = sharedPreferences?.getString(TOKEN, null)
-
-        if (token == null) {
-            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
-            return
-        }
     }
 
     private fun observer(): Observer<List<ChatItem>> {

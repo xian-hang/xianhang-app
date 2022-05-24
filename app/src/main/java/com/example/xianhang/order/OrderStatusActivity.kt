@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.example.xianhang.R
-import com.example.xianhang.adapter.ViewPagerAdapter
+import com.example.xianhang.adapter.OrderStatusAdapter
 import com.example.xianhang.home.MainActivity
 import com.example.xianhang.product.TO_PROFILE
 import com.google.android.material.tabs.TabLayout
@@ -20,7 +20,7 @@ class OrderStatusActivity : AppCompatActivity() {
 
         val tab = findViewById<TabLayout>(R.id.tab)
         val viewpager = findViewById<ViewPager2>(R.id.view_pager)
-        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        val adapter = OrderStatusAdapter(supportFragmentManager, lifecycle)
         viewpager.adapter = adapter
         TabLayoutMediator(tab, viewpager) { tab, position ->
             when (position) {

@@ -32,8 +32,11 @@ class ChatAdapter(private val context: Context): ListAdapter<ChatItem, ChatAdapt
             binding.username.text = chat.username
             binding.message.text = chat.lastMessage!!.message
             
-            if (chat.lastMessage!!.unread == true) binding.message.typeface = Typeface.DEFAULT_BOLD
-            else binding.message.typeface = Typeface.DEFAULT
+            if (chat.userId == chat.lastMessage!!.userId && chat.lastMessage!!.unread == true) {
+                binding.message.typeface = Typeface.DEFAULT_BOLD
+            } else {
+                binding.message.typeface = Typeface.DEFAULT
+            }
 
             val datetime = chat.lastMessage!!.time
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd+kk:mm:ss")

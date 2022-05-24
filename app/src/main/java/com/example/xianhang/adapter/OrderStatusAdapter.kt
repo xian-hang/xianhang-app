@@ -8,7 +8,7 @@ import com.example.xianhang.order.PaidFragment
 import com.example.xianhang.order.SentFragment
 import com.example.xianhang.order.UnpaidFragment
 
-class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle):
+class OrderStatusAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle):
     FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
         return 3
