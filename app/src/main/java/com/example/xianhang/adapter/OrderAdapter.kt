@@ -78,12 +78,14 @@ class OrderAdapter(private val method: Int, private val status: Int, private val
             holder.view.setOnClickListener {
                 val intent = Intent(context, ViewOrderActivity::class.java)
                 intent.putExtra(ID, order.order.id)
+                intent.putExtra(METHOD, BUYER)
                 context?.startActivity(intent)
             }
         } else if (method == SELLER) {
             holder.view.setOnClickListener {
                 val intent = Intent(context, ViewOrderActivity::class.java)
                 intent.putExtra(ID, order.order.id)
+                intent.putExtra(METHOD, SELLER)
                 context?.startActivity(intent)
             }
         }

@@ -63,12 +63,16 @@ class ProductAdapter(private val method: Int, private val context: Context?):
         }
 
         private fun setDetails(product: Product, method: Int) {
-            if (method == SELLER) {
-                "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
-            } else if (method == BUYER || method == COLLECTION || method == SEARCH || method == FEEDS) {
-                "$${product.price} | ${product.username}".also { binding.productDetails.text = it }
-            } else if (method == USER_PRODUCT) {
-                "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
+            when (method) {
+                SELLER -> {
+                    "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
+                }
+                BUYER, COLLECTION, SEARCH, FEEDS -> {
+                    "$${product.price} | ${product.username}".also { binding.productDetails.text = it }
+                }
+                USER_PRODUCT -> {
+                    "$${product.price} | stock ${product.stock}".also { binding.productDetails.text = it }
+                }
             }
         }
     }

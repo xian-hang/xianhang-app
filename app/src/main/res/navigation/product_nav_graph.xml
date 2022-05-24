@@ -9,14 +9,7 @@
         android:id="@+id/productFragment2"
         android:name="com.example.xianhang.product.ProductFragment"
         android:label="fragment_product"
-        tools:layout="@layout/fragment_product" >
-        <action
-            android:id="@+id/action_productFragment2_to_sellProductFragment"
-            app:destination="@id/sellProductFragment" />
-        <action
-            android:id="@+id/action_productFragment2_to_viewProductFragment"
-            app:destination="@id/viewProductFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_product" />
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.example.xianhang.order.OrdersFragment"
@@ -25,26 +18,6 @@
         <action
             android:id="@+id/action_ordersFragment_to_order_nav_graph"
             app:destination="@id/order_nav_graph" />
-    </fragment>
-    <fragment
-        android:id="@+id/sellProductFragment"
-        android:name="com.example.xianhang.product.SellProductFragment"
-        android:label="fragment_sell_product"
-        tools:layout="@layout/fragment_sell_product" >
-        <action
-            android:id="@+id/action_sellProductFragment_to_viewProductFragment"
-            app:destination="@id/viewProductFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/viewProductFragment"
-        android:name="com.example.xianhang.product.ViewProductFragment"
-        android:label="ViewProductFragment" >
-        <action
-            android:id="@+id/action_viewProductFragment_to_sellProductFragment"
-            app:destination="@id/sellProductFragment" />
-        <action
-            android:id="@+id/action_viewProductFragment_to_productFragment2"
-            app:destination="@id/productFragment2" />
     </fragment>
     <include app:graph="@navigation/order_nav_graph" />
 </navigation>

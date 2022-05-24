@@ -7,6 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.xianhang.R
+import com.example.xianhang.adapter.METHOD
+import com.example.xianhang.adapter.SELLER
 
 class ViewOrderActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -22,5 +24,9 @@ class ViewOrderActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 }
