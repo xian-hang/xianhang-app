@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.R
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.model.EditPassword
 import com.example.xianhang.network.Api
 import com.example.xianhang.rest.resOk
@@ -43,6 +44,8 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         if (token == null) {
             Toast.makeText(this, "Please Login First", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
             return
         }
 

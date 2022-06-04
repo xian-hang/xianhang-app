@@ -16,6 +16,7 @@ import com.example.xianhang.adapter.FEEDS
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.QUERY
 import com.example.xianhang.databinding.FragmentHomeBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.product.ProductsViewModel
@@ -70,6 +71,8 @@ class HomeFragment : Fragment() {
 
         if (token == null) {
             Toast.makeText(requireActivity(), "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
             return
         }
 

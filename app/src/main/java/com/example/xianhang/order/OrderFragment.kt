@@ -1,6 +1,7 @@
 package com.example.xianhang.order
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.xianhang.R
 import com.example.xianhang.adapter.PRICE
 import com.example.xianhang.adapter.TO
 import com.example.xianhang.databinding.FragmentOrderBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
@@ -59,6 +61,8 @@ class OrderFragment : Fragment() {
         println("token = $token")
         if (token == null) {
             Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
             return
         }
 

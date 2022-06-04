@@ -27,10 +27,4 @@ class ProductActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
     }
 
-    override fun onBackPressed() {
-        //val intent = Intent(this, MainActivity::class.java)
-        //intent.putExtra(TO_PROFILE, true)
-        //startActivity(intent)
-        finish()
-    }
 }

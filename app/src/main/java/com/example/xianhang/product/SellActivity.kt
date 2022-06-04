@@ -21,6 +21,7 @@ import com.example.xianhang.adapter.METHOD
 import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.ActivitySellBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment
 import com.example.xianhang.model.*
 import com.example.xianhang.network.Api
@@ -117,6 +118,8 @@ class SellActivity : AppCompatActivity() {
 
         if (token == null) {
             Toast.makeText(this, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
             return
         }
         if (!checkData()) return

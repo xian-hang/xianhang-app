@@ -18,6 +18,7 @@ import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.FragmentProductBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 
 const val SOLD = "sold"
@@ -50,7 +51,9 @@ class ProductFragment : Fragment() {
         val token = sharedPreferences?.getString(TOKEN, null)
 
         if (token == null) {
-            Toast.makeText(context, "Please Login", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
             return
         }
 

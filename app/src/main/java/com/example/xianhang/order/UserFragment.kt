@@ -18,6 +18,7 @@ import com.example.xianhang.adapter.ProductAdapter
 import com.example.xianhang.adapter.USER_PRODUCT
 import com.example.xianhang.databinding.FragmentUserBinding
 import com.example.xianhang.home.ProfileViewModel
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
@@ -44,7 +45,7 @@ class UserFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentUserBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -59,6 +60,13 @@ class UserFragment : Fragment() {
 
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
+            return null
+        }
 
         productsViewModel.setProducts(context, USER_PRODUCT, token!!, userId)
         binding.refresh.setOnRefreshListener {

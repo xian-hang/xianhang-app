@@ -13,6 +13,7 @@ import com.example.xianhang.adapter.METHOD
 import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.adapter.SELLER
 import com.example.xianhang.databinding.ActivityProductManageBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
 import com.example.xianhang.model.ProductItem
@@ -47,6 +48,8 @@ class ProductManageActivity : AppCompatActivity() {
 
         if (token == null) {
             Toast.makeText(this, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
             return
         }
 

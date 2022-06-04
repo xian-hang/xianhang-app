@@ -15,6 +15,7 @@ import com.example.xianhang.R
 import com.example.xianhang.UserActivity
 import com.example.xianhang.adapter.PRODUCT_ITEM
 import com.example.xianhang.databinding.FragmentProductDetailsBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
@@ -47,6 +48,13 @@ class ProductDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val sharedPreferences = activity?.getSharedPreferences(LOGIN_PREF, MODE_PRIVATE)
         token = sharedPreferences?.getString(TOKEN, null)
+
+        if (token == null) {
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
+            return
+        }
 
         binding.profile.setOnClickListener {
             profile()

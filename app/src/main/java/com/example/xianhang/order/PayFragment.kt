@@ -1,6 +1,7 @@
 package com.example.xianhang.order
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.xianhang.R
 import com.example.xianhang.adapter.PRICE
 import com.example.xianhang.adapter.TO
 import com.example.xianhang.databinding.FragmentPayBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
@@ -67,6 +69,12 @@ class PayFragment : Fragment() {
         val cost = text.toString().toDouble()
         if (cost != needed) {
             Toast.makeText(context, "输入金额和需缴付金额不一致", Toast.LENGTH_LONG).show()
+            return
+        }
+        if (token == null) {
+            Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
             return
         }
 

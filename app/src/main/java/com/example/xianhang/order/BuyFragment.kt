@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.xianhang.R
 import com.example.xianhang.adapter.TO
 import com.example.xianhang.databinding.FragmentBuyBinding
+import com.example.xianhang.login.LoginActivity
 import com.example.xianhang.login.LoginFragment.Companion.ID
 import com.example.xianhang.login.LoginFragment.Companion.LOGIN_PREF
 import com.example.xianhang.login.LoginFragment.Companion.TOKEN
@@ -59,6 +60,9 @@ class BuyFragment : Fragment() {
 
         if (token == null) {
             Toast.makeText(context, "Please login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
+            return
         }
         if (!checkData()) return
 

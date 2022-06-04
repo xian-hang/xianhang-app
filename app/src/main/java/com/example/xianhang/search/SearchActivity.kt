@@ -23,8 +23,5 @@ class SearchActivity : AppCompatActivity() {
                 1 -> tab.text = "用户"
             }
         }.attach()
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.view_pager)
-
     }
 }

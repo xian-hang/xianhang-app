@@ -159,6 +159,8 @@ class ProfileFragment : Fragment() {
 
         if (token == null) {
             Toast.makeText(context, "User Must Login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
             return
         }
 
@@ -206,6 +208,8 @@ class ProfileFragment : Fragment() {
 
         if (token == null) {
             Toast.makeText(requireActivity(), "User Must Login", Toast.LENGTH_LONG).show()
+            startActivity(Intent(context, LoginActivity::class.java))
+            activity?.finish()
             return
         }
 
