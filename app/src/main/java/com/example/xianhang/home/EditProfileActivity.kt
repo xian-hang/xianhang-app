@@ -42,7 +42,7 @@ class EditProfileActivity : AppCompatActivity() {
         val username = findViewById<TextInputEditText>(R.id.username).text.toString()
         val introduction = findViewById<TextInputEditText>(R.id.introduction).text.toString()
 
-        if (username.isEmpty()) {
+        if (username.isBlank()) {
             val errMsg = "please fill in the username\n"
             Toast.makeText(this, errMsg, Toast.LENGTH_LONG).show()
             return

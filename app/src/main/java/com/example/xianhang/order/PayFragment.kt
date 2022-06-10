@@ -62,7 +62,7 @@ class PayFragment : Fragment() {
     private fun setStatus() {
         val text = binding.cost.text
         val needed = viewModel.price.value.toString().toDouble() + viewModel.postage.value.toString().toDouble()
-        if (text.isEmpty()) {
+        if (text.isNullOrBlank()) {
             Toast.makeText(context, "please fill the price", Toast.LENGTH_LONG).show()
             return
         }

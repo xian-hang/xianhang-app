@@ -216,12 +216,12 @@ class SellActivity : AppCompatActivity() {
         val name = binding.productName.text.toString()
         val description = binding.productDescription.text.toString()
 
-        if (binding.productPrice.text!!.isEmpty()) {
+        if (binding.productPrice.text!!.isNullOrBlank()) {
             Toast.makeText(this, "Please fill in the product price", Toast.LENGTH_LONG).show()
             return false
         }
 
-        if (binding.productStock.text!!.isEmpty()) {
+        if (binding.productStock.text!!.isNullOrBlank()) {
             Toast.makeText(this, "Please fill in the product stock", Toast.LENGTH_LONG).show()
             return false
         }
@@ -232,12 +232,12 @@ class SellActivity : AppCompatActivity() {
         val pickup = binding.pickup.isChecked
         val address = binding.pickupAddress.text.toString()
 
-        if (name.isEmpty()) {
+        if (name.isBlank()) {
             Toast.makeText(this, "Please fill in the product name", Toast.LENGTH_LONG).show()
             return false
         }
 
-        if (description.isEmpty()) {
+        if (description.isBlank()) {
             Toast.makeText(this, "Please fill in the description", Toast.LENGTH_LONG).show()
             return false
         }
@@ -257,7 +257,7 @@ class SellActivity : AppCompatActivity() {
             return false
         }
 
-        if (pickup && address.isEmpty()) {
+        if (pickup && address.isNullOrBlank()) {
             Toast.makeText(this, "Please fill in pickup address", Toast.LENGTH_LONG).show()
             return false
         }

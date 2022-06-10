@@ -99,12 +99,12 @@ class BuyFragment : Fragment() {
 
     private fun checkData(): Boolean {
 
-        if (binding.name.text.isEmpty()) {
+        if (binding.name.text.isNullOrBlank()) {
             Toast.makeText(context, "Please fill the name", Toast.LENGTH_LONG).show()
             return false
         }
 
-        if (binding.phone.text.isEmpty()) {
+        if (binding.phone.text.isNullOrBlank()) {
             Toast.makeText(context, "Please fill the phone", Toast.LENGTH_LONG).show()
             return false
         }
@@ -117,7 +117,7 @@ class BuyFragment : Fragment() {
         val tradingMethod = if (binding.tradingMethod.text.toString() == "自取") PICKUP
         else DELIVERY
         var address: String? = null
-        if (tradingMethod == DELIVERY && binding.address.text.isEmpty()) {
+        if (tradingMethod == DELIVERY && binding.address.text.isNullOrBlank()) {
             Toast.makeText(context, "Please fill the address", Toast.LENGTH_LONG).show()
             return false
         }

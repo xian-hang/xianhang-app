@@ -57,7 +57,7 @@ class PostageFragment : Fragment() {
         }
 
         val text = binding.cost.text
-        if (text.isEmpty()) {
+        if (text.isNullOrBlank()) {
             Toast.makeText(context, "please fill the postage", Toast.LENGTH_LONG).show()
             return
         }

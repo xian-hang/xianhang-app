@@ -101,7 +101,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun checkData(): Boolean {
-        if (binding.num.text.isEmpty()) {
+        if (binding.num.text.isNullOrBlank()) {
             Toast.makeText(context, "Please fill the amount", Toast.LENGTH_LONG).show()
             return false
         }

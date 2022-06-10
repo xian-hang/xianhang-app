@@ -114,7 +114,7 @@ class ReportFragment : Fragment() {
 
     private fun checkData(): Boolean {
         val text = binding.content.text
-        if (text.isEmpty()) {
+        if (text.isNullOrBlank()) {
             Toast.makeText(context, "Please fill in the blank", Toast.LENGTH_LONG).show()
             return false
         }

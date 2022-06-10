@@ -24,7 +24,7 @@ class ResentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val binding = FragmentResentBinding.inflate(inflater)
+        binding = FragmentResentBinding.inflate(inflater)
         binding.submit.setOnClickListener {
             requestResent()
         }

@@ -77,7 +77,7 @@ class RegisterFragment : Fragment() {
                           userId: String,
                           password: String,
                           confirmPassword: String): Boolean {
-        if (username.isEmpty()) {
+        if (username.isBlank()) {
             val errMsg = "please fill in the username\n"
             Toast.makeText(requireActivity(), errMsg, Toast.LENGTH_LONG).show()
             return false
